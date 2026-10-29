@@ -1,0 +1,72 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props { title: string; description: string; current?: string; chapter?: string }
+const { title, description, current, chapter = "paper" } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#ff8126" />
+    <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />
+    <script is:inline>document.documentElement.classList.add("js");</script>
+  </head>
+  <body id="top">
+    <a class="skip" href="#main">Skip to content</a>
+    <Header current={current} chapter={chapter} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      // Header takes the colours of whichever chapter sits under it.
+      const header = document.getElementById("site-header")!;
+      const chapters = [...document.querySelectorAll<HTMLElement>("[data-chapter]")].filter((el) => el !== header);
+      const probe = () => {
+        const y = header.getBoundingClientRect().bottom - 1;
+        let current = chapters[0]?.dataset.chapter ?? "paper";
+        for (const el of chapters) {
+          const r = el.getBoundingClientRect();
+          if (r.top <= y && r.bottom > y) current = el.dataset.chapter!;
+        }
+        if (header.dataset.chapter !== current) header.dataset.chapter = current;
+      };
+      let ticking = false;
+      addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { probe(); ticking = false; }); } }, { passive: true });
+      addEventListener("resize", probe);
+      probe();
+
+      // Small-screen menu.
+      const toggle = header.querySelector<HTMLButtonElement>(".menu-toggle")!;
+      toggle.addEventListener("click", () => {
+        const open = header.classList.toggle("open");
+        toggle.setAttribute("aria-expanded", String(open));
+        toggle.textContent = open ? "Close" : "Menu";
+      });
+      header.querySelectorAll(".links a").forEach((a) => a.addEventListener("click", () => {
+        header.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); toggle.textContent = "Menu";
+      }));
+
+      // Section parts rise in once, staggered. Content is visible if this never runs.
+      const risers = document.querySelectorAll(".rise");
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+          if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+        }), { rootMargin: "0px 0px -12% 0px" });
+        risers.forEach((el) => io.observe(el));
+      } else risers.forEach((el) => el.classList.add("in"));
+      setTimeout(() => risers.forEach((el) => { if (el.getBoundingClientRect().top < innerHeight) el.classList.add("in"); }), 1500);
+    </script>
+  </body>
+</html>

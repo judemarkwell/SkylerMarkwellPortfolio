@@ -1,0 +1,223 @@
+{
+  "health": [
+    {
+      "src": "previews/health-0.jpg",
+      "width": 1100,
+      "height": 851
+    },
+    {
+      "src": "previews/health-1.jpg",
+      "width": 1100,
+      "height": 851
+    }
+  ],
+  "columbus": [
+    {
+      "src": "previews/columbus-0.jpg",
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "src": "previews/columbus-1.jpg",
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "src": "previews/columbus-2.jpg",
+      "width": 850,
+      "height": 1100
+    }
+  ],
+  "access-faqs": [
+    {
+      "src": "previews/access-faqs-0.jpg",
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "src": "previews/access-faqs-1.jpg",
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "src": "previews/access-faqs-2.jpg",
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "src": "previews/access-faqs-3.jpg",
+      "width": 850,
+      "height": 1100
+    }
+  ],
+  "restorative-circles": [
+    {
+      "src": "previews/restorative-circles-0.jpg",
+      "width": 1100,
+      "height": 619
+    },
+    {
+      "src": "previews/restorative-circles-1.jpg",
+      "width": 1100,
+      "height": 619
+    },
+    {
+      "src": "previews/restorative-circles-2.jpg",
+      "width": 1100,
+      "height": 619
+    },
+    {
+      "src": "previews/restorative-circles-3.jpg",
+      "width": 1100,
+      "height": 619
+    }
+  ],
+  "coping-poster": [
+    {
+      "src": "previews/coping-poster-0.jpg",
+      "width": 825,
+      "height": 1100
+    }
+  ],
+  "spanish-vocabulary": [
+    {
+      "src": "previews/spanish-vocabulary-0.jpg",
+      "width": 1100,
+      "height": 619
+    },
+    {
+      "src": "previews/spanish-vocabulary-1.jpg",
+      "width": 1100,
+      "height": 619
+    },
+    {
+      "src": "previews/spanish-vocabulary-2.jpg",
+      "width": 1100,
+      "height": 619
+    }
+  ],
+  "compare-contrast": [
+    {
+      "src": "previews/compare-contrast-0.jpg",
+      "width": 1100,
+      "height": 619
+    },
+    {
+      "src": "previews/compare-contrast-1.jpg",
+      "width": 1100,
+      "height": 619
+    },
+    {
+      "src": "previews/compare-contrast-2.jpg",
+      "width": 1100,
+      "height": 619
+    },
+    {
+      "src": "previews/compare-contrast-3.jpg",
+      "width": 1100,
+      "height": 619
+    }
+  ],
+  "class-expectations": [
+    {
+      "src": "previews/class-expectations-0.jpg",
+      "width": 778,
+      "height": 1100
+    },
+    {
+      "src": "previews/class-expectations-1.jpg",
+      "width": 778,
+      "height": 1100
+    }
+  ],
+  "race-rubric": [
+    {
+      "src": "previews/race-rubric-0.jpg",
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "src": "previews/race-rubric-1.jpg",
+      "width": 850,
+      "height": 1100
+    }
+  ],
+  "monthly-probes": [
+    {
+      "src": "previews/monthly-probes-0.jpg",
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "src": "previews/monthly-probes-1.jpg",
+      "width": 850,
+      "height": 1100
+    }
+  ],
+  "accommodations": [
+    {
+      "src": "previews/accommodations-0.jpg",
+      "width": 1100,
+      "height": 850
+    },
+    {
+      "src": "previews/accommodations-1.jpg",
+      "width": 1100,
+      "height": 850
+    }
+  ],
+  "access-reflection": [
+    {
+      "src": "previews/access-reflection-0.jpg",
+      "width": 850,
+      "height": 1100
+    }
+  ],
+  "check-out-frames": [
+    {
+      "src": "previews/check-out-frames-0.jpg",
+      "width": 1100,
+      "height": 850
+    }
+  ],
+  "sentence-stems": [
+    {
+      "src": "previews/sentence-stems-0.jpg",
+      "width": 1100,
+      "height": 850
+    }
+  ],
+  "read-to-self": [
+    {
+      "src": "previews/read-to-self-0.jpg",
+      "width": 850,
+      "height": 1100
+    }
+  ],
+  "nti-packet": [
+    {
+      "src": "previews/nti-packet-0.jpg",
+      "width": 778,
+      "height": 1100
+    },
+    {
+      "src": "previews/nti-packet-1.jpg",
+      "width": 778,
+      "height": 1100
+    }
+  ],
+  "social-media-compare": [
+    {
+      "src": "previews/social-media-compare-0.jpg",
+      "width": 850,
+      "height": 1100
+    }
+  ],
+  "_headshot": [
+    {
+      "src": "previews/skyler.jpg",
+      "width": 675,
+      "height": 900
+    }
+  ]
+}

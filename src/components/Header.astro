@@ -1,0 +1,23 @@
+---
+import { u, EMAIL } from "../lib/site";
+interface Props { current?: string; chapter?: string }
+const { current = "", chapter = "paper" } = Astro.props;
+const links = [
+  { href: u("/#work"), label: "Work", key: "work" },
+  { href: u("/#about"), label: "About", key: "about" },
+  { href: u("/research/"), label: "Research", key: "research" },
+  { href: u("/resume/"), label: "Resume", key: "resume" },
+];
+---
+<header class="site-header" data-chapter={chapter} id="site-header">
+  <div class="bar frame">
+    <a class="wordmark" href={u("/")}>Skyler Markwell</a>
+    <nav class="nav" aria-label="Main">
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-links">Menu</button>
+      <div class="links" id="main-links">
+        {links.map((l) => <a href={l.href} aria-current={current === l.key ? "page" : undefined}>{l.label}</a>)}
+      </div>
+      <a class="btn" href={`mailto:${EMAIL}`}>Email Skyler</a>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,164 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import Sheets from "../components/Sheets.astro";
+import { u, previewsFor, headshot } from "../lib/site";
+
+const all = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
+const featured = all.filter((w) => w.data.featured);
+const bySlug = Object.fromEntries(all.map((w) => [w.id, w]));
+const photo = headshot();
+
+// The live thing: a learner finishes the sentence, and the piece made for them is lifted.
+const frames = [
+  { end: "ask for a break", who: "A student who doesn't have the English words yet.", slug: "coping-poster" },
+  { end: "show what I know before I can write it", who: "A student whose writing hasn't caught up with their thinking.", slug: "columbus" },
+  { end: "understand my child's test scores", who: "A parent who reads Spanish.", slug: "access-faqs" },
+  { end: "talk with a newcomer on day one", who: "A teacher who doesn't speak Spanish.", slug: "spanish-vocabulary" },
+  { end: "learn health in my new language", who: "A high school newcomer.", slug: "health" },
+  { end: "solve a problem with my class", who: "A newcomer practicing English in a circle.", slug: "restorative-circles" },
+].map((f) => ({ ...f, title: bySlug[f.slug].data.title, href: u(`/work/${f.slug}/`), img: previewsFor(f.slug)[0] }));
+const first = frames[0];
+
+const designs = [
+  { big: "Courses", small: "Newcomer Health, 7 units", slug: "health" },
+  { big: "Assessments", small: "Tasks, rubrics, probes", slug: "columbus" },
+  { big: "Family guides", small: "In English and Spanish", slug: "access-faqs" },
+  { big: "Class systems", small: "PBIS, circles, check-outs", slug: "class-expectations" },
+  { big: "Lessons", small: "In three languages", slug: "compare-contrast" },
+  { big: "Teacher tools", small: "Cards, guides, stems", slug: "spanish-vocabulary" },
+];
+---
+<Base
+  title="Skyler Markwell, teacher and curriculum designer"
+  description="Courses, assessments, family guides and classroom systems designed for multilingual learners by Skyler Markwell, Louisville, Kentucky."
+  chapter="paper"
+>
+  <section class="hero" data-chapter="paper" aria-labelledby="name">
+    <div class="field-top"></div>
+    <div class="field-bottom" data-chapter="orange"></div>
+    <h1 class="hero-title" id="name">
+      <span class="ink above"><span>Skyler</span><span>Markwell</span></span>
+      <span class="ink below" aria-hidden="true"><span>Skyler</span><span>Markwell</span></span>
+    </h1>
+    <p class="hero-sub">Teacher of multilingual learners and curriculum designer. I build learning for people still learning English, and for the families and teachers around them.</p>
+  </section>
+
+  <section class="chapter-orange frame" data-chapter="orange" aria-labelledby="finish-title">
+    <div class="finish">
+      <div class="rise">
+        <h2 id="finish-title">Finish the sentence</h2>
+        <p class="statement" id="statement" aria-live="polite">I can <span class="blank" id="blank">{first.end}</span>.</p>
+        <p class="who" id="who">{first.who}</p>
+        <ul class="choices" id="choices" aria-label="Choose how the sentence ends">
+          {frames.map((f, i) => (
+            <li><button type="button" aria-pressed={i === 0 ? "true" : "false"} data-end={f.end} data-who={f.who} data-slug={f.slug} data-title={f.title} data-href={f.href} data-img={f.img?.src ?? ""} data-w={f.img?.width ?? ""} data-h={f.img?.height ?? ""}>{f.end}</button></li>
+          ))}
+        </ul>
+      </div>
+      <a class="made-this rise" id="made-this" href={first.href}>
+        {first.img && <span class="paper sheet-pic"><img id="made-img" src={first.img.src} width={first.img.width} height={first.img.height} alt="" /></span>}
+        <span class="caption">Made for them: <strong id="made-title">{first.title}</strong></span>
+      </a>
+    </div>
+  </section>
+
+  <section id="work" aria-labelledby="work-title">
+    <div class="chapter-sky frame" data-chapter="sky">
+      <div class="section-head rise">
+        <h2 id="work-title">On the desk</h2>
+        <p>Seventeen pieces from real classrooms. Pick up a sheet to see it up close.</p>
+      </div>
+    </div>
+    <div class="chapter-desk frame desk-surface" data-chapter="desk">
+      <ul class="desk rise">
+        {featured.map((w, i) => (
+          <li class={i === 0 ? "feature" : undefined}>
+            <a class="piece" href={u(`/work/${w.id}/`)} data-slug={w.id}>
+              <Sheets slug={w.id} layout={w.data.layout} tilt={w.data.tilt} pages={previewsFor(w.id)} pairLabel={w.data.pairLabel} />
+              <span class="label"><span class="name">{w.data.title}</span><span class="meta">{w.data.kind} · {w.data.languages}</span></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="ledger rise">
+        <h3>All seventeen pieces</h3>
+        <ul>
+          {all.map((w) => (
+            <li><a href={u(`/work/${w.id}/`)}><span class="t">{w.data.title}</span><span class="k">{w.data.kind}</span></a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter-night frame poster" data-chapter="night" aria-labelledby="design-title">
+    <h2 id="design-title">What I design</h2>
+    <ul class="rise">
+      {designs.map((d) => (
+        <li><a href={u(`/work/${d.slug}/`)}><span class="big">{d.big}</span><span class="small">{d.small}</span></a></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="chapter-lime frame" data-chapter="lime" id="about" aria-labelledby="about-title">
+    <div class="about">
+      <h2 id="about-title" class="rise"><span>About Skyler</span></h2>
+      <div class="row rise">
+        <div class="facts-side">
+          {photo && <img src={photo.src} width={photo.width} height={photo.height} alt="Skyler Markwell, smiling, in a denim jacket" loading="lazy" />}
+          <dl>
+            <div><dt>Based in</dt><dd>Louisville, Kentucky</dd></div>
+            <div><dt>Teaching since</dt><dd>2022</dd></div>
+            <div><dt>Languages</dt><dd>English, conversational Spanish</dd></div>
+          </dl>
+        </div>
+        <div>
+          <p class="lead">Skyler has taught multilingual learners since 2022: first as the program lead for a K–8 English learner program in Shelby County, now teaching health and early-childhood education at the ESL Newcomer Academy in Louisville. She builds courses from the ground up, writes the assessments that go with them, and makes sure families can read every page.</p>
+          <blockquote>
+            <p>I have since learned that the process is the most important piece.</p>
+            <cite>Skyler, on teaching math, from her 2026 Insight to Action reflection</cite>
+          </blockquote>
+        </div>
+      </div>
+      <div class="row">
+        <div></div>
+        <div class="record">
+          <div>
+            <h3>Experience</h3>
+            <ul>
+              <li><span>Teacher of multilingual learners, ESL Newcomer Academy (JCPS)</span><span class="y">2026–</span></li>
+              <li><span>Instructional lead and career coach, SummerWorks</span><span class="y">2026</span></li>
+              <li><span>Teacher of multilingual learners and program lead, Marnel C. Moorman K–8</span><span class="y">2022–26</span></li>
+              <li><span>Elected to the Collaboration Leadership Team, Newcomer Academy</span><span class="y">2026</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Education</h3>
+            <ul>
+              <li><span>MA in Teaching, English as a Second Language, Asbury University</span><span class="y">2025</span></li>
+              <li><span>BS, Elementary and Exceptional Child Education, Western Kentucky University</span><span class="y">2022</span></li>
+              <li><span>UFLI literacy intervention training</span><span class="y">2025</span></li>
+              <li><span>Google Certified Educator, Level 2</span><span class="y">2020</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>("#choices button");
+  const blank = document.getElementById("blank")!, who = document.getElementById("who")!, statement = document.getElementById("statement")!;
+  const made = document.getElementById("made-this") as HTMLAnchorElement, img = document.getElementById("made-img") as HTMLImageElement | null, title = document.getElementById("made-title")!;
+  const lift = (slug: string) => document.querySelectorAll(".desk .piece").forEach((p) => p.classList.toggle("chosen", (p as HTMLElement).dataset.slug === slug));
+  buttons.forEach((b) => b.addEventListener("click", () => {
+    buttons.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    const d = b.dataset;
+    blank.textContent = d.end!; who.textContent = d.who!; title.textContent = d.title!; made.href = d.href!;
+    if (img && d.img) { img.src = d.img; img.width = +d.w!; img.height = +d.h!; }
+    statement.classList.remove("swap"); void statement.offsetWidth; statement.classList.add("swap");
+    lift(d.slug!);
+  }));
+</script>
