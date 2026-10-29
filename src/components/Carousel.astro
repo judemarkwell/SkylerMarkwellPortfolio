@@ -1,7 +1,9 @@
 ---
 /* Photo carousel: a scroll-snap track (native swipe on phones), one photo centred with its
-   neighbours peeking in. Arrows, dots and Pause are always there; it advances on its own only
-   while visible, not hovered or focused, and never under reduced motion. */
+   neighbours peeking in. Arrows, dots and a pause/play button are always there.
+   Auto-advance: every 5 s while the carousel is on screen. It waits while a mouse is over it or
+   keyboard focus is inside it, restarts its clock after any swipe, arrow or dot, and never runs
+   under reduced motion. Touch never "holds" the carousel (iOS fires no leave event after a tap). */
 import { photo } from "../lib/site";
 
 interface Item { k: string; alt: string; caption: string }
@@ -11,27 +13,31 @@ const items = raw.map((it) => ({ ...it, p: photo(it.k) })).filter((it) => it.p);
 const n = items.length;
 ---
 <div class="carousel" role="region" aria-roledescription="carousel" aria-label={label}>
-  <div class="cr-track" id="cr-track" tabindex="0" aria-label={`${label}, scroll or use the buttons`}>
+  <div class="cr-track" id="cr-track" tabindex="0" aria-label={`${label}: swipe, scroll or use the buttons below`}>
     {items.map((it, i) => (
-      <figure class="cr-slide" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${n}`} data-i={i}>
-        <img src={it.p!.src} srcset={it.p!.srcset} sizes="(min-width: 960px) 40vw, 78vw" width={it.p!.width} height={it.p!.height} alt={it.alt} loading={i < 2 ? "eager" : "lazy"} decoding="async" />
+      <figure class:list={["cr-slide", { active: i === 0 }]} role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${n}`} data-i={i}>
+        <img src={it.p!.src} srcset={it.p!.srcset} sizes="(min-width: 960px) 42rem, 78vw" width={it.p!.width} height={it.p!.height} alt={it.alt} loading={i < 3 ? "eager" : "lazy"} decoding="async" draggable="false" />
         <figcaption>{it.caption}</figcaption>
       </figure>
     ))}
   </div>
   <div class="cr-controls">
     <button type="button" class="cr-btn" id="cr-prev" aria-label="Previous photo">
-      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
     </button>
     <div class="cr-dots" role="group" aria-label="Choose a photo">
       {items.map((it, i) => (
-        <button type="button" class="cr-dot" data-i={i} aria-label={`Photo ${i + 1}: ${it.caption}`} aria-current={i === 0 ? "true" : "false"}></button>
+        <button type="button" class="cr-dot" data-i={i} aria-label={`Photo ${i + 1} of ${n}`} aria-current={i === 0 ? "true" : "false"}></button>
       ))}
     </div>
+    <span class="cr-count" id="cr-count" aria-hidden="true">1 / {n}</span>
     <button type="button" class="cr-btn" id="cr-next" aria-label="Next photo">
-      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
     </button>
-    <button type="button" class="cr-btn cr-pause" id="cr-pause" aria-pressed="false">Pause</button>
+    <button type="button" class="cr-btn cr-toggle" id="cr-toggle" aria-label="Pause slideshow" data-state="playing">
+      <svg class="i-pause" viewBox="0 0 20 20" aria-hidden="true"><rect x="5.5" y="4.5" width="3" height="11" rx="1" fill="currentColor" /><rect x="11.5" y="4.5" width="3" height="11" rx="1" fill="currentColor" /></svg>
+      <svg class="i-play" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 4.8v10.4a.8.8 0 0 0 1.2.7l8-5.2a.8.8 0 0 0 0-1.4l-8-5.2A.8.8 0 0 0 7 4.8Z" fill="currentColor" /></svg>
+    </button>
   </div>
 </div>
 
@@ -41,48 +47,104 @@ const n = items.length;
     const track = root.querySelector<HTMLElement>("#cr-track")!;
     const slides = [...root.querySelectorAll<HTMLElement>(".cr-slide")];
     const dots = [...root.querySelectorAll<HTMLButtonElement>(".cr-dot")];
-    const pauseBtn = root.querySelector<HTMLButtonElement>("#cr-pause")!;
-    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let current = 0, userPaused = reduced, engaged = false, visible = false;
-    // Any change of slide, by swipe, arrow, dot, key or the timer itself, restarts the clock.
-    let lastMove = performance.now();
+    const count = root.querySelector<HTMLElement>("#cr-count")!;
+    const toggle = root.querySelector<HTMLButtonElement>("#cr-toggle")!;
+    const n = slides.length;
     const DELAY = 5000;
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const go = (i: number) => {
-      const k = (i + slides.length) % slides.length;
-      const s = slides[k];
-      const t = track.getBoundingClientRect(), r = s.getBoundingClientRect();
-      track.scrollTo({ left: track.scrollLeft + (r.left - t.left) - (t.width - r.width) / 2, behavior: reduced ? "auto" : "smooth" });
+    let current = 0;
+    let playing = !reduced;
+    let mouseOver = false;   // a real mouse is over the carousel
+    let keyFocus = false;    // keyboard focus is inside the carousel
+    let onScreen = false;
+    let lastMove = performance.now();
+    let steering = false;    // a button-driven scroll is in flight
+    let steerTimer = 0;
+
+    const mark = (k: number) => {
+      current = k;
+      slides.forEach((s, j) => s.classList.toggle("active", j === k));
+      dots.forEach((d, j) => d.setAttribute("aria-current", String(j === k)));
+      count.textContent = `${k + 1} / ${n}`;
     };
-    // The active slide is whichever sits closest to the middle (works for swipes, buttons and keys).
-    const settle = () => {
+
+    // Which slide is closest to the middle of the track.
+    const nearest = () => {
       const t = track.getBoundingClientRect(), mid = t.left + t.width / 2;
       let best = 0, bestD = Infinity;
-      slides.forEach((s, k) => { const r = s.getBoundingClientRect(); const d = Math.abs(r.left + r.width / 2 - mid); if (d < bestD) { bestD = d; best = k; } });
-      if (best !== current) lastMove = performance.now();
-      current = best;
-      slides.forEach((s, k) => s.classList.toggle("active", k === current));
-      dots.forEach((d, k) => d.setAttribute("aria-current", String(k === current)));
+      slides.forEach((s, k) => {
+        const r = s.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - mid);
+        if (d < bestD) { bestD = d; best = k; }
+      });
+      return best;
     };
-    let raf = 0;
-    track.addEventListener("scroll", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(settle); }, { passive: true });
-    addEventListener("resize", settle);
 
-    const manual = (i: number) => { lastMove = performance.now(); go(i); };
-    root.querySelector("#cr-prev")!.addEventListener("click", () => manual(current - 1));
-    root.querySelector("#cr-next")!.addEventListener("click", () => manual(current + 1));
-    dots.forEach((d) => d.addEventListener("click", () => manual(+d.dataset.i!)));
-    ["pointerdown", "wheel", "keydown", "scroll"].forEach((t) => track.addEventListener(t, () => (lastMove = performance.now()), { passive: true }));
-    const setPaused = (v: boolean) => { userPaused = v; pauseBtn.textContent = v ? "Play" : "Pause"; pauseBtn.setAttribute("aria-pressed", String(v)); };
-    pauseBtn.addEventListener("click", () => setPaused(!userPaused));
-    setPaused(userPaused);
-    ["pointerenter", "focusin", "touchstart"].forEach((t) => root.addEventListener(t, () => (engaged = true), { passive: true }));
-    ["pointerleave", "focusout"].forEach((t) => root.addEventListener(t, () => (engaged = false)));
-    new IntersectionObserver(([e]) => (visible = e.isIntersecting), { threshold: 0.4 }).observe(root);
-    settle();
-    if (!reduced) setInterval(() => {
-      if (userPaused || engaged || !visible) { lastMove = performance.now(); return; }
-      if (performance.now() - lastMove >= DELAY) { lastMove = performance.now(); go(current + 1); }
-    }, 250);
+    const scrollToSlide = (k: number, smooth: boolean) => {
+      const s = slides[k], t = track.getBoundingClientRect(), r = s.getBoundingClientRect();
+      track.scrollTo({ left: track.scrollLeft + (r.left + r.width / 2) - (t.left + t.width / 2), behavior: smooth ? "smooth" : "auto" });
+    };
+
+    // Buttons and the timer: mark the target straight away, then glide there.
+    const go = (i: number) => {
+      const k = ((i % n) + n) % n;
+      const wrap = (current === n - 1 && k === 0) || (current === 0 && k === n - 1);
+      mark(k);
+      lastMove = performance.now();
+      steering = true;
+      clearTimeout(steerTimer);
+      steerTimer = window.setTimeout(() => { steering = false; }, 900);
+      // Wrapping from the last photo to the first jumps instead of rewinding past every photo.
+      scrollToSlide(k, !reduced && !wrap);
+    };
+
+    // Swipes and trackpad scrolls: follow the track, and restart the clock.
+    let raf = 0;
+    track.addEventListener("scroll", () => {
+      if (steering) return;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const k = nearest();
+        if (k !== current) mark(k);
+        lastMove = performance.now();
+      });
+    }, { passive: true });
+    track.addEventListener("scrollend", () => { steering = false; const k = nearest(); if (k !== current) mark(k); });
+    track.addEventListener("pointerdown", () => { steering = false; lastMove = performance.now(); }, { passive: true });
+
+    root.querySelector("#cr-prev")!.addEventListener("click", () => go(current - 1));
+    root.querySelector("#cr-next")!.addEventListener("click", () => go(current + 1));
+    dots.forEach((d) => d.addEventListener("click", () => go(+d.dataset.i!)));
+    track.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") { e.preventDefault(); go(current + 1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); go(current - 1); }
+    });
+
+    const setPlaying = (v: boolean) => {
+      playing = v;
+      toggle.dataset.state = v ? "playing" : "paused";
+      toggle.setAttribute("aria-label", v ? "Pause slideshow" : "Play slideshow");
+      lastMove = performance.now();
+    };
+    toggle.addEventListener("click", () => setPlaying(!playing));
+    setPlaying(playing);
+
+    // Only a mouse or keyboard focus holds the slideshow; a finger tap never does.
+    root.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") mouseOver = true; });
+    root.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") mouseOver = false; });
+    root.addEventListener("focusin", (e) => { keyFocus = (e.target as HTMLElement).matches(":focus-visible"); });
+    root.addEventListener("focusout", () => { keyFocus = false; });
+
+    new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; lastMove = performance.now(); }, { threshold: 0.35 }).observe(root);
+    document.addEventListener("visibilitychange", () => { lastMove = performance.now(); });
+    addEventListener("resize", () => scrollToSlide(current, false));
+
+    mark(0);
+    if (!reduced) {
+      window.setInterval(() => {
+        if (!playing || mouseOver || keyFocus || !onScreen || document.hidden) { lastMove = performance.now(); return; }
+        if (performance.now() - lastMove >= DELAY) go(current + 1);
+      }, 200);
+    }
   }
 </script>
