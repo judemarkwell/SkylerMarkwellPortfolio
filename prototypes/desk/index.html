@@ -1,0 +1,570 @@
+<title>Skyler's Desk</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+/* Layout: a tabletop of slightly tilted sheets. Hover or focus lifts a sheet; opening it
+   carries the same sheet up into its own page (View Transitions), then sets it back down. */
+:root {
+  --desk: #d3dbe3;          /* blue-grey laminate desk */
+  --lamp: rgb(255 255 255 / .55);
+  --paper: #fdfdfb;
+  --ink: #1b2231;           /* text on the desk */
+  --ink-soft: #4a5466;
+  --pen: #c42d26;           /* red grading pen: the one accent */
+  --focus: #1f4fd1;
+  --sticky: #f7e57c;
+  --sticky-ink: #3b3417;
+  --metal: #7d8796;
+  --rule: rgb(27 34 49 / .14);
+  --sh: 32 42 62;           /* shadow rgb */
+  --paper-dim: 1;
+
+  --display: "Young Serif", "Iowan Old Style", Georgia, serif;
+  --body: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --ease-lift: cubic-bezier(.2, .8, .2, 1);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --desk: #172030; --lamp: rgb(140 165 210 / .14); --paper: #ecebe6;
+    --ink: #e8ecf3; --ink-soft: #a7b1c3; --pen: #ff7468; --focus: #9db8ff;
+    --sticky: #e9d66e; --sticky-ink: #2f2a12; --metal: #9aa4b4;
+    --rule: rgb(232 236 243 / .16); --sh: 0 0 0; --paper-dim: .9;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --desk: #172030; --lamp: rgb(140 165 210 / .14); --paper: #ecebe6;
+  --ink: #e8ecf3; --ink-soft: #a7b1c3; --pen: #ff7468; --focus: #9db8ff;
+  --sticky: #e9d66e; --sticky-ink: #2f2a12; --metal: #9aa4b4;
+  --rule: rgb(232 236 243 / .16); --sh: 0 0 0; --paper-dim: .9;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: radial-gradient(ellipse 80% 50% at 50% -8%, var(--lamp), transparent 70%), var(--desk);
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+.wrap {
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (min-width: 640px) { .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); } }
+
+h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.15; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
+
+.proto-tag {
+  display: inline-block; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase;
+  font-weight: 600; color: var(--ink-soft); border: 1px solid var(--rule); border-radius: 99px; padding: .15rem .6rem;
+}
+
+/* ---------- Masthead ---------- */
+.mast { padding-block: clamp(2rem, 6vw, 4.5rem) clamp(1.5rem, 4vw, 3rem); display: grid; gap: 1.25rem; }
+.mast h1 { font-size: clamp(2.6rem, 7vw, 5rem); letter-spacing: -.01em; }
+.mast .role { font-size: clamp(1.05rem, 2vw, 1.25rem); color: var(--ink-soft); max-width: 40rem; }
+.frame {
+  font-family: var(--display); font-size: clamp(1.3rem, 3vw, 1.9rem); line-height: 1.35; max-width: 44rem;
+}
+.frame .blank {
+  display: inline-block; min-width: 6.5em; border-bottom: 2px solid var(--pen); color: var(--pen);
+  font-family: var(--body); font-style: italic; font-size: .8em; text-align: center; padding-inline: .2em;
+  transition: opacity .3s;
+}
+.nowrap { white-space: nowrap; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.desk-hint { font-size: .95rem; color: var(--ink-soft); }
+
+/* ---------- The desk ---------- */
+.desk {
+  list-style: none; margin: 0; padding: 0 0 5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14.5rem), 1fr));
+  gap: clamp(2.25rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+}
+@media (min-width: 900px) { .desk .feature { grid-column: span 2; } }
+
+.piece { display: grid; gap: 1.1rem; text-decoration: none; color: inherit; outline: none; }
+.piece .label { display: grid; gap: .15rem; padding-inline: .1rem; }
+.piece .kind { font-size: .78rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--pen); }
+.piece .name { font-family: var(--display); font-size: 1.2rem; line-height: 1.25; }
+.piece .meta { font-size: .9rem; color: var(--ink-soft); }
+
+.sheets {
+  position: relative; isolation: isolate;
+  transform: rotate(var(--r, 0deg));
+  transition: transform .32s var(--ease-lift);
+  border-radius: 3px;
+}
+.paper {
+  display: block; position: relative; background: var(--paper); border-radius: 2px; overflow: hidden;
+  box-shadow:
+    0 1px 1px rgb(var(--sh) / .14),
+    0 3px 6px -1px rgb(var(--sh) / .12),
+    0 10px 18px -8px rgb(var(--sh) / .22);
+  transition: box-shadow .32s var(--ease-lift), transform .32s var(--ease-lift);
+}
+.paper img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; filter: brightness(var(--paper-dim)); }
+.paper.under { position: absolute; inset: 0; z-index: -1; }
+
+/* Lift: the same rule serves mouse hover and keyboard focus */
+.piece:hover .sheets, .piece:focus-visible .sheets { transform: translateY(-10px) rotate(0deg) scale(1.025); }
+.piece:hover .paper.top, .piece:focus-visible .paper.top {
+  box-shadow:
+    0 2px 2px rgb(var(--sh) / .10),
+    0 14px 24px -8px rgb(var(--sh) / .28),
+    0 34px 54px -18px rgb(var(--sh) / .30);
+}
+.piece:active .sheets { transform: translateY(-6px) rotate(0deg) scale(1.01); transition-duration: .12s; }
+.piece:focus-visible .sheets { outline: 3px solid var(--focus); outline-offset: 10px; }
+.piece:hover .name, .piece:focus-visible .name { text-decoration: underline; text-decoration-color: var(--pen); text-underline-offset: .2em; text-decoration-thickness: 2px; }
+
+/* Stack: a deck or packet, extra pages peeking out; hover fans them */
+.stack .under:nth-of-type(2) { transform: translate(5px, 6px) rotate(1.6deg); }
+.stack .under:nth-of-type(3) { transform: translate(-4px, 11px) rotate(-1.4deg); }
+.piece:hover .stack .under:nth-of-type(2), .piece:focus-visible .stack .under:nth-of-type(2) { transform: translate(14px, 9px) rotate(3.2deg); }
+.piece:hover .stack .under:nth-of-type(3), .piece:focus-visible .stack .under:nth-of-type(3) { transform: translate(-12px, 16px) rotate(-3deg); }
+
+/* Clipped set: task, rubric and key held together */
+.clipped .under:nth-of-type(2) { transform: translate(7%, 4%); }
+.clipped .under:nth-of-type(3) { transform: translate(14%, 8%); }
+.piece:hover .clipped .under:nth-of-type(2), .piece:focus-visible .clipped .under:nth-of-type(2) { transform: translate(10%, 5%) rotate(1.2deg); }
+.piece:hover .clipped .under:nth-of-type(3), .piece:focus-visible .clipped .under:nth-of-type(3) { transform: translate(20%, 10%) rotate(2.4deg); }
+.clipped { margin-right: 14%; margin-bottom: 8%; }
+.clip { position: absolute; top: -18px; left: 16%; width: 18px; height: 52px; color: var(--metal); z-index: 3; filter: drop-shadow(0 1px 1px rgb(var(--sh) / .3)); }
+
+/* Bilingual pair: Spanish sheet waits behind English, slides out on lift */
+.pair { margin-right: 16%; }
+.pair .under { transform: translate(12%, 3%) rotate(2deg); }
+.piece:hover .pair .under, .piece:focus-visible .pair .under { transform: translate(30%, 2%) rotate(4deg); }
+.lang-tab {
+  position: absolute; right: -16%; bottom: 10%; z-index: 2;
+  font-size: .72rem; font-weight: 700; letter-spacing: .06em; background: var(--paper); color: #1b2231;
+  border-radius: 2px; padding: .1rem .35rem; box-shadow: 0 1px 3px rgb(var(--sh) / .25);
+  transition: transform .32s var(--ease-lift);
+}
+.piece:hover .lang-tab, .piece:focus-visible .lang-tab { transform: translateX(45%); }
+
+/* Badge ring of laminated cards */
+.ring .paper { border-radius: 8px; }
+.ring .paper::after { content: ""; position: absolute; inset: 0; border-radius: 8px; box-shadow: inset 0 0 0 3px rgb(255 255 255 / .55); pointer-events: none; }
+.ring .under:nth-of-type(2) { transform: rotate(5deg); transform-origin: 9% 12%; }
+.ring .under:nth-of-type(3) { transform: rotate(10deg); transform-origin: 9% 12%; }
+.piece:hover .ring .under:nth-of-type(2), .piece:focus-visible .ring .under:nth-of-type(2) { transform: rotate(12deg); }
+.piece:hover .ring .under:nth-of-type(3), .piece:focus-visible .ring .under:nth-of-type(3) { transform: rotate(24deg); }
+.ring-loop { position: absolute; top: -14px; left: 2%; width: 40px; height: 40px; color: var(--metal); z-index: 3; filter: drop-shadow(0 1px 1px rgb(var(--sh) / .35)); }
+.hole { position: absolute; top: 9%; left: 7%; width: 10px; height: 10px; border-radius: 50%; background: var(--desk); box-shadow: inset 0 1px 2px rgb(var(--sh) / .35); z-index: 1; }
+
+/* ---------- Detail page (the sheet, picked up) ---------- */
+.detail { padding-block: 1.5rem 5rem; }
+.back {
+  display: inline-flex; align-items: center; gap: .5rem; font-weight: 600; text-decoration: none;
+  padding: .55rem .9rem .55rem .7rem; border-radius: 99px; border: 1px solid var(--rule); background: rgb(255 255 255 / .06);
+}
+.back:hover { border-color: var(--ink-soft); }
+.back svg { width: 18px; height: 18px; }
+.detail-grid { display: grid; gap: clamp(2rem, 5vw, 4rem); margin-top: 2rem; align-items: start; }
+@media (min-width: 900px) { .detail-grid { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); } }
+.hero-sheet { position: relative; }
+.hero-sheet .paper { box-shadow: 0 2px 2px rgb(var(--sh) / .10), 0 18px 30px -10px rgb(var(--sh) / .30), 0 44px 70px -24px rgb(var(--sh) / .32); }
+.hero-sheet .paper img { object-fit: contain; height: auto; }
+.pages { list-style: none; padding: 0; margin: 1.5rem 0 0; display: flex; gap: .75rem; flex-wrap: wrap; }
+.pages button {
+  all: unset; cursor: pointer; display: block; width: 4.75rem; border-radius: 2px; background: var(--paper);
+  box-shadow: 0 1px 2px rgb(var(--sh) / .25); opacity: .72; transition: opacity .2s, transform .2s;
+}
+.pages button img { display: block; width: 100%; height: 3.6rem; object-fit: cover; object-position: top; border-radius: 2px; filter: brightness(var(--paper-dim)); }
+.pages button:hover { opacity: 1; transform: translateY(-2px); }
+.pages button[aria-current="true"] { opacity: 1; outline: 2px solid var(--pen); outline-offset: 3px; }
+.pages button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; opacity: 1; }
+.pages-label { font-size: .85rem; color: var(--ink-soft); margin-top: .75rem; }
+
+.copy { display: grid; gap: 1.5rem; min-width: 0; }
+.copy .kind { font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--pen); }
+.copy h1 { font-size: clamp(2rem, 4.4vw, 3.1rem); }
+.copy h1:focus { outline: none; }
+.lede { font-size: 1.15rem; max-width: 36rem; }
+.facts { display: grid; grid-template-columns: max-content 1fr; gap: .45rem 1.25rem; margin: 0; padding-block: 1rem; border-block: 1px solid var(--rule); }
+.facts dt { font-size: .82rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); padding-top: .15rem; }
+.facts dd { margin: 0; }
+
+.sticky {
+  background: var(--sticky); color: var(--sticky-ink); padding: 1.1rem 1.2rem 1.3rem; max-width: 22rem;
+  transform: rotate(-1.4deg); box-shadow: 0 1px 1px rgb(var(--sh) / .15), 0 10px 16px -10px rgb(var(--sh) / .4);
+  display: grid; gap: .4rem;
+}
+.sticky h2 { font-size: 1.15rem; }
+.sticky .placeholder { font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; opacity: .7; }
+.sticky p { font-size: .98rem; }
+
+.inside { margin-top: clamp(3rem, 7vw, 5rem); display: grid; gap: 1.25rem; max-width: 60rem; }
+.inside h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+.inside .sub { color: var(--ink-soft); max-width: 40rem; }
+.table-scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 34rem; font-size: .97rem; }
+th, td { text-align: left; vertical-align: top; padding: .65rem .8rem .65rem 0; border-bottom: 1px solid var(--rule); }
+th { font-size: .78rem; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-soft); font-weight: 700; }
+td.num { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--pen); width: 3rem; }
+td.std { font-variant-numeric: tabular-nums; color: var(--ink-soft); font-size: .9rem; }
+.two-col { display: grid; gap: .6rem 2rem; padding: 0; margin: 0; list-style: none; }
+@media (min-width: 640px) { .two-col { grid-template-columns: 1fr 1fr; } }
+.two-col li { padding: .6rem 0; border-bottom: 1px solid var(--rule); }
+.two-col .es { color: var(--ink-soft); display: block; font-size: .95rem; }
+.plain-list { margin: 0; padding-left: 1.2rem; display: grid; gap: .35rem; }
+.steps { list-style: none; counter-reset: s; padding: 0; margin: 0; display: grid; gap: .5rem; }
+.steps li { counter-increment: s; display: flex; gap: .8rem; align-items: baseline; }
+.steps li::before { content: counter(s); font-family: var(--display); color: var(--pen); font-size: 1.3rem; min-width: 1.2rem; }
+
+/* Flip cards (vocab) */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 10.5rem), 1fr)); gap: 1rem; }
+.card { all: unset; cursor: pointer; perspective: 800px; display: block; position: relative; width: 100%; aspect-ratio: 16 / 10; max-width: 100%; }
+.card .inner { position: absolute; inset: 0; transition: transform .45s var(--ease-lift); transform-style: preserve-3d; }
+.card[aria-pressed="true"] .inner { transform: rotateY(180deg); }
+.card .face {
+  position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: .5rem;
+  backface-visibility: hidden; border-radius: 10px; background: #fdfdfb; color: #1b2231;
+  font-family: var(--display); font-size: 1.25rem; line-height: 1.2;
+  box-shadow: inset 0 0 0 3px rgb(255 255 255 / .7), 0 1px 2px rgb(var(--sh) / .2), 0 8px 14px -8px rgb(var(--sh) / .35);
+}
+.card .face small { display: block; font-family: var(--body); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: #5a6475; margin-top: .3rem; }
+.card .cface-back { transform: rotateY(180deg); color: #a3241e; }
+.card:focus-visible .face { outline: 3px solid var(--focus); outline-offset: 3px; }
+.card:hover .face { box-shadow: inset 0 0 0 3px rgb(255 255 255 / .7), 0 2px 3px rgb(var(--sh) / .2), 0 14px 20px -10px rgb(var(--sh) / .4); }
+
+.nextprev { margin-top: clamp(3rem, 7vw, 5rem); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+.nextprev a { text-decoration: none; display: grid; gap: .1rem; max-width: 20rem; }
+.nextprev a:hover .t { text-decoration: underline; text-decoration-color: var(--pen); text-underline-offset: .2em; }
+.nextprev .d { font-size: .8rem; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; }
+.nextprev .t { font-family: var(--display); font-size: 1.15rem; }
+.nextprev .next { text-align: right; margin-left: auto; }
+
+.foot { padding-block: 0 3rem; font-size: .9rem; color: var(--ink-soft); }
+
+/* View transition: the lifted sheet travels between desk and page */
+::view-transition-group(lifted) { animation-duration: .5s; animation-timing-function: var(--ease-lift); }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .28s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sheets, .paper, .lang-tab, .card .inner, .pages button { transition: none !important; }
+  .piece:hover .sheets, .piece:focus-visible .sheets { transform: rotate(0deg); }
+  .piece .under, .piece:hover .under, .piece:focus-visible .under { transition: none; }
+  .sticky { transform: none; }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}
+</style>
+
+<div class="wrap">
+  <main id="desk-view">
+    <header class="mast">
+      <span class="proto-tag">Prototype · desk gallery</span>
+      <h1>Skyler Markwell</h1>
+      <p class="role">Teacher of multilingual learners and curriculum designer in Louisville, Kentucky. Everything on this desk was made for a real classroom.</p>
+      <p class="frame">Each piece is built so a learner can finish the sentence: <span class="nowrap">I can <span class="blank" id="blank" aria-hidden="true">ask for help</span><span class="sr-only">ask for help, take a break, or cite evidence</span>.</span></p>
+      <p class="desk-hint">Pick up any sheet to see it up close.</p>
+    </header>
+    <ul class="desk" id="desk" aria-label="Portfolio pieces"></ul>
+  </main>
+
+  <main id="detail-view" class="detail" hidden></main>
+  <p class="foot">Prototype for the portfolio's gallery interaction. Previews are Skyler's own classroom materials; sticky-note text is a placeholder for her own words.</p>
+</div>
+
+<script>
+const P = [
+  {
+    id: "health", feature: true, layout: "stack", r: -0.8,
+    kind: "Curriculum architecture", name: "Newcomer Health Course",
+    meta: "Scope and sequence · 7 units",
+    imgs: ["img/health-0.jpg", "img/health-1.jpg"],
+    alts: ["Scope and sequence spreadsheet, units 1 to 4, with standards, guiding questions, vocabulary and linked activities", "Scope and sequence spreadsheet, units 5 to 7"],
+    lede: "A skills-based health course built from the ground up for high school newcomers. Every unit ties state performance indicators to guiding questions, the vocabulary students need, and a linked set of lessons.",
+    facts: [["Made for", "High school newcomers, Newcomer Academy (JCPS)"], ["Format", "Scope and sequence with linked unit folders"], ["Model", "Skills-based health education, steps 1–5 per unit"]],
+    prompt: "What did the old course get wrong for newcomers, and what did you change first?",
+    inside: `<h2>Seven units, one skill each</h2>
+      <p class="sub">Each unit pairs a health skill with a topic students meet in their first year in the U.S.</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th scope="col">Unit</th><th scope="col">Skill and topic</th><th scope="col">Performance indicators</th></tr></thead>
+        <tbody>
+          <tr><td class="num">1</td><td>Analyzing influences (personal health and wellness)</td><td class="std">1.12.1, 1.12.2, 1.12.5, 1.12.6, 2.12</td></tr>
+          <tr><td class="num">2</td><td>Goal setting (physical activity and nutrition)</td><td class="std">1.12.1, 1.12.4, 1.12.7, 6.12</td></tr>
+          <tr><td class="num">3</td><td>Practices and behaviors (mental health and coping)</td><td class="std">1.12.2, 1.12.4, 1.12.5, 1.12.9, 7.12</td></tr>
+          <tr><td class="num">4</td><td>Interpersonal communication (I-statements and refusal)</td><td class="std">1.12.1, 1.12.12, 1.12.13, 4.12</td></tr>
+          <tr><td class="num">5</td><td>Decision-making (sexual health, SB 158)</td><td class="std">1.12.10–1.12.15, 5.12</td></tr>
+          <tr><td class="num">6</td><td>Accessing information (health care)</td><td class="std">1.12.3, 1.12.4, 1.12.9, 3.12</td></tr>
+          <tr><td class="num">7</td><td>Advocacy (substance use, prevention and addiction)</td><td class="std">1.12.1, 1.12.3, 1.12.8, 1.12.9, 8.12</td></tr>
+        </tbody></table></div>
+      <h3 style="font-size:1.25rem;margin-top:1rem">Unit 1 guiding questions</h3>
+      <ol class="plain-list">
+        <li>What are ways that wellness is measured?</li>
+        <li>What are ways that my culture values wellness?</li>
+        <li>How does my background affect the decisions I make with my wellness?</li>
+        <li>What are the inequities that prevent me from accessing wellness?</li>
+      </ol>`
+  },
+  {
+    id: "columbus", layout: "clipped", r: 1.4,
+    kind: "Assessment design", name: "Columbus: Two Points of View",
+    meta: "Task, rubric and answer key",
+    imgs: ["img/columbus-task-0.jpg", "img/columbus-rubric-0.jpg", "img/columbus-key-0.jpg"],
+    alts: ["Assessment page with a drawing box and lines to explain the scene", "Four-level rubric with criteria for each perspective", "Answer key page with a model drawing description"],
+    lede: "A performance task where students draw the voyage as Columbus would remember it, then as Bartolomé de las Casas would, then as they see it themselves, citing an excerpt each time. Drawing first lets students show understanding before their English writing catches up.",
+    facts: [["Made for", "Social studies with multilingual learners"], ["Format", "Student task, 16-point rubric, teacher key"], ["Evidence", "Primary-source excerpts and a video"]],
+    prompt: "How did students respond to drawing the evidence before writing about it?",
+    inside: `<h2>What the rubric looks for</h2>
+      <p class="sub">Four criteria, each scored from 1 (not evident) to 4 (exemplary), for a total of 16.</p>
+      <ol class="steps">
+        <li>Defends Columbus's view with examples from the excerpts</li>
+        <li>Defends de las Casas's view with examples from the excerpts</li>
+        <li>States a personal opinion backed by the excerpts</li>
+        <li>Tells the same story in the drawing and the sentence</li>
+      </ol>`
+  },
+  {
+    id: "access", layout: "pair", r: -1.6,
+    kind: "Family engagement", name: "ACCESS Test FAQs for Families",
+    meta: "English and Spanish",
+    imgs: ["img/access-0.jpg", "img/access-2.jpg", "img/access-1.jpg", "img/access-3.jpg"],
+    alts: ["English FAQ page one", "Spanish FAQ page one, Preguntas frecuentes", "English FAQ page two", "Spanish FAQ page two"],
+    tab: "ES",
+    lede: "Plain-language answers to the questions families ask about the yearly English proficiency test: what it measures, who gives it, what the scores mean, and what a Program Service Plan is. Every answer appears in English and Spanish.",
+    facts: [["Made for", "Families of English learners"], ["Format", "Two-page FAQ in each language"], ["Languages", "English, Spanish"]],
+    prompt: "What were families most worried about before the test?",
+    inside: `<h2>The questions it answers</h2>
+      <ul class="two-col">
+        <li>What is the ACCESS test?<span class="es" lang="es">¿Qué es el examen ACCESS?</span></li>
+        <li>What does the ACCESS test cover?<span class="es" lang="es">¿Qué cubre el examen ACCESS?</span></li>
+        <li>Where and with whom will my student be taking the test?<span class="es" lang="es">¿Dónde y con quién realizará el examen mi estudiante?</span></li>
+        <li>Will my student be receiving help on the test?<span class="es" lang="es">¿Mi estudiante recibirá ayuda para realizar el examen?</span></li>
+        <li>What does the ACCESS test tell me?<span class="es" lang="es">¿Qué me dice el examen ACCESS?</span></li>
+        <li>What is a PSP?<span class="es" lang="es">¿Qué es un PSP?</span></li>
+        <li>When will I know my student’s ACCESS results?<span class="es" lang="es">¿Cuándo sabré los resultados de ACCESS de mi estudiante?</span></li>
+      </ul>`
+  },
+  {
+    id: "restorative", layout: "stack", r: 2,
+    kind: "Classroom culture", name: "Restorative Practice Circles",
+    meta: "Slide deck · warm-ups to repair",
+    imgs: ["img/restorative-0.jpg", "img/restorative-1.jpg", "img/restorative-3.jpg", "img/restorative-6.jpg"],
+    alts: ["Title slide, Restorative Practice Circle Exercises", "Table of contents: warm-ups, purposes of the circle, community-building, repairing harm", "Warm-up exercises with pictures: somatic breathing, body scan, box breathing and more", "Purposes of the circle: speak in English, solve problems in a group, learn about ourselves and others"],
+    lede: "A deck for running restorative circles with newcomer students. It moves from body-based warm-ups to why the circle exists, then to community-building and repairing harm, with a picture beside every instruction.",
+    facts: [["Made for", "Newcomer classrooms practicing English"], ["Format", "Slide deck in four sections"], ["Supports", "Picture cues on every exercise"]],
+    prompt: "What does a circle look like on a hard day?",
+    inside: `<h2>Warm-ups</h2>
+      <p class="sub">Students pick one exercise to practice while taking deep breaths.</p>
+      <ul class="two-col">
+        <li>Somatic breathing</li><li>Somatic shakeout</li><li>Shoulder shrug</li><li>Finger stretch</li>
+        <li>Body scan</li><li>Box breathing</li><li>Speaking with one voice</li><li>Guided meditation</li>
+        <li>Body stretch</li><li>Affirmations</li>
+      </ul>`
+  },
+  {
+    id: "coping", layout: "single", r: -2.2,
+    kind: "Self-regulation", name: "When I Need a Break, I Can…",
+    meta: "Classroom poster",
+    imgs: ["img/poster-0.jpg"],
+    alts: ["Pink poster titled When I need a break, I can, with nine pictured choices and the line You are in control of your body"],
+    lede: "Nine pictured choices a student can point to when they need a break, so asking does not depend on having the English words yet. It ends with the line the class returns to: you are in control of your body.",
+    facts: [["Made for", "Elementary multilingual learners"], ["Format", "Poster, printed for the classroom wall"], ["Supports", "A picture for every choice"]],
+    prompt: "How did students start using the poster on their own?",
+    inside: `<h2>The nine choices</h2>
+      <ul class="two-col">
+        <li>Draw or color</li><li>Do push-ups</li><li>Take a nap</li><li>Take deep breaths</li><li>Play with fidgets</li>
+        <li>Stretch</li><li>Get water</li><li>Build something</li><li>Play with Play-Doh</li>
+      </ul>`
+  },
+  {
+    id: "vocab", layout: "ring", r: 1.2,
+    kind: "Staff resource", name: "Common Spanish Vocabulary",
+    meta: "Picture cards for teachers",
+    imgs: ["img/vocab-0.jpg", "img/vocab-4.jpg", "img/vocab-33.jpg"],
+    alts: ["Title card, Common Spanish vocabulary", "Card: Lápiz, pencil, with a picture of a pencil", "Card: Por, times, six times eight, seis por ocho"],
+    lede: "Picture cards that help any teacher reach a Spanish-speaking newcomer on day one: school supplies, places, subjects, math operations, commands and questions. Use them on a laptop with audio, or print, laminate and clip them to a badge ring.",
+    facts: [["Made for", "Classroom teachers who don't speak Spanish"], ["Format", "Card deck, digital with audio or printed"], ["Sections", "Supplies, places, subjects, math, commands, questions"]],
+    prompt: "Which cards did teachers reach for most?",
+    inside: `<h2>Try a few cards</h2>
+      <p class="sub">Select a card to flip it from English to Spanish.</p>
+      <div class="cards" id="cards"></div>`
+  },
+  {
+    id: "compare", layout: "stack", r: -1,
+    kind: "Lesson design", name: "Compare and Contrast Character Details",
+    meta: "Two-day lesson · 3 languages",
+    imgs: ["img/compare-0.jpg", "img/compare-2.jpg", "img/compare-3.jpg", "img/compare-10.jpg"],
+    alts: ["Title slide, Compare/Contrast Character Details", "I can statements: read a text, understand it, cite evidence, compare and contrast", "How are these pictures alike, asked in English, Spanish and Japanese, with two photos", "Four steps: read the text, look for details, write them down, form paragraphs"],
+    lede: "A two-day ELA lesson that starts with comparing pictures, asked in English, Spanish and Japanese, and builds to citing text evidence about two characters. Day two adds a teacher model before students write.",
+    facts: [["Made for", "Elementary ELA with multilingual learners"], ["Format", "Slide deck, two lessons"], ["Languages", "English, Spanish, Japanese"]],
+    prompt: "Why start with pictures before the text?",
+    inside: `<h2>The routine students follow</h2>
+      <ol class="steps">
+        <li>Read the text</li><li>Look for details about the characters</li><li>Write the details down</li><li>Form the details into paragraphs</li>
+      </ol>`
+  },
+  {
+    id: "expectations", layout: "single", r: 0.9,
+    kind: "Behavior systems (PBIS)", name: "Class Expectations",
+    meta: "Chart and period tracker",
+    imgs: ["img/pbis-0.jpg"],
+    alts: ["Class expectations chart: respect yourself, respect others, respect our school, each with picture cues"],
+    lede: "Three expectations, each broken into four concrete behaviors with a picture cue. A second version adds checkboxes for every class period so students can track their own day.",
+    facts: [["Made for", "Multilingual learners, whole class"], ["Format", "Wall chart and printable tracker"], ["Framework", "PBIS"]],
+    prompt: "How did you introduce the expectations in the first week?",
+    inside: `<h2>Three expectations</h2>
+      <ul class="two-col">
+        <li><strong>Respect yourself</strong><span class="es">Complete assignments · Give your best effort · Practice English four ways · Ask for a break</span></li>
+        <li><strong>Respect others</strong><span class="es">Be kind · Talk and listen at the right times · Ask for help · Follow instructions</span></li>
+        <li><strong>Respect our school</strong><span class="es">Follow schoolwide expectations · Lead in the halls · No devices · Clean up</span></li>
+      </ul>`
+  }
+];
+
+const CARDS = [["Pencil","Lápiz","Supplies"],["Scissors","Tijeras","Supplies"],["Backpack","Mochila","Supplies"],["Library","Biblioteca","Places"],["Nurse’s office","Enfermería","Places"],["Times (6 × 8)","Por (seis por ocho)","Math"],["Raise your hand","Levanta tu mano","Commands"],["Calm down","Cálmate","Commands"]];
+
+const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+const $ = (s, el = document) => el.querySelector(s);
+const deskView = $("#desk-view"), detailView = $("#detail-view"), desk = $("#desk");
+let deskScroll = 0;
+
+const clipSvg = `<svg class="clip" viewBox="0 0 18 52" aria-hidden="true"><path d="M6 44V12a4.5 4.5 0 0 1 9 0v30a7 7 0 0 1-14 0V15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>`;
+const ringSvg = `<svg class="ring-loop" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="14" fill="none" stroke="currentColor" stroke-width="3.5"/></svg>`;
+
+function ratio(src) { return /restorative|vocab|compare/.test(src) ? "16 / 9" : /health/.test(src) ? "960 / 742" : /pbis/.test(src) ? "679 / 960" : /poster/.test(src) ? "3 / 4" : "742 / 960"; }
+
+function sheetsHTML(p) {
+  const top = `<span class="paper top" style="aspect-ratio:${ratio(p.imgs[0])}"><img src="${p.imgs[0]}" alt="" decoding="async"></span>`;
+  const unders = p.layout === "single" ? "" : p.imgs.slice(1, 3).map(src => `<span class="paper under"><img src="${src}" alt="" decoding="async"></span>`).join("");
+  const extra = p.layout === "clipped" ? clipSvg : p.layout === "ring" ? ringSvg + '<span class="hole"></span>' : p.layout === "pair" ? `<span class="lang-tab" aria-hidden="true">${p.tab}</span>` : "";
+  return `<span class="sheets ${p.layout}" style="--r:${p.r}deg">${top}${unders}${extra}</span>`;
+}
+
+desk.innerHTML = P.map(p => `
+  <li class="${p.feature ? "feature" : ""}">
+    <a class="piece" href="#${p.id}" data-id="${p.id}">
+      ${sheetsHTML(p)}
+      <span class="label"><span class="kind">${p.kind}</span><span class="name">${p.name}</span><span class="meta">${p.meta}</span></span>
+    </a>
+  </li>`).join("");
+
+function detailHTML(p) {
+  const i = P.indexOf(p), prev = P[(i - 1 + P.length) % P.length], next = P[(i + 1) % P.length];
+  const thumbs = p.imgs.length > 1 ? `<ul class="pages" aria-label="Pages">${p.imgs.map((src, k) => `<li><button type="button" data-k="${k}" aria-current="${k === 0}" aria-label="Show page ${k + 1}: ${p.alts[k]}"><img src="${src}" alt=""></button></li>`).join("")}</ul><p class="pages-label">${p.imgs.length} pages shown here. The full PDF download goes here on the real site.</p>` : `<p class="pages-label">The full PDF download goes here on the real site.</p>`;
+  return `
+    <a class="back" href="#" data-back><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to the desk</a>
+    <div class="detail-grid">
+      <div>
+        <div class="hero-sheet"><span class="paper" id="hero-paper"><img id="hero-img" src="${p.imgs[0]}" alt="${p.alts[0]}"></span></div>
+        ${thumbs}
+      </div>
+      <div class="copy">
+        <span class="kind">${p.kind}</span>
+        <h1 id="detail-title" tabindex="-1">${p.name}</h1>
+        <p class="lede">${p.lede}</p>
+        <dl class="facts">${p.facts.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>
+        <aside class="sticky" aria-label="Why I made it">
+          <span class="placeholder">Placeholder for Skyler</span>
+          <h2>Why I made it</h2>
+          <p>${p.prompt}</p>
+        </aside>
+      </div>
+    </div>
+    <section class="inside">${p.inside}</section>
+    <nav class="nextprev" aria-label="More pieces">
+      <a href="#${prev.id}" data-id="${prev.id}"><span class="d">Previous</span><span class="t">${prev.name}</span></a>
+      <a class="next" href="#${next.id}" data-id="${next.id}"><span class="d">Next</span><span class="t">${next.name}</span></a>
+    </nav>`;
+}
+
+function wireDetail(p) {
+  detailView.querySelectorAll(".pages button").forEach(b => b.addEventListener("click", () => {
+    const k = +b.dataset.k, img = $("#hero-img");
+    const swap = () => { img.src = p.imgs[k]; img.alt = p.alts[k]; detailView.querySelectorAll(".pages button").forEach(x => x.setAttribute("aria-current", x === b)); };
+    document.startViewTransition && !reduced.matches ? document.startViewTransition(swap) : swap();
+  }));
+  const cards = $("#cards", detailView);
+  if (cards) {
+    cards.innerHTML = CARDS.map(([en, es, cat]) => `<button type="button" class="card" aria-pressed="false"><span class="inner"><span class="face cface-front">${en}<small>${cat}</small></span><span class="face cface-back" lang="es" aria-hidden="true">${es}<small>Español</small></span></span></button>`).join("");
+    cards.querySelectorAll(".card").forEach(c => c.addEventListener("click", () => {
+      const on = c.getAttribute("aria-pressed") !== "true";
+      c.setAttribute("aria-pressed", on);
+      c.querySelector(".cface-front").setAttribute("aria-hidden", on);
+      c.querySelector(".cface-back").setAttribute("aria-hidden", !on);
+    }));
+  }
+}
+
+function topPaperFor(id) { return desk.querySelector(`[data-id="${id}"] .paper.top`); }
+
+function render(id) {
+  const p = P.find(x => x.id === id);
+  if (p) {
+    if (!deskView.hidden) deskScroll = scrollY;
+    detailView.innerHTML = detailHTML(p);
+    wireDetail(p);
+    deskView.hidden = true; detailView.hidden = false;
+    document.title = `${p.name} · Skyler's Desk`;
+    scrollTo(0, 0);
+  } else {
+    detailView.hidden = true; detailView.innerHTML = ""; deskView.hidden = false;
+    document.title = "Skyler's Desk";
+    scrollTo(0, deskScroll);
+  }
+}
+
+function currentId() { const h = location.hash.slice(1); return P.some(p => p.id === h) ? h : ""; }
+
+// Navigate with the lifted-sheet transition. Desk → page carries the sheet up; page → desk sets it back down.
+function go(toId, push = true) {
+  const fromId = currentId();
+  if (toId === fromId) return;
+  const update = () => {
+    if (push) history.pushState(null, "", toId ? `#${toId}` : location.pathname + location.search);
+    render(toId);
+    if (toId && !fromId) { const from = topPaperFor(toId); if (from) from.style.viewTransitionName = ""; $("#hero-paper").style.viewTransitionName = "lifted"; }
+    if (!toId && fromId) { const to = topPaperFor(fromId); if (to) to.style.viewTransitionName = "lifted"; }
+  };
+  const focusAfter = () => {
+    if (toId) $("#detail-title")?.focus({ preventScroll: true });
+    else desk.querySelector(`[data-id="${fromId}"]`)?.focus({ preventScroll: true });
+  };
+  const clear = () => document.querySelectorAll("[style*='view-transition-name']").forEach(el => el.style.viewTransitionName = "");
+
+  if (!document.startViewTransition || reduced.matches) { update(); clear(); focusAfter(); return; }
+  if (toId && !fromId) { const from = topPaperFor(toId); if (from) from.style.viewTransitionName = "lifted"; }
+  if (!toId && fromId) { const hp = $("#hero-paper"); if (hp) hp.style.viewTransitionName = "lifted"; }
+  const t = document.startViewTransition(update);
+  t.finished.finally(() => { clear(); focusAfter(); });
+}
+
+document.addEventListener("click", e => {
+  const a = e.target.closest("a[data-id], a[data-back]");
+  if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+  e.preventDefault();
+  go(a.hasAttribute("data-back") ? "" : a.dataset.id);
+});
+addEventListener("popstate", () => go(currentId(), false));
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !detailView.hidden) go(""); });
+
+render(currentId());
+
+// The sentence frame's blank cycles through things students say they can do.
+const blanks = ["ask for help", "take a break", "cite evidence", "say it in English", "explain my thinking"];
+let bi = 0;
+if (!reduced.matches) setInterval(() => {
+  const el = $("#blank"); if (!el || deskView.hidden) return;
+  el.style.opacity = 0;
+  setTimeout(() => { bi = (bi + 1) % blanks.length; el.textContent = blanks[bi]; el.style.opacity = 1; }, 300);
+}, 3200);
+</script>
