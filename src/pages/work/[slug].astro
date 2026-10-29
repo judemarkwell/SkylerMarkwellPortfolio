@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import { u, previewsFor } from "../../lib/site";
+import Figure from "../../components/Figure.astro";
 
 export async function getStaticPaths() {
   const all = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
@@ -59,6 +60,12 @@ const hero = pages[0];
     </div>
   </section>
   <section class="chapter-paper frame" data-chapter="paper">
+    {d.photos.length > 0 && (
+      <div class="in-class">
+        <h2>In the classroom</h2>
+        {d.photos.map((ph) => <Figure k={ph.key} alt={ph.alt} caption={ph.caption} sizes="(min-width: 960px) 900px, 100vw" />)}
+      </div>
+    )}
     <div class="prose">
       <Content />
     </div>

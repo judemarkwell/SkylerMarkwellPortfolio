@@ -1,0 +1,85 @@
+{
+  "_note": "key -> source in source-materials/photos/. crop = [l, t, r, b] fractions. blurEllipses = [cx, cy, rx, ry] fractions of the cropped image, feathered blur to hide student names.",
+  "wellness-board": {
+    "src": "wellness-board.heic",
+    "crop": [
+      0.12,
+      0.12,
+      0.98,
+      0.92
+    ]
+  },
+  "grateful-board": {
+    "src": "grateful-board.heic",
+    "crop": [
+      0.13,
+      0.2,
+      0.9,
+      0.76
+    ],
+    "blurEllipses": [
+      [
+        0.545,
+        0.45,
+        0.3,
+        0.33
+      ],
+      [
+        0.27,
+        0.44,
+        0.075,
+        0.09
+      ],
+      [
+        0.67,
+        0.76,
+        0.14,
+        0.1
+      ],
+      [
+        0.36,
+        0.68,
+        0.07,
+        0.08
+      ],
+      [
+        0.32,
+        0.25,
+        0.05,
+        0.09
+      ],
+      [
+        0.78,
+        0.32,
+        0.06,
+        0.12
+      ]
+    ]
+  },
+  "kycec-poster": {
+    "src": "kycec-poster.heic"
+  },
+  "kycec-skyler": {
+    "src": "kycec-skyler.heic"
+  },
+  "asbury-grad": {
+    "src": "asbury-grad.heic",
+    "crop": [
+      0.0,
+      0.05,
+      1.0,
+      0.85
+    ]
+  },
+  "math-whiteboard": {
+    "src": "math-whiteboard.heic"
+  },
+  "math-dominoes": {
+    "src": "math-dominoes.heic"
+  },
+  "classroom-tour": {
+    "src": "classroom-tour.mov",
+    "video": true,
+    "seconds": 4.3
+  }
+}

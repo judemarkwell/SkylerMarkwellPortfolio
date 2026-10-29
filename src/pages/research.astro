@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import { u } from "../lib/site";
+import Figure from "../components/Figure.astro";
 ---
 <Base title="Parents Do Care · Skyler Markwell" description="Skyler Markwell's action research on open dialogue between teachers and Spanish-speaking immigrant parents." current="research" chapter="orange">
   <section class="chapter-orange frame page-head" data-chapter="orange">
@@ -24,6 +25,15 @@ import { u } from "../lib/site";
       <h2>The hypothesis</h2>
       <p>Open dialogue reduces the barriers between teachers and parents by opening a line of empathetic, culturally inclusive communication that treats parents as experts on their children, which in turn supports engagement and student achievement.</p>
       <p>Findings will be added here.</p>
+
+      <h2>Earlier research: peer tutoring</h2>
+      <p>As an undergraduate at Western Kentucky University, Skyler reviewed three studies of peer tutoring with Spanish-speaking English learners and presented the results as a poster at the Kentucky Council for Exceptional Children conference in Louisville in 2022.</p>
+      <div class="poster-pair">
+        <Figure k="kycec-skyler" sizes="(min-width: 900px) 30vw, 100vw" alt="Skyler kneeling beside her research poster at the KYCEC 2022 conference" />
+        <Figure k="kycec-poster" sizes="(min-width: 900px) 30vw, 100vw" alt="Research poster: The Effect of Peer Tutoring on ELL Students' Academic Achievement, by Skyler Markwell, Western Kentucky University" />
+      </div>
+      <p><strong>What the studies found.</strong> Through peer tutoring, English learners gain language acquisition, social skills, access to classroom content, and academic validity.</p>
+      <p><strong>What to plan for.</strong> Coexisting disabilities, the cultural context of asking for help, teacher knowledge of how to implement it, and the extra time it takes.</p>
     </div>
     <nav class="nextprev" aria-label="More">
       <a href={u("/#work")}><span class="d">See the work it shaped</span><span class="t">Family guides on the desk</span></a>

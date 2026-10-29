@@ -2,12 +2,14 @@
 import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import Sheets from "../components/Sheets.astro";
-import { u, previewsFor, headshot } from "../lib/site";
+import { u, previewsFor, headshot, photo } from "../lib/site";
+import Figure from "../components/Figure.astro";
 
 const all = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
 const featured = all.filter((w) => w.data.featured);
 const bySlug = Object.fromEntries(all.map((w) => [w.id, w]));
-const photo = headshot();
+const portrait = headshot();
+const tour = photo("classroom-tour");
 
 // The live thing: a learner finishes the sentence, and the piece made for them is lifted.
 const frames = [
@@ -101,12 +103,32 @@ const designs = [
     </ul>
   </section>
 
+
+  <section class="chapter-night frame room" data-chapter="night" aria-labelledby="room-title">
+    <div class="room-head rise">
+      <h2 id="room-title">Where the work happens</h2>
+      <p>Picture supports on every wall, flags from home countries, and sentence frames students can finish in their own languages.</p>
+    </div>
+    <div class="room-grid">
+      {tour && (
+        <figure class="photo room-video">
+          <video id="tour" muted loop playsinline preload="metadata" poster={tour.poster} width={tour.width} height={tour.height} aria-label="A slow pan across Skyler's classroom: the door, encouraging posters, a clock, and standing tables under string lights">
+            <source src={tour.video} type="video/mp4" />
+          </video>
+          <button type="button" class="vid-toggle" id="tour-toggle" aria-pressed="false">Pause</button>
+          <figcaption>Skyler's classroom.</figcaption>
+        </figure>
+      )}
+      <Figure k="grateful-board" sizes="(min-width: 900px) 45vw, 100vw" alt="Hallway board titled Grateful in Every Language: a paper tree whose leaves are student sentences, with names blurred" caption="Grateful in Every Language: students finished “I am thankful for…” on leaves in English, Spanish, Arabic, Somali, Swahili, Pashto and Kinyarwanda. Names are blurred." />
+    </div>
+  </section>
+
   <section class="chapter-lime frame" data-chapter="lime" id="about" aria-labelledby="about-title">
     <div class="about">
       <h2 id="about-title" class="rise"><span>About Skyler</span></h2>
       <div class="row rise">
         <div class="facts-side">
-          {photo && <img src={photo.src} width={photo.width} height={photo.height} alt="Skyler Markwell, smiling, in a denim jacket" loading="lazy" />}
+          {portrait && <img src={portrait.src} width={portrait.width} height={portrait.height} alt="Skyler Markwell, smiling, in a denim jacket" loading="lazy" />}
           <dl>
             <div><dt>Based in</dt><dd>Louisville, Kentucky</dd></div>
             <div><dt>Teaching since</dt><dd>2022</dd></div>
@@ -119,10 +141,15 @@ const designs = [
             <p>I have since learned that the process is the most important piece.</p>
             <cite>Skyler, on teaching math, from her 2026 Insight to Action reflection</cite>
           </blockquote>
+          <div class="math-pair">
+            <Figure k="math-whiteboard" sizes="(min-width: 900px) 28vw, 50vw" alt="Student whiteboard with domino pictures labeled 3, 8, 9 and 6" />
+            <Figure k="math-dominoes" sizes="(min-width: 900px) 28vw, 50vw" alt="A student's hand writing numbers next to dominoes on a whiteboard" />
+          </div>
+          <p class="math-cap">Whiteboards from a math lesson built on dominoes: students show their thinking before the answer.</p>
         </div>
       </div>
       <div class="row">
-        <div></div>
+        <Figure k="asbury-grad" class="grad" sizes="(min-width: 900px) 25vw, 70vw" alt="Skyler in cap and gown at her Asbury University graduation" caption="Master of Arts in Teaching, Asbury University, 2025." />
         <div class="record">
           <div>
             <h3>Experience</h3>
@@ -149,6 +176,22 @@ const designs = [
 </Base>
 
 <script>
+  // Classroom loop: plays muted, pauses for reduced motion, and always has a pause control.
+  const tour = document.getElementById("tour") as HTMLVideoElement | null;
+  const tourBtn = document.getElementById("tour-toggle") as HTMLButtonElement | null;
+  if (tour && tourBtn) {
+    const set = (playing: boolean) => { tourBtn.textContent = playing ? "Pause" : "Play"; tourBtn.setAttribute("aria-pressed", String(!playing)); };
+    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reducedMotion) {
+      const io = new IntersectionObserver(([e]) => { if (e.isIntersecting && tourBtn.dataset.user !== "paused") tour.play().then(() => set(true)).catch(() => set(false)); else if (!e.isIntersecting) tour.pause(); });
+      io.observe(tour);
+    } else set(false);
+    tourBtn.addEventListener("click", () => {
+      if (tour.paused) { tourBtn.dataset.user = ""; tour.play().then(() => set(true)).catch(() => {}); }
+      else { tourBtn.dataset.user = "paused"; tour.pause(); set(false); }
+    });
+  }
+
   const buttons = document.querySelectorAll<HTMLButtonElement>("#choices button");
   const blank = document.getElementById("blank")!, who = document.getElementById("who")!, statement = document.getElementById("statement")!;
   const made = document.getElementById("made-this") as HTMLAnchorElement, img = document.getElementById("made-img") as HTMLImageElement | null, title = document.getElementById("made-title")!;

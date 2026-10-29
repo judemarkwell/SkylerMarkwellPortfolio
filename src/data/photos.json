@@ -1,0 +1,120 @@
+{
+  "wellness-board": {
+    "srcset": [
+      {
+        "src": "photos/wellness-board-800.jpg",
+        "width": 800,
+        "height": 558
+      },
+      {
+        "src": "photos/wellness-board-1600.jpg",
+        "width": 1600,
+        "height": 1116
+      }
+    ],
+    "width": 1600,
+    "height": 1116
+  },
+  "grateful-board": {
+    "srcset": [
+      {
+        "src": "photos/grateful-board-800.jpg",
+        "width": 800,
+        "height": 436
+      },
+      {
+        "src": "photos/grateful-board-1600.jpg",
+        "width": 1600,
+        "height": 873
+      }
+    ],
+    "width": 1600,
+    "height": 873
+  },
+  "kycec-poster": {
+    "srcset": [
+      {
+        "src": "photos/kycec-poster-800.jpg",
+        "width": 800,
+        "height": 1067
+      },
+      {
+        "src": "photos/kycec-poster-1600.jpg",
+        "width": 1600,
+        "height": 2133
+      }
+    ],
+    "width": 1600,
+    "height": 2133
+  },
+  "kycec-skyler": {
+    "srcset": [
+      {
+        "src": "photos/kycec-skyler-800.jpg",
+        "width": 800,
+        "height": 1067
+      },
+      {
+        "src": "photos/kycec-skyler-1600.jpg",
+        "width": 1600,
+        "height": 2133
+      }
+    ],
+    "width": 1600,
+    "height": 2133
+  },
+  "asbury-grad": {
+    "srcset": [
+      {
+        "src": "photos/asbury-grad-800.jpg",
+        "width": 800,
+        "height": 853
+      },
+      {
+        "src": "photos/asbury-grad-1600.jpg",
+        "width": 1600,
+        "height": 1707
+      }
+    ],
+    "width": 1600,
+    "height": 1707
+  },
+  "math-whiteboard": {
+    "srcset": [
+      {
+        "src": "photos/math-whiteboard-800.jpg",
+        "width": 800,
+        "height": 600
+      },
+      {
+        "src": "photos/math-whiteboard-1600.jpg",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "width": 1600,
+    "height": 1200
+  },
+  "math-dominoes": {
+    "srcset": [
+      {
+        "src": "photos/math-dominoes-800.jpg",
+        "width": 800,
+        "height": 1067
+      },
+      {
+        "src": "photos/math-dominoes-1600.jpg",
+        "width": 1600,
+        "height": 2133
+      }
+    ],
+    "width": 1600,
+    "height": 2133
+  },
+  "classroom-tour": {
+    "video": "photos/classroom-tour.mp4",
+    "poster": "photos/classroom-tour-poster.jpg",
+    "width": 720,
+    "height": 1422
+  }
+}

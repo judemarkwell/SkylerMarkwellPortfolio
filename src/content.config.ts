@@ -18,6 +18,7 @@ const work = defineCollection({
     alts: z.array(z.string()),
     pairLabel: z.string().optional(),
     prompt: z.string(),
+    photos: z.array(z.object({ key: z.string(), alt: z.string(), caption: z.string() })).default([]),
   }),
 });
 

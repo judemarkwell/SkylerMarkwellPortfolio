@@ -18,7 +18,13 @@ Dealt by taste-skill (`.taste-skill/direction.json`): **Type and nothing else**,
 - **Desk ground.** The desk is a pale tint of the sky field (`--desk`), quieter than the chapter colours, so her already-colourful materials stay the loudest thing in that section (client: "whimsical and vibrant around the work, calm desk under it").
 - **Contact section dropped;** the footer (email as headline) does that job.
 - **Ledger without hover preview.** Below the desk, every piece is listed in a plain ledger; the desk already shows the pictures.
-- **Imagery.** Her own materials are the real pictures (17 pieces, 30+ previews). No stock texture photographs.
+- **Imagery.** Her own materials and photos are the only pictures (17 pieces, 30+ previews, 7 photos, one 4-second classroom loop). No stock photographs.
+
+## Photo rules
+
+- No student faces, ever. Photos of students, field trips, honors and group shots stay out even when they are the best pictures.
+- Student names are removed before resizing: the Grateful in Every Language board gets feathered blur over its leaves (`blurEllipses` in `scripts/photos.json`); the classroom loop is cut to its first 4.3 seconds and cropped on the left, before chairs with name cards and a wall of photos come into view.
+- The loop plays muted, pauses off-screen, does not autoplay under reduced motion, and always has a visible Pause control.
 
 ## Tokens
 

@@ -7,13 +7,14 @@ Portfolio site for Skyler Markwell, educator of multilingual learners and curric
 ```bash
 npm install
 npm run previews   # renders preview images from source-materials/ (needs LibreOffice + Python: pypdfium2, Pillow)
+npm run photos     # web-sizes photos and the classroom loop from source-materials/photos/ (needs ffmpeg, pillow-heif)
 npm run dev        # http://localhost:4321/SkylerMarkwellPortfolio/
 npm run build
 ```
 
 - Product context: `PRODUCT.md`. Visual system: `DESIGN.md`.
 - Each portfolio piece is a Markdown file in `src/content/work/`. Its preview pages are listed in `scripts/previews.json`.
-- `source-materials/` (Skyler's original files) and `public/previews/` (rendered images) are **not committed**. The repo is public, and images go in only after Skyler approves which documents are published. Until then the site shows "Preview coming soon" sheets when built without them.
+- `source-materials/` (Skyler's original files), `public/previews/` and `public/photos/` (rendered images) are **not committed**. The repo is public, and images go in only after Skyler approves which documents are published. Until then the site shows "Preview coming soon" sheets when built without them.
 - Deploy: the GitHub Pages workflow runs manually (Actions → Deploy to GitHub Pages).
 
 ## Design skills (vendored)
