@@ -30,7 +30,7 @@ Dealt by taste-skill (`.taste-skill/direction.json`): **Type and nothing else**,
 
 | Role | Value | Use |
 | --- | --- | --- |
-| `--paper` | `#f6f5f1` | Hero upper field, detail pages |
+| `--paper` | `#f1f2f0` | Hero upper field, detail pages |
 | `--orange` | `#ff8126` | Chapter 1: hero lower field, intro |
 | `--sky` | `#4db3ff` | Chapter 2 field (desk header band) |
 | `--desk` | `#cfe8fb` | The desk surface |
