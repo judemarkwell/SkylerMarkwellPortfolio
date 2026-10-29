@@ -414,12 +414,6 @@ img { max-width: 100%; height: auto; }
 .in-class .photo { max-width: 48rem; }
 .poster-pair { max-width: 48rem; }
 
-.proud { padding-block: clamp(5rem, 10vw, 8rem); }
-.proud .room-head p { color: var(--color-ink); }
-.proud-grid { display: grid; gap: clamp(1.5rem, 3vw, 2.5rem); align-items: start; }
-@media (min-width: 900px) { .proud-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); } .proud-grid > .photo { grid-column: span 2; } .proud-grid > .wide { grid-column: span 3; } }
-.proud-grid .photo img { aspect-ratio: 3 / 4; object-fit: cover; }
-.proud-grid .wide img { aspect-ratio: 4 / 3; }
 .blur-note { margin-top: 2rem; font-size: var(--step-small); }
 
 /* ---------- Snapshots: photo carousel ---------- */
