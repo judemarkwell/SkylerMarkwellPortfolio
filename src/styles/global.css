@@ -433,19 +433,29 @@ img { max-width: 100%; height: auto; }
 .cr-slide.active { opacity: 1; transform: none; }
 .cr-slide img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: center 30%; border-radius: 2px; background: #ddd; }
 .cr-slide figcaption { font-size: var(--step-body); max-width: 50ch; }
-.cr-controls { display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; padding-inline: max(var(--margin), env(safe-area-inset-left, 0px)); }
-.cr-btn { all: unset; cursor: pointer; display: inline-grid; place-items: center; min-width: 2.75rem; height: 2.75rem; padding-inline: 0.6rem; box-sizing: border-box; border-radius: 999px; background: var(--color-ink); color: var(--color-paper); font-weight: 500; transition: transform 160ms var(--ease-out), background-color 160ms; }
+.cr-controls { display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding-inline: max(var(--margin), env(safe-area-inset-left, 0px)); }
+.cr-btn {
+  all: unset; box-sizing: border-box; cursor: pointer; display: inline-grid; place-items: center; flex: none;
+  width: 2.75rem; height: 2.75rem; border-radius: 999px; background: var(--color-ink); color: var(--color-paper);
+  -webkit-tap-highlight-color: transparent; transition: transform 140ms var(--ease-out), background-color 160ms;
+}
 .cr-btn svg { width: 1.2rem; height: 1.2rem; }
-.cr-btn:hover { background: var(--color-accent); }
-.cr-btn:active { transform: scale(0.94); }
+/* Hover colour only where a real hover exists, so a tap never leaves a button red on phones. */
+@media (hover: hover) and (pointer: fine) { .cr-btn:hover { background: var(--color-accent); } }
+.cr-btn:active { transform: scale(0.92); }
 .cr-btn:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 3px; }
-.cr-pause { padding-inline: 1rem; }
-.cr-dots { display: flex; gap: 0.15rem; }
-.cr-dot { all: unset; cursor: pointer; width: 1.6rem; height: 2.75rem; display: grid; place-items: center; }
-.cr-dot::before { content: ""; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: rgb(17 17 17 / 0.28); transition: background-color 200ms, transform 200ms; }
-.cr-dot[aria-current="true"]::before { background: var(--color-accent); transform: scale(1.3); }
+.cr-toggle .i-play { display: none; }
+.cr-toggle[data-state="paused"] .i-pause { display: none; }
+.cr-toggle[data-state="paused"] .i-play { display: block; }
+.cr-dots { display: flex; gap: 0.1rem; }
+.cr-dot { all: unset; cursor: pointer; width: 1.5rem; height: 2.75rem; display: grid; place-items: center; -webkit-tap-highlight-color: transparent; }
+.cr-dot::before { content: ""; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: rgb(17 17 17 / 0.28); transition: background-color 200ms, transform 200ms; }
+.cr-dot[aria-current="true"]::before { background: var(--color-accent); transform: scale(1.35); }
 .cr-dot:focus-visible::before { outline: 3px solid var(--color-ink); outline-offset: 3px; }
-@media (max-width: 640px) { .cr-dots { display: none; } }
+.cr-count { display: none; font-variant-numeric: tabular-nums; min-width: 3.5rem; text-align: center; font-weight: 500; }
+@media (max-width: 640px) { .cr-dots { display: none; } .cr-count { display: inline-block; } }
+.cr-track { touch-action: pan-x pan-y; -webkit-overflow-scrolling: touch; }
+.cr-slide img { -webkit-user-drag: none; user-select: none; }
 @media (prefers-reduced-motion: reduce) { .cr-slide { transition: none; } }
 
 /* ---------- Home: link to the gallery ---------- */
