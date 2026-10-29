@@ -4,6 +4,7 @@ interface Props { current?: string; chapter?: string }
 const { current = "", chapter = "paper" } = Astro.props;
 const links = [
   { href: u("/#work"), label: "Work", key: "work" },
+  { href: u("/gallery/"), label: "Gallery", key: "gallery" },
   { href: u("/#about"), label: "About", key: "about" },
   { href: u("/research/"), label: "Research", key: "research" },
   { href: u("/resume/"), label: "Resume", key: "resume" },

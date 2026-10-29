@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import Sheets from "../components/Sheets.astro";
-import { u, previewsFor, headshot, photo } from "../lib/site";
+import { u, previewsFor, headshot } from "../lib/site";
 import Figure from "../components/Figure.astro";
 import Carousel from "../components/Carousel.astro";
 
@@ -10,7 +10,6 @@ const all = (await getCollection("work")).sort((a, b) => a.data.order - b.data.o
 const featured = all.filter((w) => w.data.featured);
 const bySlug = Object.fromEntries(all.map((w) => [w.id, w]));
 const portrait = headshot();
-const tour = photo("classroom-tour");
 
 // The live thing: a learner finishes the sentence, and the piece made for them is lifted.
 const frames = [
@@ -66,7 +65,6 @@ const designs = [
     </div>
   </section>
 
-
   <section class="chapter-paper frame snapshots" data-chapter="paper" aria-labelledby="snap-title">
     <div class="snap-copy rise">
       <h2 id="snap-title">Snapshots</h2>
@@ -105,14 +103,7 @@ const designs = [
           </li>
         ))}
       </ul>
-      <div class="ledger rise">
-        <h3>More of my work</h3>
-        <ul>
-          {all.map((w) => (
-            <li><a href={u(`/work/${w.id}/`)}><span class="t">{w.data.title}</span><span class="k">{w.data.kind}</span></a></li>
-          ))}
-        </ul>
-      </div>
+      <p class="to-gallery rise"><a href={u("/gallery/")}>See all my work and more photos in the gallery <span aria-hidden="true">→</span></a></p>
     </div>
   </section>
 
@@ -124,28 +115,6 @@ const designs = [
       ))}
     </ul>
   </section>
-
-
-  <section class="chapter-night frame room" data-chapter="night" aria-labelledby="room-title">
-    <div class="room-head rise">
-      <h2 id="room-title">Where the work happens</h2>
-      <p>Picture supports on every wall, flags from home countries, and sentence frames students can finish in their own languages.</p>
-    </div>
-    <div class="room-grid">
-      {tour && (
-        <figure class="photo room-video">
-          <video id="tour" muted loop playsinline preload="metadata" poster={tour.poster} width={tour.width} height={tour.height} aria-label="A slow pan across my classroom: the door, encouraging posters, a clock, and standing tables under string lights">
-            <source src={tour.video} type="video/mp4" />
-          </video>
-          <button type="button" class="vid-toggle" id="tour-toggle" aria-pressed="false">Pause</button>
-          <figcaption>My classroom.</figcaption>
-        </figure>
-      )}
-      <Figure k="grateful-board" sizes="(min-width: 900px) 45vw, 100vw" alt="Hallway board titled Grateful in Every Language: a paper tree whose leaves are student sentences" caption="Grateful in Every Language: students finished “I am thankful for…” on leaves in English, Spanish, Arabic, Somali, Swahili, Pashto and Kinyarwanda." />
-    </div>
-  </section>
-
-
 
   <section class="chapter-lime frame" data-chapter="lime" id="about" aria-labelledby="about-title">
     <div class="about">
@@ -202,22 +171,6 @@ const designs = [
 </Base>
 
 <script>
-  // Classroom loop: plays muted, pauses for reduced motion, and always has a pause control.
-  const tour = document.getElementById("tour") as HTMLVideoElement | null;
-  const tourBtn = document.getElementById("tour-toggle") as HTMLButtonElement | null;
-  if (tour && tourBtn) {
-    const set = (playing: boolean) => { tourBtn.textContent = playing ? "Pause" : "Play"; tourBtn.setAttribute("aria-pressed", String(!playing)); };
-    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!reducedMotion) {
-      const io = new IntersectionObserver(([e]) => { if (e.isIntersecting && tourBtn.dataset.user !== "paused") tour.play().then(() => set(true)).catch(() => set(false)); else if (!e.isIntersecting) tour.pause(); });
-      io.observe(tour);
-    } else set(false);
-    tourBtn.addEventListener("click", () => {
-      if (tour.paused) { tourBtn.dataset.user = ""; tour.play().then(() => set(true)).catch(() => {}); }
-      else { tourBtn.dataset.user = "paused"; tour.pause(); set(false); }
-    });
-  }
-
   const buttons = document.querySelectorAll<HTMLButtonElement>("#choices button");
   const blank = document.getElementById("blank")!, who = document.getElementById("who")!, statement = document.getElementById("statement")!;
   const made = document.getElementById("made-this") as HTMLAnchorElement, img = document.getElementById("made-img") as HTMLImageElement | null, title = document.getElementById("made-title")!;
