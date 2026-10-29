@@ -8,7 +8,7 @@ layout: "stack"
 tilt: -0.8
 featured: true
 order: 1
-lede: "A skills-based health course built from the ground up for high school newcomers. Every unit ties state performance indicators to guiding questions, the vocabulary students need, and a linked set of lessons."
+lede: "A skills-based health course I built from the ground up for high school newcomers. Every unit ties state performance indicators to guiding questions, the vocabulary students need, and a linked set of lessons."
 alts: ["Scope and sequence spreadsheet, units 1 to 4, with standards, guiding questions, vocabulary and linked activities", "Scope and sequence spreadsheet, units 5 to 7"]
 prompt: "What did the course need to do differently for newcomers, and what did you build first?"
 photos: [{"key": "wellness-board", "alt": "Classroom bulletin board titled Our World in Wellness, with a world map and cards about wellness practices from different cultures", "caption": "Our World in Wellness: a classroom board on how cultures around the world practice wellness, from Native American ethnobotany to tontine savings circles in Senegal, Cameroon and Congo."}]

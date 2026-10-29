@@ -8,7 +8,7 @@ layout: "single"
 tilt: 1.6
 featured: false
 order: 13
-lede: "Six sentence frames students finish at the end of the day, so every student practices speaking about their learning, their mood and what comes next."
+lede: "Six sentence frames my students finish at the end of the day, so every student practices speaking about their learning, their mood and what comes next."
 alts: ["Six check-out sentence frames in red"]
 prompt: "How long did it take for students to use the frames without help?"
 ---

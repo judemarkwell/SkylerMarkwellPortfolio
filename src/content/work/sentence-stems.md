@@ -8,7 +8,7 @@ layout: "single"
 tilt: -1.8
 featured: false
 order: 14
-lede: "The district's five success skills, broken down word by word for students learning English. Each skill has a plain definition, three things a student can choose from, and a sentence stem to finish about their project."
+lede: "The district's five success skills, which I broke down word by word for students learning English. Each skill has a plain definition, three things a student can choose from, and a sentence stem to finish about their project."
 alts: ["Sentence stems table with columns for skill, definition, I can choices and sentence"]
 prompt: "Which skill was hardest for students to explain, and how did the stems help?"
 ---

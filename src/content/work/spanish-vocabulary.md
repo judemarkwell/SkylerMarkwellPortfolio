@@ -8,7 +8,7 @@ layout: "ring"
 tilt: 1.2
 featured: true
 order: 6
-lede: "Picture cards that help any teacher reach a Spanish-speaking newcomer on day one: school supplies, places, subjects, math operations, commands and questions. Use them on a laptop with audio, or print, laminate and clip them to a badge ring."
+lede: "Picture cards I made to help any teacher reach a Spanish-speaking newcomer on day one: school supplies, places, subjects, math operations, commands and questions. Use them on a laptop with audio, or print, laminate and clip them to a badge ring."
 alts: ["Title card: Common Spanish vocabulary", "Card: Lápiz, pencil, with a picture of a pencil", "Card: Por, times. Six times eight, seis por ocho"]
 prompt: "Which cards did teachers reach for most?"
 ---

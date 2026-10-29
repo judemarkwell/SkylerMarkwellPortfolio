@@ -9,7 +9,7 @@ tilt: 0.7
 featured: true
 order: 11
 pairLabel: "ES"
-lede: "A student-facing guide to the test accommodations in a Program Service Plan, with a sentence to ask for each one."
+lede: "A student-facing guide I made to the test accommodations in a Program Service Plan, with a sentence to ask for each one."
 alts: ["Accommodations conversation starter in English", "Accommodations conversation starter in Spanish"]
 prompt: "Which accommodation did students ask for once they had the words?"
 ---

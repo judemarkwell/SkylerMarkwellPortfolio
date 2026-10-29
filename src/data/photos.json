@@ -116,5 +116,101 @@
     "poster": "photos/classroom-tour-poster.jpg",
     "width": 720,
     "height": 1422
+  },
+  "access-exit": {
+    "srcset": [
+      {
+        "src": "photos/access-exit-800.jpg",
+        "width": 800,
+        "height": 1067
+      },
+      {
+        "src": "photos/access-exit-1600.jpg",
+        "width": 1600,
+        "height": 2133
+      }
+    ],
+    "width": 1600,
+    "height": 2133
+  },
+  "grad-cert": {
+    "srcset": [
+      {
+        "src": "photos/grad-cert-800.jpg",
+        "width": 800,
+        "height": 1067
+      },
+      {
+        "src": "photos/grad-cert-1600.jpg",
+        "width": 1600,
+        "height": 2133
+      }
+    ],
+    "width": 1600,
+    "height": 2133
+  },
+  "grad-flowers": {
+    "srcset": [
+      {
+        "src": "photos/grad-flowers-800.jpg",
+        "width": 800,
+        "height": 1067
+      },
+      {
+        "src": "photos/grad-flowers-1600.jpg",
+        "width": 1600,
+        "height": 2133
+      }
+    ],
+    "width": 1600,
+    "height": 2133
+  },
+  "thank-you": {
+    "srcset": [
+      {
+        "src": "photos/thank-you-800.jpg",
+        "width": 800,
+        "height": 600
+      },
+      {
+        "src": "photos/thank-you-1600.jpg",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "width": 1600,
+    "height": 1200
+  },
+  "pumpkin-patch": {
+    "srcset": [
+      {
+        "src": "photos/pumpkin-patch-800.jpg",
+        "width": 800,
+        "height": 600
+      },
+      {
+        "src": "photos/pumpkin-patch-1600.jpg",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "width": 1600,
+    "height": 1200
+  },
+  "tesol-2025": {
+    "srcset": [
+      {
+        "src": "photos/tesol-2025-800.jpg",
+        "width": 800,
+        "height": 600
+      },
+      {
+        "src": "photos/tesol-2025-1600.jpg",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "width": 1600,
+    "height": 1200
   }
 }

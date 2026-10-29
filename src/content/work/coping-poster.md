@@ -8,7 +8,7 @@ layout: "single"
 tilt: -2.2
 featured: true
 order: 5
-lede: "Nine pictured choices a student can point to when they need a break. It ends with the line the class comes back to: you are in control of your body."
+lede: "A poster I made with nine pictured choices a student can point to when they need a break. It ends with the line the class comes back to: you are in control of your body."
 alts: ["Pink poster titled When I need a break, I can, with nine pictured choices and the line You are in control of your body"]
 prompt: "How did students start using the poster on their own?"
 ---

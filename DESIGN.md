@@ -22,8 +22,8 @@ Dealt by taste-skill (`.taste-skill/direction.json`): **Type and nothing else**,
 
 ## Photo rules
 
-- No student faces, ever. Photos of students, field trips, honors and group shots stay out even when they are the best pictures.
-- Student names are removed before resizing: the Grateful in Every Language board gets feathered blur over its leaves (`blurEllipses` in `scripts/photos.json`); the classroom loop is cut to its first 4.3 seconds and cropped on the left, before chairs with name cards and a wall of photos come into view.
+- Student faces are always blurred (YuNet face detection plus manual boxes, checked by eye on every photo). Skyler and adult staff stay clear.
+- Student names are removed before resizing: certificates, the We're Multilingual banner and signed posters get `blurRects`; the Grateful in Every Language board gets feathered blur over its leaves (`blurEllipses` in `scripts/photos.json`); the classroom loop is cut to its first 4.3 seconds and cropped on the left, before chairs with name cards and a wall of photos come into view.
 - The loop plays muted, pauses off-screen, does not autoplay under reduced motion, and always has a visible Pause control.
 
 ## Tokens

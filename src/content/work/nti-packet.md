@@ -9,7 +9,7 @@ tilt: -1.1
 featured: false
 order: 16
 pairLabel: "ES"
-lede: "A take-home choice board for non-traditional instruction days. Students pick one of six English activities for each day out of school, and families get the same directions in Spanish."
+lede: "A take-home choice board I made for non-traditional instruction days. Students pick one of six English activities for each day out of school, and families get the same directions in Spanish."
 alts: ["NTI choice board in English with six activities", "NTI choice board in Spanish"]
 prompt: "Which choice did students pick most often?"
 ---

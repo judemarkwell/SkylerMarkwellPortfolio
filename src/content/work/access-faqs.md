@@ -9,9 +9,10 @@ tilt: -1.6
 featured: true
 order: 3
 pairLabel: "ES"
-lede: "Plain-language answers to the questions families ask about the yearly English proficiency test: what it measures, who gives it, what the scores mean, and what a Program Service Plan is. Every answer appears in English and Spanish."
+lede: "I wrote plain-language answers to the questions families ask about the yearly English proficiency test: what it measures, who gives it, what the scores mean, and what a Program Service Plan is. Every answer appears in English and Spanish."
 alts: ["English FAQ, page one", "Spanish FAQ, page one: Preguntas frecuentes", "English FAQ, page two", "Spanish FAQ, page two"]
 prompt: "What were families most worried about before the test?"
+photos: [{"key": "access-exit", "alt": "Elementary students holding certificates under a banner reading We're Multilingual, faces and names blurred", "caption": "The payoff: my students at Marnel C. Moorman after passing the ACCESS test. Faces and names are blurred."}]
 ---
 
 ## The questions it answers

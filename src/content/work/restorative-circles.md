@@ -8,7 +8,7 @@ layout: "stack"
 tilt: 2
 featured: true
 order: 4
-lede: "A deck for running restorative circles with newcomer students. It moves from body-based warm-ups to why the circle exists, then to community-building and repairing harm, with a picture beside every instruction."
+lede: "A deck I use to run restorative circles with newcomer students. It moves from body-based warm-ups to why the circle exists, then to community-building and repairing harm, with a picture beside every instruction."
 alts: ["Title slide: Restorative Practice Circle Exercises", "Table of contents: warm-ups, purposes of the circle, community-building, repairing harm", "Warm-up exercises with pictures: somatic breathing, body scan, box breathing and more", "Purposes of the circle: speak in English, solve problems in a group, learn about ourselves and others"]
 prompt: "What does a circle look like on a hard day?"
 ---

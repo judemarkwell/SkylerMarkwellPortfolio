@@ -8,7 +8,7 @@ layout: "stack"
 tilt: 0.9
 featured: true
 order: 8
-lede: "Three expectations, each broken into four concrete behaviors with a picture cue. A second version adds a box for every class period so students can track their own day."
+lede: "My three class expectations, each broken into four concrete behaviors with a picture cue. A second version adds a box for every class period so students can track their own day."
 alts: ["Class expectations chart: respect yourself, respect others, respect our school, each with picture cues", "Tracker version of the chart with boxes for each class period"]
 prompt: "How did you introduce the expectations in the first week?"
 ---

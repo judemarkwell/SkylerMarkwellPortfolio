@@ -38,6 +38,18 @@ def main():
             print(key, "video", mp4.stat().st_size // 1024, "KB")
             continue
         im = ImageOps.exif_transpose(Image.open(src)).convert("RGB")
+        # Student faces and names: blurred on the full-size original, before any crop or resize.
+        if cfg.get("blurFaces") or cfg.get("blurRects"):
+            W, H = im.size
+            mask = Image.new("L", im.size, 0); dr = ImageDraw.Draw(mask)
+            for x, y, w, h in cfg.get("blurFaces", []):
+                cx, cy, rx, ry = (x + w / 2) * W, (y + h / 2) * H, w * W * 0.8, h * H * 0.9
+                dr.ellipse((cx - rx, cy - ry * 1.05, cx + rx, cy + ry), fill=255)
+            for x, y, w, h in cfg.get("blurRects", []):
+                dr.rounded_rectangle((x * W, y * H, (x + w) * W, (y + h) * H), radius=min(w * W, h * H) * 0.2, fill=255)
+            mask = mask.filter(ImageFilter.GaussianBlur(radius=max(W, H) / 400))
+            heavy = im.resize((max(1, W // 48), max(1, H // 48)), Image.BILINEAR).resize(im.size, Image.BILINEAR).filter(ImageFilter.GaussianBlur(radius=max(W, H) / 300))
+            im = Image.composite(heavy, im, mask)
         for b in cfg.get("blur", []):
             region = box(im, b)
             patch = im.crop(region).filter(ImageFilter.GaussianBlur(radius=max(im.size) / 260))

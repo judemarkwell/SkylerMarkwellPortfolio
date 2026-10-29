@@ -69,7 +69,7 @@ const designs = [
     <div class="chapter-sky frame" data-chapter="sky">
       <div class="section-head rise">
         <h2 id="work-title">On the desk</h2>
-        <p>Seventeen pieces from real classrooms. Pick up a sheet to see it up close.</p>
+        <p>Seventeen things I made for real classrooms. Pick up a sheet to see it up close.</p>
       </div>
     </div>
     <div class="chapter-desk frame desk-surface" data-chapter="desk">
@@ -112,23 +112,39 @@ const designs = [
     <div class="room-grid">
       {tour && (
         <figure class="photo room-video">
-          <video id="tour" muted loop playsinline preload="metadata" poster={tour.poster} width={tour.width} height={tour.height} aria-label="A slow pan across Skyler's classroom: the door, encouraging posters, a clock, and standing tables under string lights">
+          <video id="tour" muted loop playsinline preload="metadata" poster={tour.poster} width={tour.width} height={tour.height} aria-label="A slow pan across my classroom: the door, encouraging posters, a clock, and standing tables under string lights">
             <source src={tour.video} type="video/mp4" />
           </video>
           <button type="button" class="vid-toggle" id="tour-toggle" aria-pressed="false">Pause</button>
-          <figcaption>Skyler's classroom.</figcaption>
+          <figcaption>My classroom.</figcaption>
         </figure>
       )}
       <Figure k="grateful-board" sizes="(min-width: 900px) 45vw, 100vw" alt="Hallway board titled Grateful in Every Language: a paper tree whose leaves are student sentences, with names blurred" caption="Grateful in Every Language: students finished “I am thankful for…” on leaves in English, Spanish, Arabic, Somali, Swahili, Pashto and Kinyarwanda. Names are blurred." />
     </div>
   </section>
 
+
+  <section class="chapter-orange frame proud" data-chapter="orange" aria-labelledby="proud-title">
+    <div class="room-head rise">
+      <h2 id="proud-title">Proud moments</h2>
+      <p>Students exiting English learner services, first graduates in their families, and a second grade class celebrating my return.</p>
+    </div>
+    <div class="proud-grid">
+      <Figure k="access-exit" sizes="(min-width: 900px) 30vw, 100vw" alt="Elementary students holding certificates under a banner reading We're Multilingual, faces and names blurred" caption="My students at Marnel C. Moorman with their certificates after passing the ACCESS test. The banner lists every student who has." />
+      <Figure k="grad-cert" sizes="(min-width: 900px) 30vw, 100vw" alt="Me beside a 12th grade student in a suit holding a Defense of Learning certificate, his face and name blurred" caption="After a 12th grade Defense of Learning at the Newcomer Academy." />
+      <Figure k="grad-flowers" sizes="(min-width: 900px) 30vw, 100vw" alt="Me with a graduate in a blue gown holding flowers and her diploma, her face blurred" caption="Graduation day for one of my students, the first in her family to finish high school." />
+      <Figure k="thank-you" class="wide" sizes="(min-width: 900px) 50vw, 100vw" alt="A second grade class holding a sign that says Thank you for letting us have Ms. Markwell back, faces and names blurred" caption="“Thank you for letting us have Ms. Markwell back!” A second grade class, the day I returned." />
+      <Figure k="pumpkin-patch" class="wide" sizes="(min-width: 900px) 50vw, 100vw" alt="Me and two other teachers with a group of students at a pumpkin farm, students' faces blurred" caption="A fall field trip to a pumpkin farm with my students." />
+    </div>
+    <p class="blur-note">Students' faces and names are blurred on purpose.</p>
+  </section>
+
   <section class="chapter-lime frame" data-chapter="lime" id="about" aria-labelledby="about-title">
     <div class="about">
-      <h2 id="about-title" class="rise"><span>About Skyler</span></h2>
-      <div class="row rise">
+      <h2 id="about-title" class="rise"><span>About me</span></h2>
+      <div class="row">
         <div class="facts-side">
-          {portrait && <img src={portrait.src} width={portrait.width} height={portrait.height} alt="Skyler Markwell, smiling, in a denim jacket" loading="lazy" />}
+          {portrait && <img src={portrait.src} width={portrait.width} height={portrait.height} alt="Me, smiling, in a denim jacket" loading="lazy" />}
           <dl>
             <div><dt>Based in</dt><dd>Louisville, Kentucky</dd></div>
             <div><dt>Teaching since</dt><dd>2022</dd></div>
@@ -136,20 +152,20 @@ const designs = [
           </dl>
         </div>
         <div>
-          <p class="lead">Skyler has taught multilingual learners since 2022: first as the program lead for a K–8 English learner program in Shelby County, now teaching health and early-childhood education at the ESL Newcomer Academy in Louisville. She builds courses from the ground up, writes the assessments that go with them, and makes sure families can read every page.</p>
+          <p class="lead">I’ve taught multilingual learners since 2022: first as the program lead for a K–8 English learner program in Shelby County, and now teaching health and early-childhood education at the ESL Newcomer Academy in Louisville. I build courses from the ground up, write the assessments that go with them, and make sure families can read every page.</p>
           <blockquote>
             <p>I have since learned that the process is the most important piece.</p>
-            <cite>Skyler, on teaching math, from her 2026 Insight to Action reflection</cite>
+            <cite>From my 2026 Insight to Action reflection, on teaching math</cite>
           </blockquote>
           <div class="math-pair">
             <Figure k="math-whiteboard" sizes="(min-width: 900px) 28vw, 50vw" alt="Student whiteboard with domino pictures labeled 3, 8, 9 and 6" />
             <Figure k="math-dominoes" sizes="(min-width: 900px) 28vw, 50vw" alt="A student's hand writing numbers next to dominoes on a whiteboard" />
           </div>
-          <p class="math-cap">Whiteboards from a math lesson built on dominoes: students show their thinking before the answer.</p>
+          <p class="math-cap">Whiteboards from one of my math lessons built on dominoes: students show their thinking before the answer.</p>
         </div>
       </div>
       <div class="row">
-        <Figure k="asbury-grad" class="grad" sizes="(min-width: 900px) 25vw, 70vw" alt="Skyler in cap and gown at her Asbury University graduation" caption="Master of Arts in Teaching, Asbury University, 2025." />
+        <Figure k="asbury-grad" class="grad" sizes="(min-width: 900px) 25vw, 70vw" alt="Me in cap and gown at my Asbury University graduation" caption="Master of Arts in Teaching, Asbury University, 2025." />
         <div class="record">
           <div>
             <h3>Experience</h3>
@@ -158,6 +174,8 @@ const designs = [
               <li><span>Instructional lead and career coach, SummerWorks</span><span class="y">2026</span></li>
               <li><span>Teacher of multilingual learners and program lead, Marnel C. Moorman K–8</span><span class="y">2022–26</span></li>
               <li><span>Elected to the Collaboration Leadership Team, Newcomer Academy</span><span class="y">2026</span></li>
+              <li><span>Attended the TESOL International Convention, Long Beach</span><span class="y">2025</span></li>
+              <li><span>Poster presentation, KYCEC conference, Louisville</span><span class="y">2022</span></li>
             </ul>
           </div>
           <div>

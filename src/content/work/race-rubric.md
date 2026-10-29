@@ -8,7 +8,7 @@ layout: "stack"
 tilt: 1.1
 featured: true
 order: 9
-lede: "A weekly rubric for short constructed responses using RACE: restate, answer, cite, explain. Each criterion is tied to a standard and described at five levels, so students can see exactly what moves a response from developing to meets."
+lede: "A weekly rubric I use for short constructed responses using RACE: restate, answer, cite, explain. Each criterion is tied to a standard and described at five levels, so students can see exactly what moves a response from developing to meets."
 alts: ["RACE rubric, page one: central idea and restatement, text evidence and citation, conventions", "RACE rubric, page two"]
 prompt: "What changed in students' writing once they used the rubric every week?"
 ---

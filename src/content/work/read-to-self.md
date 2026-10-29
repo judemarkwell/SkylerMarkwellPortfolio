@@ -8,7 +8,7 @@ layout: "single"
 tilt: 0.5
 featured: false
 order: 15
-lede: "A guide for classroom teachers on independent reading for English learners: why choosing their own books builds motivation, free leveled book sources that work on a Chromebook, and how to follow up with a conversation."
+lede: "A guide I wrote for classroom teachers on independent reading for English learners: why choosing their own books builds motivation, free leveled book sources that work on a Chromebook, and how to follow up with a conversation."
 alts: ["Read to Self Time teacher guide, page one"]
 prompt: "What did you see change when students chose their own books?"
 ---

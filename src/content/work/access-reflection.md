@@ -8,7 +8,7 @@ layout: "single"
 tilt: -0.6
 featured: false
 order: 12
-lede: "A reflection students complete after ACCESS results arrive: compare this year's score to last year's, name the hardest section, and set one realistic goal with a person who can help."
+lede: "A reflection my students complete after ACCESS results arrive: compare this year's score to last year's, name the hardest section, and set one realistic goal with a person who can help."
 alts: ["ACCESS reflection sheet, section one: understanding the results"]
 prompt: "What did students say when they compared their scores?"
 ---
