@@ -1,0 +1,74 @@
+---
+/* Photo carousel: a scroll-snap track (native swipe on phones), one photo centred with its
+   neighbours peeking in. Arrows, dots and Pause are always there; it advances on its own only
+   while visible, not hovered or focused, and never under reduced motion. */
+import { photo } from "../lib/site";
+
+interface Item { k: string; alt: string; caption: string }
+interface Props { items: Item[]; label: string }
+const { items: raw, label } = Astro.props;
+const items = raw.map((it) => ({ ...it, p: photo(it.k) })).filter((it) => it.p);
+const n = items.length;
+---
+<div class="carousel" role="region" aria-roledescription="carousel" aria-label={label}>
+  <div class="cr-track" id="cr-track" tabindex="0" aria-label={`${label}, scroll or use the buttons`}>
+    {items.map((it, i) => (
+      <figure class="cr-slide" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${n}`} data-i={i}>
+        <img src={it.p!.src} srcset={it.p!.srcset} sizes="(min-width: 960px) 40vw, 78vw" width={it.p!.width} height={it.p!.height} alt={it.alt} loading={i < 2 ? "eager" : "lazy"} decoding="async" />
+        <figcaption>{it.caption}</figcaption>
+      </figure>
+    ))}
+  </div>
+  <div class="cr-controls">
+    <button type="button" class="cr-btn" id="cr-prev" aria-label="Previous photo">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </button>
+    <div class="cr-dots" role="group" aria-label="Choose a photo">
+      {items.map((it, i) => (
+        <button type="button" class="cr-dot" data-i={i} aria-label={`Photo ${i + 1}: ${it.caption}`} aria-current={i === 0 ? "true" : "false"}></button>
+      ))}
+    </div>
+    <button type="button" class="cr-btn" id="cr-next" aria-label="Next photo">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </button>
+    <button type="button" class="cr-btn cr-pause" id="cr-pause" aria-pressed="false">Pause</button>
+  </div>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>(".carousel");
+  if (root) {
+    const track = root.querySelector<HTMLElement>("#cr-track")!;
+    const slides = [...root.querySelectorAll<HTMLElement>(".cr-slide")];
+    const dots = [...root.querySelectorAll<HTMLButtonElement>(".cr-dot")];
+    const pauseBtn = root.querySelector<HTMLButtonElement>("#cr-pause")!;
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let current = 0, userPaused = reduced, engaged = false, visible = false;
+
+    const go = (i: number) => {
+      const k = (i + slides.length) % slides.length;
+      const s = slides[k];
+      track.scrollTo({ left: s.offsetLeft - (track.clientWidth - s.clientWidth) / 2, behavior: reduced ? "auto" : "smooth" });
+    };
+    // Track which slide sits in the middle (works for swipes, buttons and keyboard scrolling).
+    const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (e.isIntersecting) {
+        current = +(e.target as HTMLElement).dataset.i!;
+        slides.forEach((s, k) => s.classList.toggle("active", k === current));
+        dots.forEach((d, k) => d.setAttribute("aria-current", String(k === current)));
+      }
+    }), { root: track, threshold: 0.6 });
+    slides.forEach((s) => io.observe(s));
+
+    root.querySelector("#cr-prev")!.addEventListener("click", () => go(current - 1));
+    root.querySelector("#cr-next")!.addEventListener("click", () => go(current + 1));
+    dots.forEach((d) => d.addEventListener("click", () => go(+d.dataset.i!)));
+    const setPaused = (v: boolean) => { userPaused = v; pauseBtn.textContent = v ? "Play" : "Pause"; pauseBtn.setAttribute("aria-pressed", String(v)); };
+    pauseBtn.addEventListener("click", () => setPaused(!userPaused));
+    setPaused(userPaused);
+    ["pointerenter", "focusin", "touchstart"].forEach((t) => root.addEventListener(t, () => (engaged = true), { passive: true }));
+    ["pointerleave", "focusout"].forEach((t) => root.addEventListener(t, () => (engaged = false)));
+    new IntersectionObserver(([e]) => (visible = e.isIntersecting), { threshold: 0.4 }).observe(root);
+    if (!reduced) setInterval(() => { if (!userPaused && !engaged && visible) go(current + 1); }, 4500);
+  }
+</script>

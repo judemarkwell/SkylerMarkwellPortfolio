@@ -555,5 +555,14 @@
   },
   "tesol-2025": {
     "src": "tesol-2025.heic"
+  },
+  "headshot": {
+    "src": "headshot.jpg"
+  },
+  "wku-grad": {
+    "src": "wku-grad.heic"
+  },
+  "wku-mascot": {
+    "src": "wku-mascot.heic"
   }
 }

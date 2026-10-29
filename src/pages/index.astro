@@ -4,6 +4,7 @@ import Base from "../layouts/Base.astro";
 import Sheets from "../components/Sheets.astro";
 import { u, previewsFor, headshot, photo } from "../lib/site";
 import Figure from "../components/Figure.astro";
+import Carousel from "../components/Carousel.astro";
 
 const all = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
 const featured = all.filter((w) => w.data.featured);
@@ -65,11 +66,33 @@ const designs = [
     </div>
   </section>
 
+
+  <section class="chapter-paper frame snapshots" data-chapter="paper" aria-labelledby="snap-title">
+    <div class="snap-copy rise">
+      <h2 id="snap-title">Snapshots</h2>
+      <p>Me, my students, and a few days I’m proud of. Swipe or use the arrows to look around.</p>
+      <p class="blur-note">Students’ faces and names are blurred on purpose.</p>
+    </div>
+    <Carousel label="Snapshots" items={[
+      { k: "headshot", alt: "Me, smiling, in a denim jacket", caption: "Hi, I’m Skyler. I teach multilingual learners in Louisville, Kentucky." },
+      { k: "grad-flowers", alt: "Me with a graduate in a blue gown holding flowers, her face blurred", caption: "Graduation day for one of my students, the first in her family to finish high school." },
+      { k: "access-exit", alt: "Students holding certificates under a We're Multilingual banner, faces blurred", caption: "My students after passing the ACCESS test and exiting English learner services." },
+      { k: "kycec-skyler", alt: "Me kneeling beside my research poster", caption: "Presenting my peer-tutoring research at KYCEC in Louisville, 2022." },
+      { k: "thank-you", alt: "A second grade class with a thank-you sign for Ms. Markwell, faces blurred", caption: "A second grade class celebrating the day I came back." },
+      { k: "asbury-grad", alt: "Me in cap and gown at Asbury University", caption: "Finishing my Master of Arts in Teaching at Asbury University, 2025." },
+      { k: "grad-cert", alt: "Me beside a 12th grade student holding a certificate, his face blurred", caption: "After a 12th grade Defense of Learning at the Newcomer Academy." },
+      { k: "tesol-2025", alt: "Me with four colleagues on the pier in Long Beach", caption: "With colleagues at the TESOL convention in Long Beach, 2025." },
+      { k: "pumpkin-patch", alt: "Me and two teachers with students at a pumpkin farm, students' faces blurred", caption: "A fall field trip with my students." },
+      { k: "wku-grad", alt: "Me in a graduation gown holding a WKU Alumni flag", caption: "Graduating from Western Kentucky University, 2022." },
+      { k: "wku-mascot", alt: "Me in a red dress with WKU's mascot, Big Red", caption: "With Big Red at Western Kentucky University." },
+    ]} />
+  </section>
+
   <section id="work" aria-labelledby="work-title">
     <div class="chapter-sky frame" data-chapter="sky">
       <div class="section-head rise">
         <h2 id="work-title">On the desk</h2>
-        <p>Seventeen things I made for real classrooms. Pick up a sheet to see it up close.</p>
+        <p>A sample of what I’ve made for real classrooms. Pick up a sheet to see it up close.</p>
       </div>
     </div>
     <div class="chapter-desk frame desk-surface" data-chapter="desk">
@@ -84,7 +107,7 @@ const designs = [
         ))}
       </ul>
       <div class="ledger rise">
-        <h3>All seventeen pieces</h3>
+        <h3>More of my work</h3>
         <ul>
           {all.map((w) => (
             <li><a href={u(`/work/${w.id}/`)}><span class="t">{w.data.title}</span><span class="k">{w.data.kind}</span></a></li>
