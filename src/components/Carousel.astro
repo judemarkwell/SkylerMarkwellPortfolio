@@ -44,31 +44,45 @@ const n = items.length;
     const pauseBtn = root.querySelector<HTMLButtonElement>("#cr-pause")!;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
     let current = 0, userPaused = reduced, engaged = false, visible = false;
+    // Any change of slide, by swipe, arrow, dot, key or the timer itself, restarts the clock.
+    let lastMove = performance.now();
+    const DELAY = 5000;
 
     const go = (i: number) => {
       const k = (i + slides.length) % slides.length;
       const s = slides[k];
-      track.scrollTo({ left: s.offsetLeft - (track.clientWidth - s.clientWidth) / 2, behavior: reduced ? "auto" : "smooth" });
+      const t = track.getBoundingClientRect(), r = s.getBoundingClientRect();
+      track.scrollTo({ left: track.scrollLeft + (r.left - t.left) - (t.width - r.width) / 2, behavior: reduced ? "auto" : "smooth" });
     };
-    // Track which slide sits in the middle (works for swipes, buttons and keyboard scrolling).
-    const io = new IntersectionObserver((entries) => entries.forEach((e) => {
-      if (e.isIntersecting) {
-        current = +(e.target as HTMLElement).dataset.i!;
-        slides.forEach((s, k) => s.classList.toggle("active", k === current));
-        dots.forEach((d, k) => d.setAttribute("aria-current", String(k === current)));
-      }
-    }), { root: track, threshold: 0.6 });
-    slides.forEach((s) => io.observe(s));
+    // The active slide is whichever sits closest to the middle (works for swipes, buttons and keys).
+    const settle = () => {
+      const t = track.getBoundingClientRect(), mid = t.left + t.width / 2;
+      let best = 0, bestD = Infinity;
+      slides.forEach((s, k) => { const r = s.getBoundingClientRect(); const d = Math.abs(r.left + r.width / 2 - mid); if (d < bestD) { bestD = d; best = k; } });
+      if (best !== current) lastMove = performance.now();
+      current = best;
+      slides.forEach((s, k) => s.classList.toggle("active", k === current));
+      dots.forEach((d, k) => d.setAttribute("aria-current", String(k === current)));
+    };
+    let raf = 0;
+    track.addEventListener("scroll", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(settle); }, { passive: true });
+    addEventListener("resize", settle);
 
-    root.querySelector("#cr-prev")!.addEventListener("click", () => go(current - 1));
-    root.querySelector("#cr-next")!.addEventListener("click", () => go(current + 1));
-    dots.forEach((d) => d.addEventListener("click", () => go(+d.dataset.i!)));
+    const manual = (i: number) => { lastMove = performance.now(); go(i); };
+    root.querySelector("#cr-prev")!.addEventListener("click", () => manual(current - 1));
+    root.querySelector("#cr-next")!.addEventListener("click", () => manual(current + 1));
+    dots.forEach((d) => d.addEventListener("click", () => manual(+d.dataset.i!)));
+    ["pointerdown", "wheel", "keydown", "scroll"].forEach((t) => track.addEventListener(t, () => (lastMove = performance.now()), { passive: true }));
     const setPaused = (v: boolean) => { userPaused = v; pauseBtn.textContent = v ? "Play" : "Pause"; pauseBtn.setAttribute("aria-pressed", String(v)); };
     pauseBtn.addEventListener("click", () => setPaused(!userPaused));
     setPaused(userPaused);
     ["pointerenter", "focusin", "touchstart"].forEach((t) => root.addEventListener(t, () => (engaged = true), { passive: true }));
     ["pointerleave", "focusout"].forEach((t) => root.addEventListener(t, () => (engaged = false)));
     new IntersectionObserver(([e]) => (visible = e.isIntersecting), { threshold: 0.4 }).observe(root);
-    if (!reduced) setInterval(() => { if (!userPaused && !engaged && visible) go(current + 1); }, 4500);
+    settle();
+    if (!reduced) setInterval(() => {
+      if (userPaused || engaged || !visible) { lastMove = performance.now(); return; }
+      if (performance.now() - lastMove >= DELAY) { lastMove = performance.now(); go(current + 1); }
+    }, 250);
   }
 </script>
