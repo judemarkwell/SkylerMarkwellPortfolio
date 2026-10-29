@@ -1,0 +1,105 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { u, previewsFor } from "../../lib/site";
+import Figure from "../../components/Figure.astro";
+
+export async function getStaticPaths() {
+  const all = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
+  return all.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, prev: all[(i - 1 + all.length) % all.length], next: all[(i + 1) % all.length] },
+  }));
+}
+
+const { entry, prev, next } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const pages = previewsFor(entry.id);
+const hero = pages[0];
+---
+<Base title={`${d.title} · Skyler Markwell`} description={d.lede} current="work" chapter="desk">
+  <section class="chapter-desk frame piece-top" data-chapter="desk">
+    <a class="back" href={u("/#work")}>
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      Back to the desk
+    </a>
+    <div class="piece-grid">
+      <div>
+        {hero ? (
+          <span class="paper hero-paper" style={`view-transition-name: sheet-${entry.id}`}>
+            <img id="hero-img" src={hero.src} width={hero.width} height={hero.height} alt={d.alts[0]} />
+          </span>
+        ) : (
+          <span class="paper hero-paper blank-sheet" style={`aspect-ratio: 8.5 / 11; view-transition-name: sheet-${entry.id}`}>Preview coming soon</span>
+        )}
+        {pages.length > 1 && (
+          <ul class="thumbs" aria-label="Pages">
+            {pages.map((p, k) => (
+              <li><button type="button" aria-current={k === 0 ? "true" : "false"} aria-label={`Show page ${k + 1}: ${d.alts[k] ?? ""}`} data-src={p.src} data-w={p.width} data-h={p.height} data-alt={d.alts[k] ?? ""}><img src={p.src} alt="" loading="lazy" /></button></li>
+            ))}
+          </ul>
+        )}
+        <p class="thumbs-note">{pages.length > 1 ? `${pages.length} pages shown. ` : ""}The full file will be available to download here.</p>
+      </div>
+      <div class="piece-copy">
+        <h1>{d.title}</h1>
+        <p class="lede">{d.lede}</p>
+        <dl class="piece-facts">
+          <dt>Kind of work</dt><dd>{d.kind}</dd>
+          <dt>Made for</dt><dd>{d.madeFor}</dd>
+          <dt>Format</dt><dd>{d.format}</dd>
+          <dt>Languages</dt><dd>{d.languages}</dd>
+        </dl>
+        <aside class="sticky" aria-labelledby="why">
+          <h2 id="why">Why I made it</h2>
+          <p>{d.prompt}</p>
+          <p class="note">Draft: my answer goes here.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+  <section class="chapter-paper frame" data-chapter="paper">
+    {d.photos.length > 0 && (
+      <div class="in-class">
+        <h2>In the classroom</h2>
+        {d.photos.map((ph) => <Figure k={ph.key} alt={ph.alt} caption={ph.caption} sizes="(min-width: 960px) 900px, 100vw" />)}
+      </div>
+    )}
+    <div class="prose">
+      <Content />
+    </div>
+    <nav class="nextprev" aria-label="More work">
+      <a href={u(`/work/${prev.id}/`)}><span class="d">Previous</span><span class="t">{prev.data.title}</span></a>
+      <a class="next" href={u(`/work/${next.id}/`)}><span class="d">Next</span><span class="t">{next.data.title}</span></a>
+    </nav>
+  </section>
+</Base>
+
+<script>
+  const hero = document.getElementById("hero-img") as HTMLImageElement | null;
+  const thumbs = document.querySelectorAll<HTMLButtonElement>(".thumbs button");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  thumbs.forEach((b) => b.addEventListener("click", () => {
+    if (!hero) return;
+    const swap = () => {
+      hero.src = b.dataset.src!; hero.width = +b.dataset.w!; hero.height = +b.dataset.h!; hero.alt = b.dataset.alt!;
+      thumbs.forEach((x) => x.setAttribute("aria-current", String(x === b)));
+    };
+    const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown };
+    if (doc.startViewTransition && !reduced) doc.startViewTransition(swap); else swap();
+  }));
+
+  // Flip cards (Spanish vocabulary)
+  document.querySelectorAll<HTMLElement>(".flipcards").forEach((box) => {
+    const cards: [string, string, string][] = JSON.parse(box.dataset.cards || "[]");
+    box.innerHTML = cards.map(([en, es, cat]) =>
+      `<button type="button" class="card" aria-pressed="false"><span class="inner"><span class="face en-face">${en}<small>${cat}</small></span><span class="face es-face" lang="es" aria-hidden="true">${es}<small>Español</small></span></span></button>`).join("");
+    box.querySelectorAll<HTMLButtonElement>(".card").forEach((c) => c.addEventListener("click", () => {
+      const on = c.getAttribute("aria-pressed") !== "true";
+      c.setAttribute("aria-pressed", String(on));
+      c.querySelector(".en-face")!.setAttribute("aria-hidden", String(on));
+      c.querySelector(".es-face")!.setAttribute("aria-hidden", String(!on));
+    }));
+  });
+</script>

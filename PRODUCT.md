@@ -42,13 +42,14 @@ Her materials are designed for learners who are still acquiring English: picture
 - Public contact: email (markwell.skyler@gmail.com) and LinkedIn only. No phone number on the site or the public resume PDF.
 - Name: the site uses "Skyler Markwell" only. Site copy never mentions her previous surname. Open decision: the thesis PDF title page and the ACCESS FAQ text show the previous surname; decide whether to publish those files as-is, redact, or show summaries only.
 - The repo is public. Source documents are not committed; only reviewed previews and PDFs are.
+- Every photo Skyler provided is cleared for public use (confirmed by the client), with student faces and names blurred.
 - Undecided: custom domain, analytics, Spanish version of the site.
 
 ## Brand Commitments
 
 - Name: Skyler Markwell.
 - Headshot provided (portrait, denim jacket, red lip).
-- Voice: warm, plain, confident; first person in her own notes.
+- Voice: warm, plain, confident, and always first person. The site is Skyler speaking ("I built", "my students"), never "Skyler" or "she".
 
 ## Evidence on Hand
 
@@ -74,7 +75,7 @@ Excluded from the site: NCA IEP goals/minutes and ECE ELA data (protected studen
 2. Write each piece for both readers: the classroom context and the design decision, in plain language.
 3. Show the learner. Every piece names who it was for and what they needed.
 4. Never invent. Her reasons, outcomes, and quotes come from her.
-5. Protect students and colleagues. No student names, faces, or records; check every file before it goes public.
+5. Protect students. Student faces and names are always blurred, and student records never appear; check every file before it goes public.
 
 ## Accessibility & Inclusion
 

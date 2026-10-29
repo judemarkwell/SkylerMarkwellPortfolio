@@ -1,0 +1,23 @@
+---
+import { u, EMAIL, LINKEDIN } from "../lib/site";
+const [user, domain] = EMAIL.split("@");
+---
+<footer class="site-footer chapter-sky frame" data-chapter="sky" id="contact">
+  <div class="notes">
+    <p>Skyler Markwell, teacher of multilingual learners and curriculum designer.</p>
+    <p>Louisville, Kentucky. Open to instructional design and multilingual-learner roles.</p>
+    <a href="#top">Back to top</a>
+  </div>
+  <div class="contact">
+    <h2>Get in touch</h2>
+    <p><a class="email-line" href={`mailto:${EMAIL}`}><span>{user}</span><span>@{domain}</span></a></p>
+  </div>
+  <div class="meta">
+    <nav aria-label="Elsewhere">
+      <a href={LINKEDIN} rel="me">LinkedIn</a>
+      <a href={u("/resume/")}>Resume</a>
+    </nav>
+    <p>Every preview on this site is a classroom material I made.</p>
+    <p>Louisville, 2026</p>
+  </div>
+</footer>

@@ -1,0 +1,26 @@
+---
+import type { Preview } from "../lib/site";
+interface Props { slug: string; layout: string; tilt: number; pages: Preview[]; pairLabel?: string; eager?: boolean }
+const { slug, layout, tilt, pages, pairLabel, eager = false } = Astro.props;
+const top = pages[0];
+const unders = layout === "single" ? [] : pages.slice(1, 3);
+---
+<span class={`sheets ${layout}`} style={`--r:${tilt}deg`}>
+  {top ? (
+    <span class="paper top" style={`aspect-ratio:${top.width} / ${top.height}; view-transition-name: sheet-${slug}`}>
+      <img src={top.src} width={top.width} height={top.height} alt="" loading={eager ? "eager" : "lazy"} decoding="async" />
+    </span>
+  ) : (
+    <span class="paper top blank-sheet" style={`aspect-ratio: 8.5 / 11; view-transition-name: sheet-${slug}`}>Preview coming soon</span>
+  )}
+  {unders.map((p) => (
+    <span class="paper under"><img src={p.src} width={p.width} height={p.height} alt="" loading="lazy" decoding="async" /></span>
+  ))}
+  {layout === "clipped" && (
+    <svg class="clip" viewBox="0 0 18 52" aria-hidden="true"><path d="M6 44V12a4.5 4.5 0 0 1 9 0v30a7 7 0 0 1-14 0V15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" /></svg>
+  )}
+  {layout === "ring" && (
+    <><svg class="ring-loop" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="14" fill="none" stroke="currentColor" stroke-width="3.5" /></svg><span class="hole"></span></>
+  )}
+  {layout === "pair" && pairLabel && <span class="lang-tab" aria-hidden="true">{pairLabel}</span>}
+</span>

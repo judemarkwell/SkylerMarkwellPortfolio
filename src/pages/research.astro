@@ -1,0 +1,47 @@
+---
+import Base from "../layouts/Base.astro";
+import { u } from "../lib/site";
+import Figure from "../components/Figure.astro";
+---
+<Base title="Parents Do Care · Skyler Markwell" description="Skyler Markwell's action research on open dialogue between teachers and Spanish-speaking immigrant parents." current="research" chapter="orange">
+  <section class="chapter-orange frame page-head" data-chapter="orange">
+    <h1>Parents do care</h1>
+    <p>My action research on what happens when teachers sit down with Spanish-speaking immigrant parents and ask, instead of tell. Master of Arts in Teaching, Asbury University, 2025.</p>
+  </section>
+  <section class="chapter-paper frame" data-chapter="paper">
+    <div class="prose">
+      <h2>The question</h2>
+      <p>Spanish-speaking immigrant parents are deeply engaged in their children's learning at home, yet schools sometimes assume these parents do not care about their children's success. My study asks what effect open dialogue has on parent communication, and on how teachers see these families.</p>
+      <p>Four research questions guide it:</p>
+      <ol>
+        <li>How does parent engagement affect student success?</li>
+        <li>What barriers exist to immigrant families in school engagement?</li>
+        <li>What can schools do to overcome these barriers?</li>
+        <li>What effect will open dialogue have on parent communication?</li>
+      </ol>
+      <h2>The study design</h2>
+      <p>The study uses spring parent-teacher conferences, an event families already plan around. One core teacher per grade level at a K–8 school with a large Spanish-speaking English learner population chooses one family who would benefit most from a one-to-one conversation. Before the conference, the teacher reads about common breakdowns in cross-cultural communication and receives a set of open-ended prompts that position the parent as the expert on their child. Families receive the same questions ahead of time, with interpretation provided.</p>
+      <p>A mixed-design questionnaire, combining Likert-scale and open-ended questions, captures how teachers' perceptions of parent engagement change.</p>
+      <h2>What I expect to find</h2>
+      <p>I hypothesize that open dialogue reduces the barriers between teachers and parents by opening a line of empathetic, culturally inclusive communication that treats parents as experts on their children, which in turn supports engagement and student achievement.</p>
+      <p>Findings will be added here.</p>
+
+      <h2>Earlier research: peer tutoring</h2>
+      <p>As an undergraduate at Western Kentucky University, I reviewed three studies of peer tutoring with Spanish-speaking English learners and presented the results as a poster at the Kentucky Council for Exceptional Children conference in Louisville in 2022.</p>
+      <div class="poster-pair">
+        <Figure k="kycec-skyler" sizes="(min-width: 900px) 30vw, 100vw" alt="Me kneeling beside my research poster at the KYCEC 2022 conference" />
+        <Figure k="kycec-poster" sizes="(min-width: 900px) 30vw, 100vw" alt="Research poster: The Effect of Peer Tutoring on ELL Students' Academic Achievement, by Skyler Markwell, Western Kentucky University" />
+      </div>
+      <p><strong>What the studies found.</strong> Through peer tutoring, English learners gain language acquisition, social skills, access to classroom content, and academic validity.</p>
+      <p><strong>What to plan for.</strong> Coexisting disabilities, the cultural context of asking for help, teacher knowledge of how to implement it, and the extra time it takes.</p>
+
+      <h2>Bringing it back to my school</h2>
+      <p>After the TESOL International Convention in Long Beach in 2025, I led a station for my colleagues on helping beginning writers analyze informational texts: how a student's cultural expectations of writing shape purpose, tone and what they think is worth saying.</p>
+      <Figure k="tesol-2025" sizes="(min-width: 900px) 48rem, 100vw" alt="Me with four colleagues on the pier in Long Beach, a Ferris wheel behind us" caption="With colleagues in Long Beach at TESOL 2025." />
+    </div>
+    <nav class="nextprev" aria-label="More">
+      <a href={u("/#work")}><span class="d">See the work it shaped</span><span class="t">Family guides on the desk</span></a>
+      <a class="next" href={u("/resume/")}><span class="d">Next</span><span class="t">Resume</span></a>
+    </nav>
+  </section>
+</Base>

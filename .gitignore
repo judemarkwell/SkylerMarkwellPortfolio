@@ -5,3 +5,4 @@ dist/
 .env
 prototypes/**/img/
 source-materials/
+.taste-skill/inspect/

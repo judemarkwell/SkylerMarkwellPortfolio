@@ -1,0 +1,12 @@
+---
+import { photo } from "../lib/site";
+interface Props { k: string; alt: string; caption?: string; sizes?: string; class?: string; eager?: boolean }
+const { k, alt, caption, sizes = "(min-width: 960px) 50vw, 100vw", class: cls, eager = false } = Astro.props;
+const p = photo(k);
+---
+{p && (
+  <figure class:list={["photo", cls]}>
+    <img src={p.src} srcset={p.srcset} sizes={sizes} width={p.width} height={p.height} alt={alt} loading={eager ? "eager" : "lazy"} decoding="async" />
+    {caption && <figcaption>{caption}</figcaption>}
+  </figure>
+)}

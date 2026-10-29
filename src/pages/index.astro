@@ -1,0 +1,225 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import Sheets from "../components/Sheets.astro";
+import { u, previewsFor, headshot, photo } from "../lib/site";
+import Figure from "../components/Figure.astro";
+
+const all = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
+const featured = all.filter((w) => w.data.featured);
+const bySlug = Object.fromEntries(all.map((w) => [w.id, w]));
+const portrait = headshot();
+const tour = photo("classroom-tour");
+
+// The live thing: a learner finishes the sentence, and the piece made for them is lifted.
+const frames = [
+  { end: "ask for a break", who: "A student who doesn't have the English words yet.", slug: "coping-poster" },
+  { end: "show what I know before I can write it", who: "A student whose writing hasn't caught up with their thinking.", slug: "columbus" },
+  { end: "understand my child's test scores", who: "A parent who reads Spanish.", slug: "access-faqs" },
+  { end: "talk with a newcomer on day one", who: "A teacher who doesn't speak Spanish.", slug: "spanish-vocabulary" },
+  { end: "learn health in my new language", who: "A high school newcomer.", slug: "health" },
+  { end: "solve a problem with my class", who: "A newcomer practicing English in a circle.", slug: "restorative-circles" },
+].map((f) => ({ ...f, title: bySlug[f.slug].data.title, href: u(`/work/${f.slug}/`), img: previewsFor(f.slug)[0] }));
+const first = frames[0];
+
+const designs = [
+  { big: "Courses", small: "Newcomer Health, 7 units", slug: "health" },
+  { big: "Assessments", small: "Tasks, rubrics, probes", slug: "columbus" },
+  { big: "Family guides", small: "In English and Spanish", slug: "access-faqs" },
+  { big: "Class systems", small: "PBIS, circles, check-outs", slug: "class-expectations" },
+  { big: "Lessons", small: "In three languages", slug: "compare-contrast" },
+  { big: "Teacher tools", small: "Cards, guides, stems", slug: "spanish-vocabulary" },
+];
+---
+<Base
+  title="Skyler Markwell, teacher and curriculum designer"
+  description="Courses, assessments, family guides and classroom systems designed for multilingual learners by Skyler Markwell, Louisville, Kentucky."
+  chapter="paper"
+>
+  <section class="hero" data-chapter="paper" aria-labelledby="name">
+    <div class="field-top"></div>
+    <div class="field-bottom" data-chapter="orange"></div>
+    <h1 class="hero-title" id="name">
+      <span class="ink above"><span>Skyler</span><span>Markwell</span></span>
+      <span class="ink below" aria-hidden="true"><span>Skyler</span><span>Markwell</span></span>
+    </h1>
+    <p class="hero-sub">Teacher of multilingual learners and curriculum designer. I build learning for people still learning English, and for the families and teachers around them.</p>
+  </section>
+
+  <section class="chapter-orange frame" data-chapter="orange" aria-labelledby="finish-title">
+    <div class="finish">
+      <div class="rise">
+        <h2 id="finish-title">Finish the sentence</h2>
+        <p class="statement" id="statement" aria-live="polite">I can <span class="blank" id="blank">{first.end}</span>.</p>
+        <p class="who" id="who">{first.who}</p>
+        <ul class="choices" id="choices" aria-label="Choose how the sentence ends">
+          {frames.map((f, i) => (
+            <li><button type="button" aria-pressed={i === 0 ? "true" : "false"} data-end={f.end} data-who={f.who} data-slug={f.slug} data-title={f.title} data-href={f.href} data-img={f.img?.src ?? ""} data-w={f.img?.width ?? ""} data-h={f.img?.height ?? ""}>{f.end}</button></li>
+          ))}
+        </ul>
+      </div>
+      <a class="made-this rise" id="made-this" href={first.href}>
+        {first.img && <span class="paper sheet-pic"><img id="made-img" src={first.img.src} width={first.img.width} height={first.img.height} alt="" /></span>}
+        <span class="caption">Made for them: <strong id="made-title">{first.title}</strong></span>
+      </a>
+    </div>
+  </section>
+
+  <section id="work" aria-labelledby="work-title">
+    <div class="chapter-sky frame" data-chapter="sky">
+      <div class="section-head rise">
+        <h2 id="work-title">On the desk</h2>
+        <p>Seventeen things I made for real classrooms. Pick up a sheet to see it up close.</p>
+      </div>
+    </div>
+    <div class="chapter-desk frame desk-surface" data-chapter="desk">
+      <ul class="desk rise">
+        {featured.map((w, i) => (
+          <li class={i === 0 ? "feature" : undefined}>
+            <a class="piece" href={u(`/work/${w.id}/`)} data-slug={w.id}>
+              <Sheets slug={w.id} layout={w.data.layout} tilt={w.data.tilt} pages={previewsFor(w.id)} pairLabel={w.data.pairLabel} />
+              <span class="label"><span class="name">{w.data.title}</span><span class="meta">{w.data.kind} · {w.data.languages}</span></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="ledger rise">
+        <h3>All seventeen pieces</h3>
+        <ul>
+          {all.map((w) => (
+            <li><a href={u(`/work/${w.id}/`)}><span class="t">{w.data.title}</span><span class="k">{w.data.kind}</span></a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter-night frame poster" data-chapter="night" aria-labelledby="design-title">
+    <h2 id="design-title">What I design</h2>
+    <ul class="rise">
+      {designs.map((d) => (
+        <li><a href={u(`/work/${d.slug}/`)}><span class="big">{d.big}</span><span class="small">{d.small}</span></a></li>
+      ))}
+    </ul>
+  </section>
+
+
+  <section class="chapter-night frame room" data-chapter="night" aria-labelledby="room-title">
+    <div class="room-head rise">
+      <h2 id="room-title">Where the work happens</h2>
+      <p>Picture supports on every wall, flags from home countries, and sentence frames students can finish in their own languages.</p>
+    </div>
+    <div class="room-grid">
+      {tour && (
+        <figure class="photo room-video">
+          <video id="tour" muted loop playsinline preload="metadata" poster={tour.poster} width={tour.width} height={tour.height} aria-label="A slow pan across my classroom: the door, encouraging posters, a clock, and standing tables under string lights">
+            <source src={tour.video} type="video/mp4" />
+          </video>
+          <button type="button" class="vid-toggle" id="tour-toggle" aria-pressed="false">Pause</button>
+          <figcaption>My classroom.</figcaption>
+        </figure>
+      )}
+      <Figure k="grateful-board" sizes="(min-width: 900px) 45vw, 100vw" alt="Hallway board titled Grateful in Every Language: a paper tree whose leaves are student sentences, with names blurred" caption="Grateful in Every Language: students finished “I am thankful for…” on leaves in English, Spanish, Arabic, Somali, Swahili, Pashto and Kinyarwanda. Names are blurred." />
+    </div>
+  </section>
+
+
+  <section class="chapter-orange frame proud" data-chapter="orange" aria-labelledby="proud-title">
+    <div class="room-head rise">
+      <h2 id="proud-title">Proud moments</h2>
+      <p>Students exiting English learner services, first graduates in their families, and a second grade class celebrating my return.</p>
+    </div>
+    <div class="proud-grid">
+      <Figure k="access-exit" sizes="(min-width: 900px) 30vw, 100vw" alt="Elementary students holding certificates under a banner reading We're Multilingual, faces and names blurred" caption="My students at Marnel C. Moorman with their certificates after passing the ACCESS test. The banner lists every student who has." />
+      <Figure k="grad-cert" sizes="(min-width: 900px) 30vw, 100vw" alt="Me beside a 12th grade student in a suit holding a Defense of Learning certificate, his face and name blurred" caption="After a 12th grade Defense of Learning at the Newcomer Academy." />
+      <Figure k="grad-flowers" sizes="(min-width: 900px) 30vw, 100vw" alt="Me with a graduate in a blue gown holding flowers and her diploma, her face blurred" caption="Graduation day for one of my students, the first in her family to finish high school." />
+      <Figure k="thank-you" class="wide" sizes="(min-width: 900px) 50vw, 100vw" alt="A second grade class holding a sign that says Thank you for letting us have Ms. Markwell back, faces and names blurred" caption="“Thank you for letting us have Ms. Markwell back!” A second grade class, the day I returned." />
+      <Figure k="pumpkin-patch" class="wide" sizes="(min-width: 900px) 50vw, 100vw" alt="Me and two other teachers with a group of students at a pumpkin farm, students' faces blurred" caption="A fall field trip to a pumpkin farm with my students." />
+    </div>
+    <p class="blur-note">Students' faces and names are blurred on purpose.</p>
+  </section>
+
+  <section class="chapter-lime frame" data-chapter="lime" id="about" aria-labelledby="about-title">
+    <div class="about">
+      <h2 id="about-title" class="rise"><span>About me</span></h2>
+      <div class="row">
+        <div class="facts-side">
+          {portrait && <img src={portrait.src} width={portrait.width} height={portrait.height} alt="Me, smiling, in a denim jacket" loading="lazy" />}
+          <dl>
+            <div><dt>Based in</dt><dd>Louisville, Kentucky</dd></div>
+            <div><dt>Teaching since</dt><dd>2022</dd></div>
+            <div><dt>Languages</dt><dd>English, conversational Spanish</dd></div>
+          </dl>
+        </div>
+        <div>
+          <p class="lead">I’ve taught multilingual learners since 2022: first as the program lead for a K–8 English learner program in Shelby County, and now teaching health and early-childhood education at the ESL Newcomer Academy in Louisville. I build courses from the ground up, write the assessments that go with them, and make sure families can read every page.</p>
+          <blockquote>
+            <p>I have since learned that the process is the most important piece.</p>
+            <cite>From my 2026 Insight to Action reflection, on teaching math</cite>
+          </blockquote>
+          <div class="math-pair">
+            <Figure k="math-whiteboard" sizes="(min-width: 900px) 28vw, 50vw" alt="Student whiteboard with domino pictures labeled 3, 8, 9 and 6" />
+            <Figure k="math-dominoes" sizes="(min-width: 900px) 28vw, 50vw" alt="A student's hand writing numbers next to dominoes on a whiteboard" />
+          </div>
+          <p class="math-cap">Whiteboards from one of my math lessons built on dominoes: students show their thinking before the answer.</p>
+        </div>
+      </div>
+      <div class="row">
+        <Figure k="asbury-grad" class="grad" sizes="(min-width: 900px) 25vw, 70vw" alt="Me in cap and gown at my Asbury University graduation" caption="Master of Arts in Teaching, Asbury University, 2025." />
+        <div class="record">
+          <div>
+            <h3>Experience</h3>
+            <ul>
+              <li><span>Teacher of multilingual learners, ESL Newcomer Academy (JCPS)</span><span class="y">2026–</span></li>
+              <li><span>Instructional lead and career coach, SummerWorks</span><span class="y">2026</span></li>
+              <li><span>Teacher of multilingual learners and program lead, Marnel C. Moorman K–8</span><span class="y">2022–26</span></li>
+              <li><span>Elected to the Collaboration Leadership Team, Newcomer Academy</span><span class="y">2026</span></li>
+              <li><span>Attended the TESOL International Convention, Long Beach</span><span class="y">2025</span></li>
+              <li><span>Poster presentation, KYCEC conference, Louisville</span><span class="y">2022</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Education</h3>
+            <ul>
+              <li><span>MA in Teaching, English as a Second Language, Asbury University</span><span class="y">2025</span></li>
+              <li><span>BS, Elementary and Exceptional Child Education, Western Kentucky University</span><span class="y">2022</span></li>
+              <li><span>UFLI literacy intervention training</span><span class="y">2025</span></li>
+              <li><span>Google Certified Educator, Level 2</span><span class="y">2020</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Classroom loop: plays muted, pauses for reduced motion, and always has a pause control.
+  const tour = document.getElementById("tour") as HTMLVideoElement | null;
+  const tourBtn = document.getElementById("tour-toggle") as HTMLButtonElement | null;
+  if (tour && tourBtn) {
+    const set = (playing: boolean) => { tourBtn.textContent = playing ? "Pause" : "Play"; tourBtn.setAttribute("aria-pressed", String(!playing)); };
+    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reducedMotion) {
+      const io = new IntersectionObserver(([e]) => { if (e.isIntersecting && tourBtn.dataset.user !== "paused") tour.play().then(() => set(true)).catch(() => set(false)); else if (!e.isIntersecting) tour.pause(); });
+      io.observe(tour);
+    } else set(false);
+    tourBtn.addEventListener("click", () => {
+      if (tour.paused) { tourBtn.dataset.user = ""; tour.play().then(() => set(true)).catch(() => {}); }
+      else { tourBtn.dataset.user = "paused"; tour.pause(); set(false); }
+    });
+  }
+
+  const buttons = document.querySelectorAll<HTMLButtonElement>("#choices button");
+  const blank = document.getElementById("blank")!, who = document.getElementById("who")!, statement = document.getElementById("statement")!;
+  const made = document.getElementById("made-this") as HTMLAnchorElement, img = document.getElementById("made-img") as HTMLImageElement | null, title = document.getElementById("made-title")!;
+  const lift = (slug: string) => document.querySelectorAll(".desk .piece").forEach((p) => p.classList.toggle("chosen", (p as HTMLElement).dataset.slug === slug));
+  buttons.forEach((b) => b.addEventListener("click", () => {
+    buttons.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    const d = b.dataset;
+    blank.textContent = d.end!; who.textContent = d.who!; title.textContent = d.title!; made.href = d.href!;
+    if (img && d.img) { img.src = d.img; img.width = +d.w!; img.height = +d.h!; }
+    statement.classList.remove("swap"); void statement.offsetWidth; statement.classList.add("swap");
+    lift(d.slug!);
+  }));
+</script>
