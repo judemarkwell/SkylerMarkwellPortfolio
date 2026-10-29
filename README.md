@@ -14,8 +14,8 @@ npm run build
 
 - Product context: `PRODUCT.md`. Visual system: `DESIGN.md`.
 - Each portfolio piece is a Markdown file in `src/content/work/`. Its preview pages are listed in `scripts/previews.json`.
-- `source-materials/` (Skyler's original files), `public/previews/` and `public/photos/` (rendered images) are **not committed**. The repo is public, and images go in only after Skyler approves which documents are published. Until then the site shows "Preview coming soon" sheets when built without them.
-- Deploy: the GitHub Pages workflow runs manually (Actions → Deploy to GitHub Pages).
+- `source-materials/` (Skyler's original files) is **not committed**. The rendered, privacy-checked images in `public/previews/` and `public/photos/` are, because the site needs them to deploy. Re-run `npm run previews` / `npm run photos` after changing a source file.
+- Deploy: every push to `main` deploys to GitHub Pages (Actions → Deploy to GitHub Pages can also be run by hand).
 
 ## Design skills (vendored)
 

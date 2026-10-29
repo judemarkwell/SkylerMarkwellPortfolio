@@ -1,7 +1,8 @@
-# Deploys the site to GitHub Pages. Manual only for now: preview images are not in the
-# repo until Skyler approves which documents are public (see README).
+# Deploys the site to GitHub Pages on every push to main, or by hand.
 name: Deploy to GitHub Pages
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read

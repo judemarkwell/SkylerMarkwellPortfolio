@@ -11,7 +11,11 @@ Usage: python3 scripts/build_previews.py
 import json, subprocess, tempfile, shutil
 from pathlib import Path
 import pypdfium2 as pdfium
-from PIL import Image
+from PIL import Image, ImageFilter
+import pdfplumber
+
+# Words blurred wherever they appear in a preview (the previous surname; the site uses Markwell only).
+REDACT = ("garr",)
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC, OUT = ROOT / "source-materials", ROOT / "public" / "previews"
@@ -39,7 +43,15 @@ def main():
             manifest[slug] = []
             for n, (name, page) in enumerate(cfg["pages"]):
                 doc = pdfium.PdfDocument(str(to_pdf(SRC / name, tmp)))
+                pdf_path = to_pdf(SRC / name, tmp)
                 im = doc[page].render(scale=2.4).to_pil().convert("RGB")
+                with pdfplumber.open(str(pdf_path)) as pl:
+                    pg = pl.pages[page]; sx, sy = im.width / pg.width, im.height / pg.height
+                    for w in pg.extract_words():
+                        if any(r in w["text"].lower() for r in REDACT):
+                            pad = 4
+                            box = (int(w["x0"] * sx) - pad, int(w["top"] * sy) - pad, int(w["x1"] * sx) + pad, int(w["bottom"] * sy) + pad)
+                            im.paste(im.crop(box).filter(ImageFilter.GaussianBlur(radius=9)), box)
                 if "crop" in cfg:
                     l, tp, r, b = cfg["crop"]; w, h = im.size
                     im = im.crop((int(w * l), int(h * tp), int(w * r), int(h * b)))
