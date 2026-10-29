@@ -212,5 +212,53 @@
     ],
     "width": 1600,
     "height": 1200
+  },
+  "headshot": {
+    "srcset": [
+      {
+        "src": "photos/headshot-800.jpg",
+        "width": 800,
+        "height": 1067
+      },
+      {
+        "src": "photos/headshot-1600.jpg",
+        "width": 1600,
+        "height": 2133
+      }
+    ],
+    "width": 1600,
+    "height": 2133
+  },
+  "wku-grad": {
+    "srcset": [
+      {
+        "src": "photos/wku-grad-800.jpg",
+        "width": 800,
+        "height": 600
+      },
+      {
+        "src": "photos/wku-grad-1600.jpg",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "width": 1600,
+    "height": 1200
+  },
+  "wku-mascot": {
+    "srcset": [
+      {
+        "src": "photos/wku-mascot-800.jpg",
+        "width": 800,
+        "height": 1067
+      },
+      {
+        "src": "photos/wku-mascot-1600.jpg",
+        "width": 1600,
+        "height": 2133
+      }
+    ],
+    "width": 1600,
+    "height": 2133
   }
 }

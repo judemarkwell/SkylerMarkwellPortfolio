@@ -20,6 +20,10 @@ Dealt by taste-skill (`.taste-skill/direction.json`): **Type and nothing else**,
 - **Ledger without hover preview.** Below the desk, every piece is listed in a plain ledger; the desk already shows the pictures.
 - **Imagery.** Her own materials and photos are the only pictures (17 pieces, 30+ previews, 7 photos, one 4-second classroom loop). No stock photographs.
 
+## Snapshots carousel
+
+On the home page between "Finish the sentence" and the desk: a scroll-snap carousel of photos of Skyler and her proudest moments. Swipe on phones; arrows, dots and Pause always present; it auto-advances only while visible and not being used, never under reduced motion.
+
 ## Photo rules
 
 - Student faces are always blurred (YuNet face detection plus manual boxes, checked by eye on every photo). Skyler and adult staff stay clear.
