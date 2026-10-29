@@ -30,22 +30,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     </main>
     <Footer />
     <script>
-      // Header takes the colours of whichever chapter sits under it.
+      // The header is a fixed solid bar; it gains a shadow once the page scrolls under it.
       const header = document.getElementById("site-header")!;
-      const chapters = [...document.querySelectorAll<HTMLElement>("[data-chapter]")].filter((el) => el !== header);
-      const probe = () => {
-        const y = header.getBoundingClientRect().bottom - 1;
-        let current = chapters[0]?.dataset.chapter ?? "paper";
-        for (const el of chapters) {
-          const r = el.getBoundingClientRect();
-          if (r.top <= y && r.bottom > y) current = el.dataset.chapter!;
-        }
-        if (header.dataset.chapter !== current) header.dataset.chapter = current;
-      };
-      let ticking = false;
-      addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { probe(); ticking = false; }); } }, { passive: true });
-      addEventListener("resize", probe);
-      probe();
+      const onScroll = () => header.toggleAttribute("data-scrolled", scrollY > 8);
+      addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
 
       // Small-screen menu.
       const toggle = header.querySelector<HTMLButtonElement>(".menu-toggle")!;

@@ -52,5 +52,5 @@ Shape: one radius (`2px` on paper, `999px` on the button), one button style (sol
 
 - No eyebrows, no uppercase micro-labels, no monospace, no 01/02/03 numbering, no hairline rules, no gradients.
 - Every heading two lines or fewer at every width.
-- Motion: the fixed header takes the ink of the chapter under it (300ms colour transition). Sections enter once with a 60–90ms stagger (rise 24px + opacity), never hidden if script fails. Every control has hover, press and focus feedback. All travel drops under `prefers-reduced-motion`.
+- Header: one solid paper-coloured bar with ink text on every page, gaining a soft shadow once the page scrolls (client: the menu blended into content when it took each chapter's colour). Sections enter once with a 60–90ms stagger (rise 24px + opacity), never hidden if script fails. Every control has hover, press and focus feedback. All travel drops under `prefers-reduced-motion`.
 - Accessibility: WCAG 2.2 AA; every sheet is an ordinary link; previews always come with real text.
