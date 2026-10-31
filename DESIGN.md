@@ -35,7 +35,7 @@ Dealt by taste-skill (`.taste-skill/direction.json`): **Type and nothing else**,
 
 ## Definition terms
 
-Each term is a plain colour highlight (not a link): its colour matches the card below that holds the evidence. Evidence links are black pill buttons with an arrow.
+Each term is a plain colour highlight (not a link): its colour matches the card below that holds the evidence. Evidence links are inline crimson text with an underline.
 
 ## Snapshots carousel
 

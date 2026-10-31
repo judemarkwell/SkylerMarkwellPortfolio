@@ -54,7 +54,7 @@ const snaps = [
   { k: "wku-mascot", alt: t("Me in a red dress with WKU's mascot, Big Red", "Yo con vestido rojo junto a Big Red, la mascota de WKU"), caption: t("With Big Red at Western Kentucky University.", "Con Big Red en Western Kentucky University.") },
 ];
 
-const ev = (href: string, label: string) => `<a class="ev" href="${href}">${label}<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m0 0-4.5-4.5M15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>`;
+const ev = (href: string, label: string) => `<a class="ev" href="${href}">${label}</a>`;
 const term = (_id: string, cls: string, text: string) => `<span class="term ${cls}">${text}</span>`;
 const definition = lang === "es"
   ? `Educadora adaptable y ${term("d-advocate", "t-advocate", "defensora")}, con experiencia en el ${term("d-curriculum", "t-curriculum", "desarrollo de currículo desde cero")} y la ${term("d-problem", "t-problem", "resolución de problemas")}. Me desenvuelvo mejor en ${term("d-collab", "t-collab", "entornos colaborativos")} donde puedo ayudar a cada persona a alcanzar su máximo potencial.`
@@ -86,10 +86,10 @@ const definition = lang === "es"
         <h3>{t("Advocate", "Defensora")}</h3>
         <ul>
           <li>{t("Letters to families and to my district", "Cartas a las familias y a mi distrito")}
-            <span class="evs" set:html={[ev(L("/work/access-faqs/"), t("ACCESS FAQs", "Preguntas sobre ACCESS")), ev(L("/work/nti-packet/"), t("NTI letter", "Carta NTI")), ev(L("/work/district-letter/"), t("Principal selection letter", "Carta sobre el director"))].join("")} />
+            <span class="evs" set:html={[ev(L("/work/access-faqs/"), t("ACCESS FAQs", "Preguntas sobre ACCESS")), ev(L("/work/nti-packet/"), t("NTI letter", "Carta NTI")), ev(L("/work/district-letter/"), t("Principal selection letter", "Carta sobre el director"))].join(", ")} />
           </li>
           <li>{t("Training for teachers", "Capacitación para maestros")}
-            <span class="evs" set:html={[ev(L("/research/#tesol"), t("TESOL station", "Estación TESOL")), ev(L("/work/read-to-self/"), t("Read to Self guide", "Guía de lectura")), ev(L("/work/spanish-vocabulary/"), t("Spanish vocabulary cards", "Tarjetas de vocabulario"))].join("")} />
+            <span class="evs" set:html={[ev(L("/research/#tesol"), t("TESOL station", "Estación TESOL")), ev(L("/work/read-to-self/"), t("Read to Self guide", "Guía de lectura")), ev(L("/work/spanish-vocabulary/"), t("Spanish vocabulary cards", "Tarjetas de vocabulario"))].join(", ")} />
           </li>
           <li>{t("Made sure 100% of families were onboarded to our digital communication platform", "Me aseguré de que el 100% de las familias se unieran a nuestra plataforma de comunicación digital")}</li>
         </ul>
