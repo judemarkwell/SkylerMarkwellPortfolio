@@ -213,6 +213,30 @@
       "height": 1100
     }
   ],
+  "district-letter": [
+    {
+      "src": "previews/district-letter-0.jpg",
+      "width": 850,
+      "height": 1100
+    },
+    {
+      "src": "previews/district-letter-1.jpg",
+      "width": 850,
+      "height": 1100
+    }
+  ],
+  "progress-tracker": [
+    {
+      "src": "previews/progress-tracker-0.jpg",
+      "width": 778,
+      "height": 1100
+    },
+    {
+      "src": "previews/progress-tracker-1.jpg",
+      "width": 778,
+      "height": 1100
+    }
+  ],
   "_headshot": [
     {
       "src": "previews/skyler.jpg",

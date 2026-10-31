@@ -27,12 +27,18 @@ def main():
         src = SRC / cfg["src"]
         if cfg.get("video"):
             mp4, poster = OUT / f"{key}.mp4", OUT / f"{key}-poster.jpg"
-            # Only the first `seconds` are kept and the left edge is cropped: later frames show student name cards, and the left wall has photos.
-            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-t", str(cfg.get("seconds", 5)), "-an", "-vf", "crop=iw*0.9:ih:iw*0.1:0,scale=720:-2,fps=30",
-                            "-c:v", "libx264", "-preset", "veryfast", "-crf", "28", "-pix_fmt", "yuv420p",
-                            "-movflags", "+faststart", str(mp4)], check=True)
-            subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", "1.5", "-i", str(src), "-frames:v", "1",
-                            "-vf", "crop=iw*0.9:ih:iw*0.1:0,scale=720:-2", "-q:v", "4", str(poster)], check=True)
+            if cfg.get("keepAudio"):
+                # A talking video: full length, sound kept, no crop.
+                subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-vf", "scale=1280:-2", "-c:v", "libx264", "-preset", "veryfast",
+                                "-crf", "27", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "96k", "-movflags", "+faststart", str(mp4)], check=True)
+                subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", "2", "-i", str(src), "-frames:v", "1", "-vf", "scale=1280:-2", "-q:v", "4", str(poster)], check=True)
+            else:
+                # Only the first `seconds` are kept and the left edge is cropped: later frames show student name cards, and the left wall has photos.
+                subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-t", str(cfg.get("seconds", 5)), "-an", "-vf", "crop=iw*0.9:ih:iw*0.1:0,scale=720:-2,fps=30",
+                                "-c:v", "libx264", "-preset", "veryfast", "-crf", "28", "-pix_fmt", "yuv420p",
+                                "-movflags", "+faststart", str(mp4)], check=True)
+                subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", "1.5", "-i", str(src), "-frames:v", "1",
+                                "-vf", "crop=iw*0.9:ih:iw*0.1:0,scale=720:-2", "-q:v", "4", str(poster)], check=True)
             pw, ph = Image.open(poster).size
             manifest[key] = {"video": f"photos/{key}.mp4", "poster": f"photos/{key}-poster.jpg", "width": pw, "height": ph}
             print(key, "video", mp4.stat().st_size // 1024, "KB")

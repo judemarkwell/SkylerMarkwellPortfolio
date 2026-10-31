@@ -14,8 +14,8 @@ import pypdfium2 as pdfium
 from PIL import Image, ImageFilter
 import pdfplumber
 
-# Words blurred wherever they appear in a preview (the previous surname; the site uses Markwell only).
-REDACT = ("garr",)
+# Words blurred wherever they appear in a preview. Empty: the client chose to show names in documents as they are.
+REDACT: tuple[str, ...] = ()
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC, OUT = ROOT / "source-materials", ROOT / "public" / "previews"

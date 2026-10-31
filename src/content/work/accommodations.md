@@ -6,7 +6,7 @@ format: "One-page guide in each language"
 languages: "English and Spanish"
 layout: "pair"
 tilt: 0.7
-featured: true
+featured: false
 order: 11
 pairLabel: "ES"
 lede: "A student-facing guide I made to the test accommodations in a Program Service Plan, with a sentence to ask for each one."

@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
-import { u, previewsFor } from "../../lib/site";
+import { u, previewsFor, download } from "../../lib/site";
 import Figure from "../../components/Figure.astro";
 
 export async function getStaticPaths() {
@@ -17,6 +17,7 @@ const { Content } = await render(entry);
 const d = entry.data;
 const pages = previewsFor(entry.id);
 const hero = pages[0];
+const file = download(entry.id);
 ---
 <Base title={`${d.title} · Skyler Markwell`} description={d.lede} current="work" chapter="desk">
   <section class="chapter-desk frame piece-top" data-chapter="desk">
@@ -40,7 +41,15 @@ const hero = pages[0];
             ))}
           </ul>
         )}
-        <p class="thumbs-note">{pages.length > 1 ? `${pages.length} pages shown. ` : ""}The full file will be available to download here.</p>
+        {file && (
+          <p class="dl-row">
+            <a class="btn dl-btn" href={file.href} download>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10m0 0-4-4m4 4 4-4M4 16h12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              Download PDF
+            </a>
+            <span class="dl-size">{file.size}</span>
+          </p>
+        )}
       </div>
       <div class="piece-copy">
         <h1>{d.title}</h1>
@@ -51,11 +60,12 @@ const hero = pages[0];
           <dt>Format</dt><dd>{d.format}</dd>
           <dt>Languages</dt><dd>{d.languages}</dd>
         </dl>
-        <aside class="sticky" aria-labelledby="why">
-          <h2 id="why">Why I made it</h2>
-          <p>{d.prompt}</p>
-          <p class="note">Draft: my answer goes here.</p>
-        </aside>
+        {d.why && (
+          <aside class="sticky" aria-labelledby="why">
+            <h2 id="why">Why I made it</h2>
+            <p>{d.why}</p>
+          </aside>
+        )}
       </div>
     </div>
   </section>

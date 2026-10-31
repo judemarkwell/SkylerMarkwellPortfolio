@@ -1,0 +1,90 @@
+{
+  "health": {
+    "href": "files/health.pdf",
+    "bytes": 109976
+  },
+  "columbus": {
+    "href": "files/columbus.pdf",
+    "bytes": 71615
+  },
+  "access-faqs": {
+    "href": "files/access-faqs.pdf",
+    "bytes": 49728
+  },
+  "restorative-circles": {
+    "href": "files/restorative-circles.pdf",
+    "bytes": 2810939
+  },
+  "coping-poster": {
+    "href": "files/coping-poster.pdf",
+    "bytes": 92335
+  },
+  "spanish-vocabulary": {
+    "href": "files/spanish-vocabulary.pdf",
+    "bytes": 3959777
+  },
+  "compare-contrast": {
+    "href": "files/compare-contrast.pdf",
+    "bytes": 1553294
+  },
+  "class-expectations": {
+    "href": "files/class-expectations.pdf",
+    "bytes": 80741
+  },
+  "race-rubric": {
+    "href": "files/race-rubric.pdf",
+    "bytes": 22924
+  },
+  "monthly-probes": {
+    "href": "files/monthly-probes.pdf",
+    "bytes": 813801
+  },
+  "accommodations": {
+    "href": "files/accommodations.pdf",
+    "bytes": 48126
+  },
+  "access-reflection": {
+    "href": "files/access-reflection.pdf",
+    "bytes": 23303
+  },
+  "check-out-frames": {
+    "href": "files/check-out-frames.pdf",
+    "bytes": 6871
+  },
+  "sentence-stems": {
+    "href": "files/sentence-stems.pdf",
+    "bytes": 77243
+  },
+  "read-to-self": {
+    "href": "files/read-to-self.pdf",
+    "bytes": 40598
+  },
+  "nti-packet": {
+    "href": "files/nti-packet.pdf",
+    "bytes": 6916065
+  },
+  "social-media-compare": {
+    "href": "files/social-media-compare.pdf",
+    "bytes": 10910
+  },
+  "district-letter": {
+    "href": "files/district-letter.pdf",
+    "bytes": 60187
+  },
+  "progress-tracker": {
+    "href": "files/progress-tracker.pdf",
+    "bytes": 44623
+  },
+  "_credential-history": {
+    "href": "files/credential-history.pdf",
+    "bytes": 118205
+  },
+  "_asbury-transcript": {
+    "href": "files/asbury-transcript.pdf",
+    "bytes": 312942
+  },
+  "_resume": {
+    "href": "files/skyler-markwell-resume.pdf",
+    "bytes": 90466
+  }
+}

@@ -20,6 +20,13 @@ Dealt by taste-skill (`.taste-skill/direction.json`): **Type and nothing else**,
 - **Ledger without hover preview.** Below the desk, every piece is listed in a plain ledger; the desk already shows the pictures.
 - **Imagery.** Her own materials and photos are the only pictures (17 pieces, 30+ previews, 7 photos, one 4-second classroom loop). No stock photographs.
 
+## Client decisions (Oct 30 notes)
+
+- Names inside her own documents (e.g. "Mrs. Garr" in the ACCESS FAQ) and on the Grateful board leaves are shown as they are.
+- "Why I made it" notes appear only when Skyler has written one (`why:` in the piece file; prompts listed in WHY-I-MADE-IT.md).
+- Every piece has a real PDF download (`npm run downloads`). The transcript is published with the student ID and date of birth removed and flattened to images.
+- "By definition" section on the home page: her definition sentence, each highlighted term linked to its evidence, in the four chapter colours.
+
 ## Snapshots carousel
 
 On the home page between "Finish the sentence" and the desk: a scroll-snap carousel of photos of Skyler and her proudest moments. Swipe on phones; arrows, dots and Pause always present; it auto-advances only while visible and not being used, never under reduced motion.
@@ -27,7 +34,7 @@ On the home page between "Finish the sentence" and the desk: a scroll-snap carou
 ## Photo rules
 
 - Student faces are always blurred (YuNet face detection plus manual boxes, checked by eye on every photo). Skyler and adult staff stay clear.
-- Student names are removed before resizing: certificates, the We're Multilingual banner and signed posters get `blurRects`; the Grateful in Every Language board gets feathered blur over its leaves (`blurEllipses` in `scripts/photos.json`); the classroom loop is cut to its first 4.3 seconds and cropped on the left, before chairs with name cards and a wall of photos come into view.
+- Student names are removed before resizing: certificates, the We're Multilingual banner and signed posters get `blurRects`; the classroom loop is cut to its first 4.3 seconds and cropped on the left, before chairs with name cards and a wall of photos come into view.
 - The loop plays muted, pauses off-screen, does not autoplay under reduced motion, and always has a visible Pause control.
 
 ## Tokens

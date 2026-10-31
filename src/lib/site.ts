@@ -1,5 +1,6 @@
 import manifest from "../data/previews.json";
 import photoManifest from "../data/photos.json";
+import downloadManifest from "../data/downloads.json";
 
 export type Preview = { src: string; width: number; height: number };
 
@@ -27,4 +28,13 @@ export const photo = (key: string): Photo | undefined => {
   if (e.video) return { src: u(`/${e.poster}`), srcset: "", width: e.width, height: e.height, video: u(`/${e.video}`), poster: u(`/${e.poster}`) };
   const set = e.srcset ?? [];
   return { src: u(`/${set[0].src}`), srcset: set.map((x) => `${u(`/${x.src}`)} ${x.width}w`).join(", "), width: e.width, height: e.height };
+};
+
+export type Download = { href: string; size: string };
+const fmtSize = (b: number) => (b >= 1e6 ? `${(b / 1e6).toFixed(1)} MB` : `${Math.max(1, Math.round(b / 1e3))} KB`);
+
+/** A downloadable PDF (a piece slug, or "_resume", "_credential-history", "_asbury-transcript"). */
+export const download = (key: string): Download | undefined => {
+  const d = (downloadManifest as Record<string, { href: string; bytes: number }>)[key];
+  return d ? { href: u(`/${d.href}`), size: fmtSize(d.bytes) } : undefined;
 };

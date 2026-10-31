@@ -6,23 +6,26 @@ import Figure from "../components/Figure.astro";
 import { u, previewsFor, photo } from "../lib/site";
 
 const all = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
-const kinds = ["Curriculum design", "Assessment design", "Lesson design", "Family engagement", "Classroom systems", "Teacher resources"] as const;
+const kinds = ["Curriculum design", "Assessment design", "Data and progress monitoring", "Lesson design", "Family engagement", "Advocacy and leadership", "Classroom systems", "Teacher resources"] as const;
 const groups = kinds.map((k) => ({ kind: k, items: all.filter((w) => w.data.kind === k) })).filter((g) => g.items.length);
 const tour = photo("classroom-tour");
 
 const photos = [
   { k: "grateful-board", alt: "Hallway board titled Grateful in Every Language: a paper tree whose leaves are student sentences", caption: "Grateful in Every Language: students finished “I am thankful for…” in English, Spanish, Arabic, Somali, Swahili, Pashto and Kinyarwanda." },
-  { k: "access-exit", alt: "Students holding certificates under a We're Multilingual banner", caption: "My students after passing the ACCESS test and exiting English learner services." },
+  { k: "access-exit", alt: "Students holding certificates under a We're Multilingual banner", caption: "I exited 25 students from English learner services. Here are some of them with their certificates after passing the ACCESS test." },
   { k: "wellness-board", alt: "Classroom board titled Our World in Wellness with a world map and culture cards", caption: "Our World in Wellness, from my health classroom." },
   { k: "grad-flowers", alt: "Me with a graduate in a blue gown holding flowers", caption: "Graduation day for one of my students, the first in her family to finish high school." },
   { k: "math-dominoes", alt: "A student's hand writing numbers next to dominoes on a whiteboard", caption: "Number work with dominoes." },
-  { k: "grad-cert", alt: "Me beside a 12th grade student holding a certificate", caption: "After a 12th grade Defense of Learning at the Newcomer Academy." },
+  { k: "grad-cert", alt: "Me beside a 12th grade student holding a certificate", caption: "A 20-year-old student I taught passed his Defense of Learning and came back to thank me!" },
   { k: "thank-you", alt: "A second grade class with a thank-you sign for Ms. Markwell", caption: "A second grade class celebrating the day I came back." },
   { k: "kycec-poster", alt: "My research poster on peer tutoring for English learners", caption: "My KYCEC 2022 poster: The Effect of Peer Tutoring on ELL Students’ Academic Achievement." },
   { k: "math-whiteboard", alt: "Student whiteboard with domino pictures labeled 3, 8, 9 and 6", caption: "Showing the thinking before the answer." },
-  { k: "pumpkin-patch", alt: "Me and two teachers with students at a pumpkin farm", caption: "A fall field trip with my students." },
+  { k: "pumpkin-patch", alt: "Me and two teachers with students at a pumpkin farm", caption: "My elementary students seeing a pumpkin patch for the first time." },
   { k: "tesol-2025", alt: "Me with four colleagues on the pier in Long Beach", caption: "With colleagues at TESOL 2025 in Long Beach." },
   { k: "asbury-grad", alt: "Me in cap and gown at Asbury University", caption: "Master of Arts in Teaching, Asbury University, 2025." },
+  { k: "coworkers-dinner", alt: "Me with six co-workers smiling in a restaurant selfie", caption: "Dinner with my co-workers." },
+  { k: "staff-photo", alt: "A whole school staff in green shirts posing in a gym", caption: "With my whole school staff, everyone in green." },
+  { k: "coworkers-kycec", alt: "Me with three fellow educators in a hotel lobby", caption: "With fellow educators at KYCEC, 2022." },
   { k: "wku-grad", alt: "Me in a graduation gown holding a WKU Alumni flag", caption: "Graduating from Western Kentucky University, 2022." },
 ];
 ---

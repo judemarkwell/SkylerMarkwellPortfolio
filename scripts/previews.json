@@ -1,20 +1,245 @@
 {
   "_note": "slug -> list of [source file in source-materials/, zero-based page]. Optional crop per slug as fractions [left, top, right, bottom].",
-  "health": {"pages": [["Newcomer_Health_Scope_and_Sequence.xlsx", 0], ["Newcomer_Health_Scope_and_Sequence.xlsx", 1]], "crop": [0.12, 0.17, 0.88, 0.93]},
-  "columbus": {"pages": [["Columbus_Assessment.docx", 0], ["Columbus_Assessment_Rubric.docx", 0], ["Columbus_Assessment_Key.docx", 0]]},
-  "access-faqs": {"pages": [["ACCESS_FAQs_Spanish_English.docx", 0], ["ACCESS_FAQs_Spanish_English.docx", 2], ["ACCESS_FAQs_Spanish_English.docx", 1], ["ACCESS_FAQs_Spanish_English.docx", 3]]},
-  "restorative-circles": {"pages": [["Restorative_Practice_Exercises.pptx", 0], ["Restorative_Practice_Exercises.pptx", 1], ["Restorative_Practice_Exercises.pptx", 3], ["Restorative_Practice_Exercises.pptx", 6]]},
-  "coping-poster": {"pages": [["Pink_and_White_Playful_Doodle_Coping_Skills_Poster.pdf", 0]]},
-  "spanish-vocabulary": {"pages": [["Common_Spanish_Vocabulary.pptx", 0], ["Common_Spanish_Vocabulary.pptx", 4], ["Common_Spanish_Vocabulary.pptx", 33]]},
-  "compare-contrast": {"pages": [["Compare__Contrast_Character_Details.pptx", 0], ["Compare__Contrast_Character_Details.pptx", 2], ["Compare__Contrast_Character_Details.pptx", 3], ["Compare__Contrast_Character_Details.pptx", 10]]},
-  "class-expectations": {"pages": [["PBIS_Chart.pdf", 0], ["PBIS_Chart.pdf", 1]]},
-  "race-rubric": {"pages": [["Weekly_RACE_Rubric_.docx", 0], ["Weekly_RACE_Rubric_.docx", 1]]},
-  "monthly-probes": {"pages": [["Newcomer_Monthly_Probe.docx", 0], ["Beginner_Monthly_Probe.docx", 0]]},
-  "accommodations": {"pages": [["Accommodations_Conversation_Starter.docx", 0], ["Accommodations_Conversation_Starter.docx", 1]]},
-  "access-reflection": {"pages": [["ACCESS_Reflection_Sheet.docx", 0]]},
-  "check-out-frames": {"pages": [["Student_Check_Out_Sentence_Frames.docx", 0]]},
-  "sentence-stems": {"pages": [["JTS_Sentence_Stems.docx", 0]]},
-  "read-to-self": {"pages": [["Read_to_Self_Time.docx", 0]]},
-  "nti-packet": {"pages": [["ML_NTI_Packet.pdf", 0], ["ML_NTI_Packet.pdf", 1]]},
-  "social-media-compare": {"pages": [["Compare_and_Contrast__Twitter_v_Facebook.docx", 0]]}
+  "health": {
+    "pages": [
+      [
+        "Newcomer_Health_Scope_and_Sequence.xlsx",
+        0
+      ],
+      [
+        "Newcomer_Health_Scope_and_Sequence.xlsx",
+        1
+      ]
+    ],
+    "crop": [
+      0.12,
+      0.17,
+      0.88,
+      0.93
+    ]
+  },
+  "columbus": {
+    "pages": [
+      [
+        "Columbus_Assessment.docx",
+        0
+      ],
+      [
+        "Columbus_Assessment_Rubric.docx",
+        0
+      ],
+      [
+        "Columbus_Assessment_Key.docx",
+        0
+      ]
+    ]
+  },
+  "access-faqs": {
+    "pages": [
+      [
+        "ACCESS_FAQs_Spanish_English.docx",
+        0
+      ],
+      [
+        "ACCESS_FAQs_Spanish_English.docx",
+        2
+      ],
+      [
+        "ACCESS_FAQs_Spanish_English.docx",
+        1
+      ],
+      [
+        "ACCESS_FAQs_Spanish_English.docx",
+        3
+      ]
+    ]
+  },
+  "restorative-circles": {
+    "pages": [
+      [
+        "Restorative_Practice_Exercises.pptx",
+        0
+      ],
+      [
+        "Restorative_Practice_Exercises.pptx",
+        1
+      ],
+      [
+        "Restorative_Practice_Exercises.pptx",
+        3
+      ],
+      [
+        "Restorative_Practice_Exercises.pptx",
+        6
+      ]
+    ]
+  },
+  "coping-poster": {
+    "pages": [
+      [
+        "Pink_and_White_Playful_Doodle_Coping_Skills_Poster.pdf",
+        0
+      ]
+    ]
+  },
+  "spanish-vocabulary": {
+    "pages": [
+      [
+        "Common_Spanish_Vocabulary.pptx",
+        0
+      ],
+      [
+        "Common_Spanish_Vocabulary.pptx",
+        4
+      ],
+      [
+        "Common_Spanish_Vocabulary.pptx",
+        33
+      ]
+    ]
+  },
+  "compare-contrast": {
+    "pages": [
+      [
+        "Compare__Contrast_Character_Details.pptx",
+        0
+      ],
+      [
+        "Compare__Contrast_Character_Details.pptx",
+        2
+      ],
+      [
+        "Compare__Contrast_Character_Details.pptx",
+        3
+      ],
+      [
+        "Compare__Contrast_Character_Details.pptx",
+        10
+      ]
+    ]
+  },
+  "class-expectations": {
+    "pages": [
+      [
+        "PBIS_Chart.pdf",
+        0
+      ],
+      [
+        "PBIS_Chart.pdf",
+        1
+      ]
+    ]
+  },
+  "race-rubric": {
+    "pages": [
+      [
+        "Weekly_RACE_Rubric_.docx",
+        0
+      ],
+      [
+        "Weekly_RACE_Rubric_.docx",
+        1
+      ]
+    ]
+  },
+  "monthly-probes": {
+    "pages": [
+      [
+        "Newcomer_Monthly_Probe.docx",
+        0
+      ],
+      [
+        "Beginner_Monthly_Probe.docx",
+        0
+      ]
+    ]
+  },
+  "accommodations": {
+    "pages": [
+      [
+        "Accommodations_Conversation_Starter.docx",
+        0
+      ],
+      [
+        "Accommodations_Conversation_Starter.docx",
+        1
+      ]
+    ]
+  },
+  "access-reflection": {
+    "pages": [
+      [
+        "ACCESS_Reflection_Sheet.docx",
+        0
+      ]
+    ]
+  },
+  "check-out-frames": {
+    "pages": [
+      [
+        "Student_Check_Out_Sentence_Frames.docx",
+        0
+      ]
+    ]
+  },
+  "sentence-stems": {
+    "pages": [
+      [
+        "JTS_Sentence_Stems.docx",
+        0
+      ]
+    ]
+  },
+  "read-to-self": {
+    "pages": [
+      [
+        "Read_to_Self_Time.docx",
+        0
+      ]
+    ]
+  },
+  "nti-packet": {
+    "pages": [
+      [
+        "ML_NTI_Packet.pdf",
+        0
+      ],
+      [
+        "ML_NTI_Packet.pdf",
+        1
+      ]
+    ]
+  },
+  "social-media-compare": {
+    "pages": [
+      [
+        "Compare_and_Contrast__Twitter_v_Facebook.docx",
+        0
+      ]
+    ]
+  },
+  "district-letter": {
+    "pages": [
+      [
+        "CLT_Principal_Selection_Letter.pdf",
+        0
+      ],
+      [
+        "CLT_Principal_Selection_Letter.pdf",
+        1
+      ]
+    ]
+  },
+  "progress-tracker": {
+    "pages": [
+      [
+        "ELA_Goal_Progress_Tracker.xlsx",
+        0
+      ],
+      [
+        "ELA_Goal_Progress_Tracker.xlsx",
+        1
+      ]
+    ]
+  }
 }

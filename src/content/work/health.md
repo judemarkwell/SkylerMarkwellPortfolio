@@ -1,7 +1,7 @@
 ---
 title: "Newcomer Health Course"
 kind: "Curriculum design"
-madeFor: "High school newcomers, Newcomer Academy (JCPS)"
+madeFor: "High school newcomers, ESL Newcomer Academy"
 format: "Scope and sequence, 7 units with linked lessons"
 languages: "English, with vocabulary supports"
 layout: "stack"

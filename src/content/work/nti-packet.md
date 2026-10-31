@@ -6,7 +6,7 @@ format: "Six-choice board, printed packet"
 languages: "English and Spanish"
 layout: "pair"
 tilt: -1.1
-featured: false
+featured: true
 order: 16
 pairLabel: "ES"
 lede: "A take-home choice board I made for non-traditional instruction days. Students pick one of six English activities for each day out of school, and families get the same directions in Spanish."
