@@ -1,0 +1,98 @@
+---
+import Base from "../layouts/Base.astro";
+import { download, EMAIL, LINKEDIN } from "../lib/site";
+import { tr, lp, type Lang } from "../lib/i18n";
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = tr(lang);
+
+const resume = download("_resume");
+const creds = download("_credential-history");
+const transcript = download("_asbury-transcript");
+
+const certificates = [
+  { name: t("English as a Second Language, all grades", "Inglés como segundo idioma, todos los grados"), dates: "2024–2029" },
+  { name: t("Exceptional Children: Learning and Behavior Disorders, primary through grade 12", "Educación especial: trastornos del aprendizaje y de la conducta, de preescolar a 12.º grado"), dates: "2022–2027" },
+  { name: t("Elementary School, primary through grade 5", "Educación primaria, de preescolar a 5.º grado"), dates: "2022–2027" },
+];
+const coursework = [
+  { area: t("Diagnosis and remediation of reading difficulties", "Diagnóstico y atención de dificultades de lectura"), courses: "LBD Language Intervention: Strategies and Materials; Assessment for Teaching English" },
+  { area: t("Foundational reading skills", "Habilidades básicas de lectura"), courses: "Foundations of Elementary Literacy; Grammar and Linguistics for Teaching English Learners" },
+  { area: t("Reading comprehension", "Comprensión lectora"), courses: "Literacy in Elementary Grades; Methods for Teaching English" },
+  { area: t("Composition and literature", "Redacción y literatura"), courses: "Writing in the Discipline; Freshman English; Introduction to Literature; Children’s Literature" },
+  { area: t("Literacy in the content areas", "Lectoescritura en las materias"), courses: t("Methods for Teaching English (sheltered instruction); Teaching Strategies II", "Methods for Teaching English (instrucción protegida); Teaching Strategies II") },
+];
+---
+<Base lang={lang} title={t("Professional · Skyler Markwell", "Profesional · Skyler Markwell")} description={t("Skyler Markwell's certifications, education, training, qualifications and resume.", "Certificaciones, educación, formación, calificaciones y currículum de Skyler Markwell.")} current="professional" chapter="lime">
+  <section class="chapter-lime frame page-head" data-chapter="lime">
+    <h1>{t("Professional", "Profesional")}</h1>
+    <p>{t("My certifications, education and training, plus my resume and transcripts to download.", "Mis certificaciones, educación y formación, además de mi currículum y mis expedientes académicos para descargar.")}</p>
+    <div class="dl-list">
+      {resume && <a class="btn" href={resume.href} download>{t("Resume", "Currículum")} (PDF, {resume.size})</a>}
+      {creds && <a class="btn" href={creds.href} download>{t("Kentucky credentials", "Credenciales de Kentucky")} (PDF, {creds.size})</a>}
+      {transcript && <a class="btn" href={transcript.href} download>{t("Asbury transcript", "Expediente de Asbury")} (PDF, {transcript.size})</a>}
+    </div>
+    {lang === "es" && <p class="dl-note">Los documentos para descargar están en inglés.</p>}
+  </section>
+
+  <section class="chapter-paper frame pro" data-chapter="paper">
+    <div class="pro-row">
+      <h2>{t("What I’m qualified to teach", "Lo que estoy calificada para enseñar")}</h2>
+      <div class="pro-body">
+        <p class="pro-lead">{t("I hold Kentucky professional certificates in English as a Second Language for all grades, Learning and Behavior Disorders from primary through grade 12, and Elementary Education, at Rank II. With 31 semester hours in reading, writing and language instruction, I’m qualified to teach English language development and strategic literacy at the elementary, middle and secondary levels, and to support students with disabilities in each.", "Tengo certificados profesionales de Kentucky en inglés como segundo idioma para todos los grados, trastornos del aprendizaje y de la conducta de preescolar a 12.º grado, y educación primaria, con Rango II. Con 31 horas semestrales en enseñanza de lectura, escritura e idioma, estoy calificada para enseñar desarrollo del idioma inglés y lectoescritura estratégica en primaria, secundaria y preparatoria, y para apoyar a estudiantes con discapacidades en cada nivel.")}</p>
+      </div>
+    </div>
+
+    <div class="pro-row">
+      <h2>{t("Certifications", "Certificaciones")}</h2>
+      <div class="pro-body">
+        <p>{t("Kentucky Education Professional Standards Board, Rank II.", "Kentucky Education Professional Standards Board, Rango II.")}</p>
+        <ul class="pro-list">
+          {certificates.map((c) => <li><span>{c.name}</span><span class="y">{c.dates}</span></li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="pro-row">
+      <h2>{t("Education", "Educación")}</h2>
+      <div class="pro-body">
+        <ul class="pro-list">
+          <li><span><strong>{t("Master of Arts in Teaching", "Maestría en Enseñanza")}</strong>, {t("ESL P–12 endorsement, Asbury University. 4.0 GPA.", "certificación en ESL de preescolar a 12.º grado, Asbury University. Promedio de 4.0.")}</span><span class="y">2025</span></li>
+          <li><span><strong>{t("Bachelor of Science", "Licenciatura")}</strong>, {t("Elementary Education and Exceptional Child Education (LBD), Western Kentucky University. Summa cum laude.", "Educación primaria y educación especial (LBD), Western Kentucky University. Summa cum laude.")}</span><span class="y">2022</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pro-row">
+      <h2>{t("Training", "Formación")}</h2>
+      <div class="pro-body">
+        <ul class="pro-list">
+          <li><span>{t("Trained in restorative practices", "Formación en prácticas restaurativas")}</span></li>
+          <li><span>{t("UFLI literacy intervention", "Intervención de lectoescritura UFLI")}</span><span class="y">2025</span></li>
+          <li><span>Kentucky Numeracy Counts Academy (OVEC)</span><span class="y">{t("2027, in progress", "2027, en curso")}</span></li>
+          <li><span>{t("Google Certified Educator, Level 2", "Educadora certificada por Google, nivel 2")}</span><span class="y">2020</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pro-row">
+      <h2>{t("Literacy and language coursework", "Cursos de lectoescritura e idioma")}</h2>
+      <div class="pro-body">
+        <p>{t("31 semester hours across Western Kentucky University and Asbury University.", "31 horas semestrales entre Western Kentucky University y Asbury University.")}</p>
+        <dl class="pro-dl">
+          {coursework.map((c) => <><dt>{c.area}</dt><dd>{c.courses}</dd></>)}
+        </dl>
+      </div>
+    </div>
+
+    <div class="pro-row">
+      <h2>{t("Resume", "Currículum")}</h2>
+      <div class="pro-body">
+        <p>{t("Read my full work history on the page, or download it as a PDF.", "Lee mi historial completo aquí o descárgalo en PDF.")}</p>
+        <p class="pro-links"><a href={lp(lang, "/resume/")}>{t("Read my resume", "Leer mi currículum")}</a>{resume && <> · <a href={resume.href} download>{t("Download PDF", "Descargar PDF")}</a></>}</p>
+        <p class="pro-links"><a href={`mailto:${EMAIL}`}>{EMAIL}</a> · <a href={LINKEDIN}>LinkedIn</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

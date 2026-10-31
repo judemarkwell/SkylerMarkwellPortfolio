@@ -1,0 +1,278 @@
+---
+import Base from "../layouts/Base.astro";
+import Sheets from "../components/Sheets.astro";
+import Figure from "../components/Figure.astro";
+import Carousel from "../components/Carousel.astro";
+import { previewsFor, headshot, photo } from "../lib/site";
+import { tr, lp, workIn, kindLabel, type Lang } from "../lib/i18n";
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = tr(lang);
+const L = (path: string) => lp(lang, path);
+
+const all = await workIn(lang);
+const featured = all.filter((w) => w.data.featured);
+const bySlug = Object.fromEntries(all.map((w) => [w.id, w]));
+const portrait = headshot();
+const intro = photo("intro-video");
+
+// The live thing: a learner finishes the sentence, and the piece made for them is lifted.
+const frames = [
+  { end: t("ask for a break", "pedir un descanso"), who: t("A student who doesn't have the English words yet.", "Un estudiante que todavía no tiene las palabras en inglés."), slug: "coping-poster" },
+  { end: t("show what I know before I can write it", "mostrar lo que sé antes de poder escribirlo"), who: t("A student whose writing hasn't caught up with their thinking.", "Un estudiante cuya escritura todavía no alcanza a su pensamiento."), slug: "columbus" },
+  { end: t("understand my child's test scores", "entender los resultados de mi hijo"), who: t("A parent who reads Spanish.", "Una madre o un padre que lee en español."), slug: "access-faqs" },
+  { end: t("talk with a newcomer on day one", "hablar con un recién llegado desde el primer día"), who: t("A teacher who doesn't speak Spanish.", "Un maestro que no habla español."), slug: "spanish-vocabulary" },
+  { end: t("learn health in my new language", "aprender salud en mi nuevo idioma"), who: t("A high school newcomer.", "Un estudiante de secundaria recién llegado."), slug: "health" },
+  { end: t("solve a problem with my class", "resolver un problema con mi clase"), who: t("A newcomer practicing English in a circle.", "Un recién llegado que practica inglés en un círculo."), slug: "restorative-circles" },
+].map((f) => ({ ...f, title: bySlug[f.slug].data.title, href: L(`/work/${f.slug}/`), img: previewsFor(f.slug)[0] }));
+const first = frames[0];
+
+const designs = [
+  { big: t("Courses", "Cursos"), small: t("Newcomer Health, 7 units", "Salud para recién llegados, 7 unidades"), slug: "health" },
+  { big: t("Assessments", "Evaluaciones"), small: t("Tasks, rubrics, probes", "Tareas, rúbricas, sondeos"), slug: "columbus" },
+  { big: t("Family guides", "Guías familiares"), small: t("In English and Spanish", "En inglés y español"), slug: "access-faqs" },
+  { big: t("Class systems", "Sistemas de clase"), small: t("PBIS, circles, check-outs", "PBIS, círculos, cierres"), slug: "class-expectations" },
+  { big: t("Lessons", "Lecciones"), small: t("In three languages", "En tres idiomas"), slug: "compare-contrast" },
+  { big: t("Teacher tools", "Para maestros"), small: t("Cards, guides, stems", "Tarjetas, guías, frases"), slug: "spanish-vocabulary" },
+];
+
+const snaps = [
+  { k: "headshot", alt: t("Me, smiling, in a denim jacket", "Yo, sonriendo, con una chaqueta de mezclilla"), caption: t("I am currently one of two teachers in the entire state of Kentucky teaching students with disabilities, ages 12–21, at a specialized school for multilingual learners.", "Actualmente soy una de dos maestras en todo el estado de Kentucky que enseñan a estudiantes con discapacidades, de 12 a 21 años, en una escuela especializada para estudiantes multilingües.") },
+  { k: "grad-flowers", alt: t("Me with a graduate in a blue gown holding flowers", "Yo con una graduada con toga azul y flores"), caption: t("Graduation day for one of my students, the first in her family to finish high school.", "El día de graduación de una de mis estudiantes, la primera de su familia en terminar la preparatoria.") },
+  { k: "access-exit", alt: t("Students holding certificates under a We're Multilingual banner", "Estudiantes con certificados debajo de un letrero que dice We're Multilingual"), caption: t("I exited 25 students from English learner services. Here are some of them with their certificates after passing the ACCESS test.", "Logré que 25 estudiantes salieran de los servicios para estudiantes de inglés. Aquí están algunos con sus certificados después de aprobar el examen ACCESS.") },
+  { k: "kycec-skyler", alt: t("Me kneeling beside my research poster", "Yo junto a mi póster de investigación"), caption: t("Presenting my peer-tutoring research at KYCEC in Louisville, 2022.", "Presentando mi investigación sobre tutoría entre compañeros en KYCEC, Louisville, 2022.") },
+  { k: "thank-you", alt: t("A second grade class with a thank-you sign for Ms. Markwell", "Una clase de segundo grado con un letrero de agradecimiento para la maestra Markwell"), caption: t("A second grade class celebrating the day I came back.", "Una clase de segundo grado celebrando el día que regresé.") },
+  { k: "asbury-grad", alt: t("Me in cap and gown at Asbury University", "Yo con toga y birrete en Asbury University"), caption: t("Finishing my Master of Arts in Teaching at Asbury University, 2025.", "Terminando mi maestría en enseñanza en Asbury University, 2025.") },
+  { k: "grad-cert", alt: t("Me beside a 12th grade student holding a certificate", "Yo junto a un estudiante de último año con su certificado"), caption: t("A 20-year-old student I taught passed his Defense of Learning and came back to thank me!", "¡Un estudiante de 20 años al que le di clases aprobó su Defensa del Aprendizaje y regresó para darme las gracias!") },
+  { k: "tesol-2025", alt: t("Me with four colleagues on the pier in Long Beach", "Yo con cuatro colegas en el muelle de Long Beach"), caption: t("With colleagues at the TESOL convention in Long Beach, 2025.", "Con colegas en la convención TESOL en Long Beach, 2025.") },
+  { k: "pumpkin-patch", alt: t("Me and two teachers with students at a pumpkin farm", "Yo y dos maestras con estudiantes en una granja de calabazas"), caption: t("My elementary students seeing a pumpkin patch for the first time.", "Mis estudiantes de primaria viendo un campo de calabazas por primera vez.") },
+  { k: "wku-grad", alt: t("Me in a graduation gown holding a WKU Alumni flag", "Yo con toga sosteniendo una bandera de exalumnos de WKU"), caption: t("Graduating from Western Kentucky University, 2022.", "Graduándome de Western Kentucky University, 2022.") },
+  { k: "coworkers-dinner", alt: t("Me with six co-workers smiling in a restaurant selfie", "Yo con seis compañeras de trabajo en una selfie en un restaurante"), caption: t("Dinner with my co-workers.", "Cena con mis compañeras de trabajo.") },
+  { k: "coworkers-kycec", alt: t("Me with three fellow educators in a hotel lobby", "Yo con tres educadoras en el vestíbulo de un hotel"), caption: t("With fellow educators at the KYCEC conference in Louisville, 2022.", "Con otras educadoras en la conferencia KYCEC en Louisville, 2022.") },
+  { k: "staff-photo", alt: t("A whole school staff in green shirts posing in a gym", "Todo el personal de una escuela con camisetas verdes en un gimnasio"), caption: t("With my whole school staff, everyone in green.", "Con todo el personal de mi escuela, todos de verde.") },
+  { k: "wku-mascot", alt: t("Me in a red dress with WKU's mascot, Big Red", "Yo con vestido rojo junto a Big Red, la mascota de WKU"), caption: t("With Big Red at Western Kentucky University.", "Con Big Red en Western Kentucky University.") },
+];
+
+const arrowDown = `<svg class="term-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v11m0 0-4.5-4.5M10 15l4.5-4.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const ev = (href: string, label: string) => `<a class="ev" href="${href}">${label}<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m0 0-4.5-4.5M15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>`;
+const term = (id: string, cls: string, text: string) => `<a href="#${id}" class="term ${cls}">${text}${arrowDown}</a>`;
+const definition = lang === "es"
+  ? `Educadora adaptable y ${term("d-advocate", "t-advocate", "defensora")}, con experiencia en el ${term("d-curriculum", "t-curriculum", "desarrollo de currículo desde cero")} y la ${term("d-problem", "t-problem", "resolución de problemas")}. Me desenvuelvo mejor en ${term("d-collab", "t-collab", "entornos colaborativos")} donde puedo ayudar a cada persona a alcanzar su máximo potencial.`
+  : `Adaptable educator and ${term("d-advocate", "t-advocate", "advocate")}, skilled in ${term("d-curriculum", "t-curriculum", "ground-up curriculum development")} and ${term("d-problem", "t-problem", "problem solving")}. I thrive in ${term("d-collab", "t-collab", "collaborative environments")} where I can empower individuals to reach their full potential.`;
+---
+<Base
+  lang={lang}
+  title={t("Skyler Markwell, teacher and curriculum designer", "Skyler Markwell, maestra y diseñadora de currículo")}
+  description={t("Courses, assessments, family guides and classroom systems designed for multilingual learners by Skyler Markwell, Louisville, Kentucky.", "Cursos, evaluaciones, guías para familias y sistemas de clase diseñados para estudiantes multilingües por Skyler Markwell, Louisville, Kentucky.")}
+  chapter="paper"
+>
+  <section class="hero" data-chapter="paper" aria-labelledby="name">
+    <div class="field-top"></div>
+    <div class="field-bottom" data-chapter="orange"></div>
+    <h1 class="hero-title" id="name">
+      <span class="ink above"><span>Skyler</span><span>Markwell</span></span>
+      <span class="ink below" aria-hidden="true"><span>Skyler</span><span>Markwell</span></span>
+    </h1>
+    <p class="hero-sub">{t("Teacher of multilingual learners and curriculum designer. I build learning for people still learning English, and for the families and teachers around them.", "Maestra de estudiantes multilingües y diseñadora de currículo. Creo aprendizaje para personas que todavía aprenden inglés, y para las familias y maestros que las rodean.")}</p>
+  </section>
+
+  <section class="chapter-paper frame define" data-chapter="paper" aria-labelledby="define-title">
+    <div class="define-head rise">
+      <h2 id="define-title">{t("By definition", "Por definición")}</h2>
+      <p class="define-text" set:html={definition} />
+      <p class="define-hint">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3.5v8.2l-1.6-1.5a1.4 1.4 0 0 0-2 2l3.7 3.9c.8.8 1.9 1.3 3 1.3h2.4a4 4 0 0 0 4-4V9.5a1.3 1.3 0 0 0-2.6 0V9a1.3 1.3 0 0 0-2.6 0v-.4a1.3 1.3 0 0 0-2.6 0V3.5a1.3 1.3 0 0 0-2.7 0Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        {t("Tap a highlighted word to see the proof, then follow a link to open the piece.", "Toca una palabra resaltada para ver la evidencia y luego sigue un enlace para abrir el trabajo.")}
+      </p>
+    </div>
+    <div class="define-grid rise">
+      <article id="d-advocate" class="def t-advocate">
+        <h3>{t("Advocate", "Defensora")}</h3>
+        <ul>
+          <li>{t("Letters to families and to my district", "Cartas a las familias y a mi distrito")}
+            <span class="evs" set:html={[ev(L("/work/access-faqs/"), t("ACCESS FAQs", "Preguntas sobre ACCESS")), ev(L("/work/nti-packet/"), t("NTI letter", "Carta NTI")), ev(L("/work/district-letter/"), t("Principal selection letter", "Carta sobre el director"))].join("")} />
+          </li>
+          <li>{t("Training for teachers", "Capacitación para maestros")}
+            <span class="evs" set:html={[ev(L("/research/#tesol"), t("TESOL station", "Estación TESOL")), ev(L("/work/read-to-self/"), t("Read to Self guide", "Guía de lectura")), ev(L("/work/spanish-vocabulary/"), t("Spanish vocabulary cards", "Tarjetas de vocabulario"))].join("")} />
+          </li>
+          <li>{t("Made sure 100% of families were onboarded to our digital communication platform", "Me aseguré de que el 100% de las familias se unieran a nuestra plataforma de comunicación digital")}</li>
+        </ul>
+      </article>
+      <article id="d-curriculum" class="def t-curriculum">
+        <h3>{t("Ground-up curriculum", "Currículo desde cero")}</h3>
+        <ul>
+          <li>{t("Seven skills-based health units built from scratch", "Siete unidades de salud basadas en habilidades, creadas desde cero")}
+            <span class="evs" set:html={ev(L("/work/health/"), t("Newcomer Health scope and sequence", "Curso de salud para recién llegados"))} />
+          </li>
+          <li>{t("The Our World in Wellness bulletin board from the same course", "El tablero Nuestro mundo en bienestar del mismo curso")}
+            <span class="evs" set:html={ev(L("/work/health/"), t("See the board", "Ver el tablero"))} />
+          </li>
+        </ul>
+      </article>
+      <article id="d-problem" class="def t-problem">
+        <h3>{t("Problem solving", "Resolución de problemas")}</h3>
+        <ul>
+          <li>{t("Data and spreadsheets", "Datos y hojas de cálculo")}
+            <span class="evs" set:html={ev(L("/work/progress-tracker/"), t("IEP goal progress tracker", "Registro de metas del IEP"))} />
+          </li>
+          <li>{t("Exited 25 students from English learner services", "Logré que 25 estudiantes salieran de los servicios para estudiantes de inglés")}</li>
+          <li>{t("Led a team of 6, managing schedules and resource allocation to ensure daily coverage for 100% of my caseload", "Dirigí un equipo de 6, organizando horarios y recursos para cubrir cada día al 100% de mis estudiantes")}</li>
+          <li>{t("Led a data-cleansing initiative that audited records for 225 students, from their first entry into the country to the present day", "Dirigí una revisión de datos que auditó los expedientes de 225 estudiantes, desde su llegada al país hasta hoy")}</li>
+        </ul>
+      </article>
+      <article id="d-collab" class="def t-collab">
+        <h3>{t("Collaborative", "Colaborativa")}</h3>
+        <ul>
+          <li>{t("Co-teaching in a general education class", "Enseñanza en equipo en una clase de educación general")}
+            <span class="evs" set:html={ev(L("/work/compare-contrast/"), t("Compare and contrast lesson", "Lección de comparar y contrastar"))} />
+          </li>
+          <li>{t("Elected to the Collaboration Leadership Team at the ESL Newcomer Academy", "Electa al Equipo de Liderazgo Colaborativo de la ESL Newcomer Academy")}</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-orange frame" data-chapter="orange" aria-labelledby="finish-title">
+    <div class="finish">
+      <div class="rise">
+        <h2 id="finish-title">{t("Finish the sentence", "Termina la frase")}</h2>
+        <p class="statement" id="statement" aria-live="polite">{t("I can", "Puedo")} <span class="blank" id="blank">{first.end}</span>.</p>
+        <p class="who" id="who">{first.who}</p>
+        <ul class="choices" id="choices" aria-label={t("Choose how the sentence ends", "Elige cómo termina la frase")}>
+          {frames.map((f, i) => (
+            <li><button type="button" aria-pressed={i === 0 ? "true" : "false"} data-end={f.end} data-who={f.who} data-slug={f.slug} data-title={f.title} data-href={f.href} data-img={f.img?.src ?? ""} data-w={f.img?.width ?? ""} data-h={f.img?.height ?? ""}>{f.end}</button></li>
+          ))}
+        </ul>
+      </div>
+      <a class="made-this rise" id="made-this" href={first.href}>
+        {first.img && <span class="paper sheet-pic"><img id="made-img" src={first.img.src} width={first.img.width} height={first.img.height} alt="" /></span>}
+        <span class="caption">{t("Made for them:", "Hecho para ellos:")} <strong id="made-title">{first.title}</strong></span>
+      </a>
+    </div>
+  </section>
+
+  <section class="chapter-paper frame snapshots" data-chapter="paper" aria-labelledby="snap-title">
+    <div class="snap-copy rise">
+      <h2 id="snap-title">{t("Snapshots", "Momentos")}</h2>
+      <p>{t("Me, my students, and a few days I’m proud of. Swipe or use the arrows to look around.", "Yo, mis estudiantes y algunos días de los que estoy orgullosa. Desliza o usa las flechas para verlos.")}</p>
+    </div>
+    <Carousel label={t("Snapshots", "Momentos")} lang={lang} items={snaps} />
+  </section>
+
+  <section id="work" aria-labelledby="work-title">
+    <div class="chapter-sky frame" data-chapter="sky">
+      <div class="section-head rise">
+        <h2 id="work-title">{t("On the desk", "Sobre el escritorio")}</h2>
+        <p>{t("A sample of what I’ve made for real classrooms. Pick up a sheet to see it up close.", "Una muestra de lo que he hecho para salones reales. Toma una hoja para verla de cerca.")}</p>
+      </div>
+    </div>
+    <div class="chapter-desk frame desk-surface" data-chapter="desk">
+      <ul class="desk rise">
+        {featured.map((w, i) => (
+          <li class={i === 0 ? "feature" : undefined}>
+            <a class="piece" href={L(`/work/${w.id}/`)} data-slug={w.id}>
+              <Sheets slug={w.id} layout={w.data.layout} tilt={w.data.tilt} pages={previewsFor(w.id)} pairLabel={w.data.pairLabel} />
+              <span class="label"><span class="name">{w.data.title}</span><span class="meta">{kindLabel(lang, w.data.kind)} · {w.data.languages}</span></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="to-gallery rise"><a href={L("/gallery/")}>{t("See all my work and more photos in the gallery", "Mira todo mi trabajo y más fotos en la galería")} <span aria-hidden="true">→</span></a></p>
+    </div>
+  </section>
+
+  <section class="chapter-night frame poster" data-chapter="night" aria-labelledby="design-title">
+    <h2 id="design-title">{t("What I design", "Lo que diseño")}</h2>
+    <ul class="rise">
+      {designs.map((d) => (
+        <li><a href={L(`/work/${d.slug}/`)}><span class="big">{d.big}</span><span class="small">{d.small}</span></a></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="chapter-lime frame" data-chapter="lime" id="about" aria-labelledby="about-title">
+    <div class="about">
+      <h2 id="about-title" class="rise"><span>{t("About me", "Sobre mí")}</span></h2>
+      <div class="row">
+        <div class="facts-side">
+          {portrait && <img src={portrait.src} width={portrait.width} height={portrait.height} alt={t("Me, smiling, in a denim jacket", "Yo, sonriendo, con una chaqueta de mezclilla")} loading="lazy" />}
+          <dl>
+            <div><dt>{t("Based in", "Vivo en")}</dt><dd>Louisville, Kentucky</dd></div>
+            <div><dt>{t("Teaching since", "Enseño desde")}</dt><dd>2022</dd></div>
+            <div><dt>{t("Languages", "Idiomas")}</dt><dd>{t("English, conversational Spanish", "Inglés y español conversacional")}</dd></div>
+            <div><dt>{t("Trained in", "Formación en")}</dt><dd>{t("Restorative practices", "Prácticas restaurativas")}</dd></div>
+          </dl>
+        </div>
+        <div>
+          <p class="lead">{t("I’ve taught ages 5–21, all with varying levels of English language proficiency and background knowledge. I’ve co-taught with other teachers in mixed groups, and I’ve taught in isolated settings with high-needs students. I enjoy helping all learners exceed what they thought possible.", "He enseñado a estudiantes de 5 a 21 años, todos con distintos niveles de dominio del inglés y de conocimientos previos. He enseñado junto con otros maestros en grupos mixtos y también en entornos separados con estudiantes de altas necesidades. Me encanta ayudar a cada estudiante a superar lo que creía posible.")}</p>
+          <blockquote>
+            <p>{t("I have since learned that the process is the most important piece.", "Desde entonces he aprendido que el proceso es lo más importante.")}</p>
+            <cite>{t("From my 2026 Insight to Action reflection, on teaching math", "De mi reflexión Insight to Action de 2026, sobre la enseñanza de matemáticas")}</cite>
+          </blockquote>
+          {intro && (
+            <figure class="photo intro-video">
+              <video controls playsinline preload="none" poster={intro.poster} width={intro.width} height={intro.height} aria-label={t("Me in a pink jacket, outdoors in the snow, talking about the kind of teacher I wanted to be", "Yo con una chaqueta rosa, afuera en la nieve, hablando del tipo de maestra que quería ser")}>
+                <source src={intro.video} type="video/mp4" />
+              </video>
+              <figcaption>{t("When I first started student teaching, I recorded what kind of teacher I wanted to be.", "Cuando empecé mis prácticas docentes, grabé qué tipo de maestra quería ser. El video está en inglés.")}</figcaption>
+            </figure>
+          )}
+        </div>
+      </div>
+      <div class="row">
+        <Figure k="asbury-grad" class="grad" sizes="(min-width: 900px) 25vw, 70vw" alt={t("Me in cap and gown at my Asbury University graduation", "Yo con toga y birrete en mi graduación de Asbury University")} caption={t("Master of Arts in Teaching, Asbury University, 2025.", "Maestría en Enseñanza, Asbury University, 2025.")} />
+        <div class="record">
+          <div>
+            <h3>{t("Experience", "Experiencia")}</h3>
+            <ul>
+              <li><span>{t("Teacher of multilingual learners, ECE and Health, ESL Newcomer Academy", "Maestra de estudiantes multilingües, educación especial y salud, ESL Newcomer Academy")}</span><span class="y">2026–</span></li>
+              <li><span>{t("Instructional lead and career coach, SummerWorks", "Líder instructiva y orientadora profesional, SummerWorks")}</span><span class="y">2026</span></li>
+              <li><span>{t("Teacher of multilingual learners and program lead, Marnel C. Moorman K–8", "Maestra de estudiantes multilingües y líder del programa, Marnel C. Moorman K–8")}</span><span class="y">2022–26</span></li>
+              <li><span>{t("Elected to the Collaboration Leadership Team, Newcomer Academy", "Electa al Equipo de Liderazgo Colaborativo, Newcomer Academy")}</span><span class="y">2026</span></li>
+              <li><span>{t("Attended the TESOL International Convention, Long Beach", "Asistí a la Convención Internacional TESOL, Long Beach")}</span><span class="y">2025</span></li>
+              <li><span>{t("Poster presentation, KYCEC conference, Louisville", "Presentación de póster, conferencia KYCEC, Louisville")}</span><span class="y">2022</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>{t("Education", "Educación")}</h3>
+            <ul>
+              <li><span>{t("MA in Teaching, English as a Second Language, Asbury University", "Maestría en Enseñanza, inglés como segundo idioma, Asbury University")}</span><span class="y">2025</span></li>
+              <li><span>{t("BS, Elementary and Exceptional Child Education, Western Kentucky University", "Licenciatura en educación primaria y educación especial, Western Kentucky University")}</span><span class="y">2022</span></li>
+              <li><span>{t("UFLI literacy intervention training", "Capacitación en intervención de lectoescritura UFLI")}</span><span class="y">2025</span></li>
+              <li><span>{t("Google Certified Educator, Level 2", "Educadora certificada por Google, nivel 2")}</span><span class="y">2020</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>("#choices button");
+  const blank = document.getElementById("blank")!, who = document.getElementById("who")!, statement = document.getElementById("statement")!;
+  const made = document.getElementById("made-this") as HTMLAnchorElement, img = document.getElementById("made-img") as HTMLImageElement | null, title = document.getElementById("made-title")!;
+  const lift = (slug: string) => document.querySelectorAll(".desk .piece").forEach((p) => p.classList.toggle("chosen", (p as HTMLElement).dataset.slug === slug));
+  buttons.forEach((b) => b.addEventListener("click", () => {
+    buttons.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    const d = b.dataset;
+    blank.textContent = d.end!; who.textContent = d.who!; title.textContent = d.title!; made.href = d.href!;
+    if (img && d.img) { img.src = d.img; img.width = +d.w!; img.height = +d.h!; }
+    statement.classList.remove("swap"); void statement.offsetWidth; statement.classList.add("swap");
+    lift(d.slug!);
+  }));
+
+  // Definition terms: glide to the card and flash it so the jump is obvious.
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll<HTMLAnchorElement>(".define-text .term").forEach((a) => a.addEventListener("click", (e) => {
+    const card = document.querySelector<HTMLElement>(a.getAttribute("href")!);
+    if (!card) return;
+    e.preventDefault();
+    history.replaceState(null, "", a.getAttribute("href"));
+    card.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
+    card.classList.remove("flash"); void card.offsetWidth; card.classList.add("flash");
+    card.querySelector<HTMLElement>("a.ev, h3")?.focus({ preventScroll: true });
+  }));
+  document.querySelectorAll<HTMLElement>(".def h3").forEach((h) => h.setAttribute("tabindex", "-1"));
+</script>

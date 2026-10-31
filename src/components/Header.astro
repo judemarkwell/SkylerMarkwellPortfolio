@@ -1,24 +1,34 @@
 ---
-import { u, EMAIL } from "../lib/site";
-interface Props { current?: string; chapter?: string }
-const { current = "", chapter = "paper" } = Astro.props;
+import { EMAIL } from "../lib/site";
+import { tr, lp, otherLangPath, type Lang } from "../lib/i18n";
+interface Props { current?: string; chapter?: string; lang?: Lang }
+const { current = "", chapter = "paper", lang = "en" } = Astro.props;
+const t = tr(lang);
 const links = [
-  { href: u("/#work"), label: "Work", key: "work" },
-  { href: u("/gallery/"), label: "Gallery", key: "gallery" },
-  { href: u("/#about"), label: "About", key: "about" },
-  { href: u("/research/"), label: "Research", key: "research" },
-  { href: u("/professional/"), label: "Professional", key: "professional" },
+  { href: lp(lang, "/#work"), label: t("Work", "Trabajo"), key: "work" },
+  { href: lp(lang, "/gallery/"), label: t("Gallery", "Galería"), key: "gallery" },
+  { href: lp(lang, "/#about"), label: t("About", "Sobre mí"), key: "about" },
+  { href: lp(lang, "/research/"), label: t("Research", "Investigación"), key: "research" },
+  { href: lp(lang, "/professional/"), label: t("Professional", "Profesional"), key: "professional" },
 ];
+const other = otherLangPath(Astro.url.pathname);
+const enHref = lang === "en" ? undefined : other.href;
+const esHref = lang === "es" ? undefined : other.href;
 ---
 <header class="site-header" data-chapter={chapter} id="site-header">
   <div class="bar frame">
-    <a class="wordmark" href={u("/")}>Skyler Markwell</a>
-    <nav class="nav" aria-label="Main">
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-links">Menu</button>
+    <a class="wordmark" href={lp(lang, "/")}>Skyler Markwell</a>
+    <nav class="nav" aria-label={t("Main", "Principal")}>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-links" data-open={t("Menu", "Menú")} data-close={t("Close", "Cerrar")}>{t("Menu", "Menú")}</button>
       <div class="links" id="main-links">
         {links.map((l) => <a href={l.href} aria-current={current === l.key ? "page" : undefined}>{l.label}</a>)}
+        <a class="menu-email" href={`mailto:${EMAIL}`}>{t("Email me", "Escríbeme")}</a>
       </div>
-      <a class="btn" href={`mailto:${EMAIL}`}>Email me</a>
+      <div class="lang-switch" role="group" aria-label={t("Language", "Idioma")}>
+        {enHref ? <a href={enHref} hreflang="en" lang="en" data-lang="en">EN<span class="sr-only"> English</span></a> : <span aria-current="true" lang="en">EN<span class="sr-only"> English, current</span></span>}
+        {esHref ? <a href={esHref} hreflang="es" lang="es" data-lang="es">ES<span class="sr-only"> Español</span></a> : <span aria-current="true" lang="es">ES<span class="sr-only"> Español, actual</span></span>}
+      </div>
+      <a class="btn" href={`mailto:${EMAIL}`}>{t("Email me", "Escríbeme")}</a>
     </nav>
   </div>
 </header>

@@ -27,6 +27,16 @@ Dealt by taste-skill (`.taste-skill/direction.json`): **Type and nothing else**,
 - Every piece has a real PDF download (`npm run downloads`). The transcript is published with the student ID and date of birth removed and flattened to images.
 - "By definition" section on the home page: her definition sentence, each highlighted term linked to its evidence, in the four chapter colours.
 
+## Spanish version
+
+- Every page exists in English and Spanish (`/es/...`). Pages are shared views in `src/views/` that take `lang`; strings use `t(en, es)` from `src/lib/i18n.ts`.
+- Work pieces: Spanish text lives in `src/content/work-es/` and is laid over the English entry (layout, order, previews and downloads stay shared). Her documents themselves stay in the language she used them in.
+- The EN / ES switch sits in the header and goes to the same page in the other language. On phones under 520px, "Email me" moves into the menu so the switch always fits.
+
+## Definition terms
+
+Each highlighted term is underlined with a down arrow that nudges twice on load; clicking glides to its card and flashes it. Evidence links are black pill buttons with an arrow.
+
 ## Snapshots carousel
 
 On the home page between "Finish the sentence" and the desk: a scroll-snap carousel of photos of Skyler and her proudest moments. Swipe on phones; arrows, dots and Pause always present; it auto-advances only while visible and not being used, never under reduced motion.

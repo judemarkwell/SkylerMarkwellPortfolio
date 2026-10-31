@@ -1,0 +1,14 @@
+---
+import Piece from "../../../views/Piece.astro";
+import { workIn } from "../../../lib/i18n";
+
+export async function getStaticPaths() {
+  const all = await workIn("es");
+  return all.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, prev: all[(i - 1 + all.length) % all.length], next: all[(i + 1) % all.length] },
+  }));
+}
+const { entry, prev, next } = Astro.props;
+---
+<Piece lang="es" entry={entry} prev={prev} next={next} />

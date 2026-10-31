@@ -1,0 +1,102 @@
+---
+import Base from "../layouts/Base.astro";
+import Sheets from "../components/Sheets.astro";
+import Figure from "../components/Figure.astro";
+import { previewsFor, photo } from "../lib/site";
+import { tr, lp, workIn, kindLabel, type Lang } from "../lib/i18n";
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = tr(lang);
+
+const all = await workIn(lang);
+const kinds = ["Curriculum design", "Assessment design", "Data and progress monitoring", "Lesson design", "Family engagement", "Advocacy and leadership", "Classroom systems", "Teacher resources"];
+const groups = kinds.map((k) => ({ kind: k, items: all.filter((w) => w.data.kind === k) })).filter((g) => g.items.length);
+const tour = photo("classroom-tour");
+
+const photos = [
+  { k: "grateful-board", alt: t("Hallway board titled Grateful in Every Language: a paper tree whose leaves are student sentences", "Tablero del pasillo titulado Grateful in Every Language: un árbol de papel con hojas escritas por estudiantes"), caption: t("Grateful in Every Language: students finished “I am thankful for…” in English, Spanish, Arabic, Somali, Swahili, Pashto and Kinyarwanda.", "Agradecidos en todos los idiomas: los estudiantes completaron «Estoy agradecido por…» en inglés, español, árabe, somalí, suajili, pastún y kinyarwanda.") },
+  { k: "access-exit", alt: t("Students holding certificates under a We're Multilingual banner", "Estudiantes con certificados debajo de un letrero que dice We're Multilingual"), caption: t("I exited 25 students from English learner services. Here are some of them with their certificates after passing the ACCESS test.", "Logré que 25 estudiantes salieran de los servicios para estudiantes de inglés. Aquí están algunos con sus certificados después de aprobar el examen ACCESS.") },
+  { k: "wellness-board", alt: t("Classroom board titled Our World in Wellness with a world map and culture cards", "Tablero del salón titulado Our World in Wellness con un mapa del mundo y tarjetas culturales"), caption: t("Our World in Wellness, from my health classroom.", "Nuestro mundo en bienestar, de mi salón de salud.") },
+  { k: "grad-flowers", alt: t("Me with a graduate in a blue gown holding flowers", "Yo con una graduada con toga azul y flores"), caption: t("Graduation day for one of my students, the first in her family to finish high school.", "El día de graduación de una de mis estudiantes, la primera de su familia en terminar la preparatoria.") },
+  { k: "math-dominoes", alt: t("A student's hand writing numbers next to dominoes on a whiteboard", "La mano de un estudiante escribiendo números junto a fichas de dominó en una pizarra"), caption: t("Number work with dominoes.", "Trabajo con números usando dominó.") },
+  { k: "grad-cert", alt: t("Me beside a 12th grade student holding a certificate", "Yo junto a un estudiante de último año con su certificado"), caption: t("A 20-year-old student I taught passed his Defense of Learning and came back to thank me!", "¡Un estudiante de 20 años al que le di clases aprobó su Defensa del Aprendizaje y regresó para darme las gracias!") },
+  { k: "thank-you", alt: t("A second grade class with a thank-you sign for Ms. Markwell", "Una clase de segundo grado con un letrero de agradecimiento para la maestra Markwell"), caption: t("A second grade class celebrating the day I came back.", "Una clase de segundo grado celebrando el día que regresé.") },
+  { k: "kycec-poster", alt: t("My research poster on peer tutoring for English learners", "Mi póster de investigación sobre tutoría entre compañeros para estudiantes de inglés"), caption: t("My KYCEC 2022 poster: The Effect of Peer Tutoring on ELL Students’ Academic Achievement.", "Mi póster de KYCEC 2022: el efecto de la tutoría entre compañeros en el rendimiento académico de estudiantes de inglés.") },
+  { k: "math-whiteboard", alt: t("Student whiteboard with domino pictures labeled 3, 8, 9 and 6", "Pizarra de un estudiante con dibujos de dominó marcados 3, 8, 9 y 6"), caption: t("Showing the thinking before the answer.", "Mostrar el razonamiento antes de la respuesta.") },
+  { k: "pumpkin-patch", alt: t("Me and two teachers with students at a pumpkin farm", "Yo y dos maestras con estudiantes en una granja de calabazas"), caption: t("My elementary students seeing a pumpkin patch for the first time.", "Mis estudiantes de primaria viendo un campo de calabazas por primera vez.") },
+  { k: "tesol-2025", alt: t("Me with four colleagues on the pier in Long Beach", "Yo con cuatro colegas en el muelle de Long Beach"), caption: t("With colleagues at TESOL 2025 in Long Beach.", "Con colegas en TESOL 2025 en Long Beach.") },
+  { k: "asbury-grad", alt: t("Me in cap and gown at Asbury University", "Yo con toga y birrete en Asbury University"), caption: t("Master of Arts in Teaching, Asbury University, 2025.", "Maestría en Enseñanza, Asbury University, 2025.") },
+  { k: "coworkers-dinner", alt: t("Me with six co-workers smiling in a restaurant selfie", "Yo con seis compañeras de trabajo en una selfie en un restaurante"), caption: t("Dinner with my co-workers.", "Cena con mis compañeras de trabajo.") },
+  { k: "staff-photo", alt: t("A whole school staff in green shirts posing in a gym", "Todo el personal de una escuela con camisetas verdes en un gimnasio"), caption: t("With my whole school staff, everyone in green.", "Con todo el personal de mi escuela, todos de verde.") },
+  { k: "coworkers-kycec", alt: t("Me with three fellow educators in a hotel lobby", "Yo con tres educadoras en el vestíbulo de un hotel"), caption: t("With fellow educators at KYCEC, 2022.", "Con otras educadoras en KYCEC, 2022.") },
+  { k: "wku-grad", alt: t("Me in a graduation gown holding a WKU Alumni flag", "Yo con toga sosteniendo una bandera de exalumnos de WKU"), caption: t("Graduating from Western Kentucky University, 2022.", "Graduándome de Western Kentucky University, 2022.") },
+];
+---
+<Base lang={lang} title={t("Gallery · Skyler Markwell", "Galería · Skyler Markwell")} description={t("All of Skyler Markwell's classroom materials and photos from her classrooms.", "Todos los materiales de clase de Skyler Markwell y fotos de sus salones.")} current="gallery" chapter="sky">
+  <section class="chapter-sky frame page-head" data-chapter="sky">
+    <h1>{t("Gallery", "Galería")}</h1>
+    <p>{t("Everything I’ve shared here, sorted by the kind of work, plus photos from my classrooms.", "Todo lo que comparto aquí, ordenado por tipo de trabajo, y fotos de mis salones.")}</p>
+    <nav class="gallery-jump" aria-label={t("On this page", "En esta página")}>
+      <a href="#all-work">{t("All my work", "Todo mi trabajo")}</a>
+      <a href="#photos">{t("Photos", "Fotos")}</a>
+    </nav>
+  </section>
+
+  <section class="chapter-desk frame gallery-work" data-chapter="desk" id="all-work" aria-labelledby="all-work-title">
+    <h2 id="all-work-title">{t("All my work", "Todo mi trabajo")}</h2>
+    {groups.map((g) => (
+      <div class="gw-group">
+        <h3>{kindLabel(lang, g.kind)}</h3>
+        <ul class="gw-grid">
+          {g.items.map((w) => (
+            <li>
+              <a class="piece gw-piece" href={lp(lang, `/work/${w.id}/`)}>
+                <Sheets slug={w.id} layout="single" tilt={0} pages={previewsFor(w.id)} />
+                <span class="label"><span class="name">{w.data.title}</span><span class="meta">{w.data.madeFor}</span></span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </section>
+
+  <section class="chapter-night frame gallery-photos" data-chapter="night" id="photos" aria-labelledby="photos-title">
+    <div class="room-head">
+      <h2 id="photos-title">{t("Photos", "Fotos")}</h2>
+      <p>{t("Picture supports on every wall, flags from home countries, and the students and colleagues who make the work worth it.", "Apoyos visuales en cada pared, banderas de los países de origen y los estudiantes y colegas que hacen que todo valga la pena.")}</p>
+    </div>
+    <div class="masonry">
+      {tour && (
+        <figure class="photo room-video">
+          <video id="tour" muted loop playsinline preload="metadata" poster={tour.poster} width={tour.width} height={tour.height} aria-label={t("A slow pan across my classroom: the door, encouraging posters, a clock, and standing tables under string lights", "Un recorrido lento por mi salón: la puerta, carteles de ánimo, un reloj y mesas altas bajo luces colgantes")}>
+            <source src={tour.video} type="video/mp4" />
+          </video>
+          <button type="button" class="vid-toggle" id="tour-toggle" aria-pressed="false" data-pause={t("Pause", "Pausar")} data-play={t("Play", "Reproducir")}>{t("Pause", "Pausar")}</button>
+          <figcaption>{t("My classroom.", "Mi salón.")}</figcaption>
+        </figure>
+      )}
+      {photos.map((ph) => <Figure k={ph.k} alt={ph.alt} caption={ph.caption} sizes="(min-width: 1100px) 30vw, (min-width: 700px) 45vw, 100vw" />)}
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Classroom loop: plays muted while on screen, never autoplays under reduced motion, always pausable.
+  const tour = document.getElementById("tour") as HTMLVideoElement | null;
+  const btn = document.getElementById("tour-toggle") as HTMLButtonElement | null;
+  if (tour && btn) {
+    const set = (playing: boolean) => { btn.textContent = playing ? btn.dataset.pause! : btn.dataset.play!; btn.setAttribute("aria-pressed", String(!playing)); };
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      new IntersectionObserver(([e]) => {
+        if (e.isIntersecting && btn.dataset.user !== "paused") tour.play().then(() => set(true)).catch(() => set(false));
+        else if (!e.isIntersecting) tour.pause();
+      }).observe(tour);
+    } else set(false);
+    btn.addEventListener("click", () => {
+      if (tour.paused) { btn.dataset.user = ""; tour.play().then(() => set(true)).catch(() => {}); }
+      else { btn.dataset.user = "paused"; tour.pause(); set(false); }
+    });
+  }
+</script>

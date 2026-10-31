@@ -5,36 +5,38 @@
    keyboard focus is inside it, restarts its clock after any swipe, arrow or dot, and never runs
    under reduced motion. Touch never "holds" the carousel (iOS fires no leave event after a tap). */
 import { photo } from "../lib/site";
+import { tr, type Lang } from "../lib/i18n";
 
 interface Item { k: string; alt: string; caption: string }
-interface Props { items: Item[]; label: string }
-const { items: raw, label } = Astro.props;
+interface Props { items: Item[]; label: string; lang?: Lang }
+const { items: raw, label, lang = "en" } = Astro.props;
+const t = tr(lang);
 const items = raw.map((it) => ({ ...it, p: photo(it.k) })).filter((it) => it.p);
 const n = items.length;
 ---
 <div class="carousel" role="region" aria-roledescription="carousel" aria-label={label}>
-  <div class="cr-track" id="cr-track" tabindex="0" aria-label={`${label}: swipe, scroll or use the buttons below`}>
+  <div class="cr-track" id="cr-track" tabindex="0" aria-label={`${label}: ${t("swipe, scroll or use the buttons below", "desliza o usa los botones de abajo")}`}>
     {items.map((it, i) => (
-      <figure class:list={["cr-slide", { active: i === 0 }]} role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${n}`} data-i={i}>
+      <figure class:list={["cr-slide", { active: i === 0 }]} role="group" aria-roledescription="slide" aria-label={`${i + 1} ${t("of", "de")} ${n}`} data-i={i}>
         <img src={it.p!.src} srcset={it.p!.srcset} sizes="(min-width: 960px) 42rem, 78vw" width={it.p!.width} height={it.p!.height} alt={it.alt} loading={i < 3 ? "eager" : "lazy"} decoding="async" draggable="false" />
         <figcaption>{it.caption}</figcaption>
       </figure>
     ))}
   </div>
   <div class="cr-controls">
-    <button type="button" class="cr-btn" id="cr-prev" aria-label="Previous photo">
+    <button type="button" class="cr-btn" id="cr-prev" aria-label={t("Previous photo", "Foto anterior")}>
       <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
     </button>
-    <div class="cr-dots" role="group" aria-label="Choose a photo">
+    <div class="cr-dots" role="group" aria-label={t("Choose a photo", "Elige una foto")}>
       {items.map((it, i) => (
-        <button type="button" class="cr-dot" data-i={i} aria-label={`Photo ${i + 1} of ${n}`} aria-current={i === 0 ? "true" : "false"}></button>
+        <button type="button" class="cr-dot" data-i={i} aria-label={`${t("Photo", "Foto")} ${i + 1} ${t("of", "de")} ${n}`} aria-current={i === 0 ? "true" : "false"}></button>
       ))}
     </div>
     <span class="cr-count" id="cr-count" aria-hidden="true">1 / {n}</span>
-    <button type="button" class="cr-btn" id="cr-next" aria-label="Next photo">
+    <button type="button" class="cr-btn" id="cr-next" aria-label={t("Next photo", "Foto siguiente")}>
       <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
     </button>
-    <button type="button" class="cr-btn cr-toggle" id="cr-toggle" aria-label="Pause slideshow" data-state="playing">
+    <button type="button" class="cr-btn cr-toggle" id="cr-toggle" aria-label={t("Pause slideshow", "Pausar las fotos")} data-state="playing" data-pause={t("Pause slideshow", "Pausar las fotos")} data-play={t("Play slideshow", "Reproducir las fotos")}>
       <svg class="i-pause" viewBox="0 0 20 20" aria-hidden="true"><rect x="5.5" y="4.5" width="3" height="11" rx="1" fill="currentColor" /><rect x="11.5" y="4.5" width="3" height="11" rx="1" fill="currentColor" /></svg>
       <svg class="i-play" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 4.8v10.4a.8.8 0 0 0 1.2.7l8-5.2a.8.8 0 0 0 0-1.4l-8-5.2A.8.8 0 0 0 7 4.8Z" fill="currentColor" /></svg>
     </button>
@@ -123,7 +125,7 @@ const n = items.length;
     const setPlaying = (v: boolean) => {
       playing = v;
       toggle.dataset.state = v ? "playing" : "paused";
-      toggle.setAttribute("aria-label", v ? "Pause slideshow" : "Play slideshow");
+      toggle.setAttribute("aria-label", v ? toggle.dataset.pause! : toggle.dataset.play!);
       lastMove = performance.now();
     };
     toggle.addEventListener("click", () => setPlaying(!playing));
