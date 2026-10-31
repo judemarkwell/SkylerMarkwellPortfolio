@@ -35,7 +35,7 @@ Dealt by taste-skill (`.taste-skill/direction.json`): **Type and nothing else**,
 
 ## Definition terms
 
-Each term keeps its colour highlight and gets a thick crimson underline that thickens on hover; clicking glides to its card and flashes it. Evidence links are black pill buttons with an arrow.
+Each term is a plain colour highlight (not a link): its colour matches the card below that holds the evidence. Evidence links are black pill buttons with an arrow.
 
 ## Snapshots carousel
 
