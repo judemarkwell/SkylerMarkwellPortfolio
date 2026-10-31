@@ -35,7 +35,7 @@ Dealt by taste-skill (`.taste-skill/direction.json`): **Type and nothing else**,
 
 ## Definition terms
 
-Each highlighted term is underlined with a down arrow that nudges twice on load; clicking glides to its card and flashes it. Evidence links are black pill buttons with an arrow.
+Each term keeps its colour highlight and gets a thick crimson underline that thickens on hover; clicking glides to its card and flashes it. Evidence links are black pill buttons with an arrow.
 
 ## Snapshots carousel
 
