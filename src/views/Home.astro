@@ -54,9 +54,8 @@ const snaps = [
   { k: "wku-mascot", alt: t("Me in a red dress with WKU's mascot, Big Red", "Yo con vestido rojo junto a Big Red, la mascota de WKU"), caption: t("With Big Red at Western Kentucky University.", "Con Big Red en Western Kentucky University.") },
 ];
 
-const arrowDown = `<svg class="term-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v11m0 0-4.5-4.5M10 15l4.5-4.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const ev = (href: string, label: string) => `<a class="ev" href="${href}">${label}<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m0 0-4.5-4.5M15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>`;
-const term = (id: string, cls: string, text: string) => `<a href="#${id}" class="term ${cls}">${text}${arrowDown}</a>`;
+const term = (id: string, cls: string, text: string) => `<a href="#${id}" class="term ${cls}">${text}</a>`;
 const definition = lang === "es"
   ? `Educadora adaptable y ${term("d-advocate", "t-advocate", "defensora")}, con experiencia en el ${term("d-curriculum", "t-curriculum", "desarrollo de currículo desde cero")} y la ${term("d-problem", "t-problem", "resolución de problemas")}. Me desenvuelvo mejor en ${term("d-collab", "t-collab", "entornos colaborativos")} donde puedo ayudar a cada persona a alcanzar su máximo potencial.`
   : `Adaptable educator and ${term("d-advocate", "t-advocate", "advocate")}, skilled in ${term("d-curriculum", "t-curriculum", "ground-up curriculum development")} and ${term("d-problem", "t-problem", "problem solving")}. I thrive in ${term("d-collab", "t-collab", "collaborative environments")} where I can empower individuals to reach their full potential.`;
