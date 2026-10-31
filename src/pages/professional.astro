@@ -1,0 +1,92 @@
+---
+import Base from "../layouts/Base.astro";
+import { u, download, EMAIL, LINKEDIN } from "../lib/site";
+
+const resume = download("_resume");
+const creds = download("_credential-history");
+const transcript = download("_asbury-transcript");
+
+const certificates = [
+  { name: "English as a Second Language, all grades", dates: "2024–2029" },
+  { name: "Exceptional Children: Learning and Behavior Disorders, primary through grade 12", dates: "2022–2027" },
+  { name: "Elementary School, primary through grade 5", dates: "2022–2027" },
+];
+const coursework = [
+  { area: "Diagnosis and remediation of reading difficulties", courses: "LBD Language Intervention: Strategies and Materials; Assessment for Teaching English" },
+  { area: "Foundational reading skills", courses: "Foundations of Elementary Literacy; Grammar and Linguistics for Teaching English Learners" },
+  { area: "Reading comprehension", courses: "Literacy in Elementary Grades; Methods for Teaching English" },
+  { area: "Composition and literature", courses: "Writing in the Discipline; Freshman English; Introduction to Literature; Children’s Literature" },
+  { area: "Literacy in the content areas", courses: "Methods for Teaching English (sheltered instruction); Teaching Strategies II" },
+];
+---
+<Base title="Professional · Skyler Markwell" description="Skyler Markwell's certifications, education, training, qualifications and resume." current="professional" chapter="lime">
+  <section class="chapter-lime frame page-head" data-chapter="lime">
+    <h1>Professional</h1>
+    <p>My certifications, education and training, plus my resume and transcripts to download.</p>
+    <div class="dl-list">
+      {resume && <a class="btn" href={resume.href} download>Resume (PDF, {resume.size})</a>}
+      {creds && <a class="btn" href={creds.href} download>Kentucky credentials (PDF, {creds.size})</a>}
+      {transcript && <a class="btn" href={transcript.href} download>Asbury transcript (PDF, {transcript.size})</a>}
+    </div>
+  </section>
+
+  <section class="chapter-paper frame pro" data-chapter="paper">
+    <div class="pro-row">
+      <h2>What I’m qualified to teach</h2>
+      <div class="pro-body">
+        <p class="pro-lead">I hold Kentucky professional certificates in English as a Second Language for all grades, Learning and Behavior Disorders from primary through grade 12, and Elementary Education, at Rank II. With 31 semester hours in reading, writing and language instruction, I’m qualified to teach English language development and strategic literacy at the elementary, middle and secondary levels, and to support students with disabilities in each.</p>
+      </div>
+    </div>
+
+    <div class="pro-row">
+      <h2>Certifications</h2>
+      <div class="pro-body">
+        <p>Kentucky Education Professional Standards Board, Rank II.</p>
+        <ul class="pro-list">
+          {certificates.map((c) => <li><span>{c.name}</span><span class="y">{c.dates}</span></li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="pro-row">
+      <h2>Education</h2>
+      <div class="pro-body">
+        <ul class="pro-list">
+          <li><span><strong>Master of Arts in Teaching</strong>, ESL P–12 endorsement, Asbury University. 4.0 GPA.</span><span class="y">2025</span></li>
+          <li><span><strong>Bachelor of Science</strong>, Elementary Education and Exceptional Child Education (LBD), Western Kentucky University. Summa cum laude.</span><span class="y">2022</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pro-row">
+      <h2>Training</h2>
+      <div class="pro-body">
+        <ul class="pro-list">
+          <li><span>Trained in restorative practices</span></li>
+          <li><span>UFLI literacy intervention</span><span class="y">2025</span></li>
+          <li><span>Kentucky Numeracy Counts Academy (OVEC)</span><span class="y">2027, in progress</span></li>
+          <li><span>Google Certified Educator, Level 2</span><span class="y">2020</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pro-row">
+      <h2>Literacy and language coursework</h2>
+      <div class="pro-body">
+        <p>31 semester hours across Western Kentucky University and Asbury University.</p>
+        <dl class="pro-dl">
+          {coursework.map((c) => <><dt>{c.area}</dt><dd>{c.courses}</dd></>)}
+        </dl>
+      </div>
+    </div>
+
+    <div class="pro-row">
+      <h2>Resume</h2>
+      <div class="pro-body">
+        <p>Read my full work history on the page, or download it as a PDF.</p>
+        <p class="pro-links"><a href={u("/resume/")}>Read my resume</a>{resume && <> · <a href={resume.href} download>Download PDF</a></>}</p>
+        <p class="pro-links"><a href={`mailto:${EMAIL}`}>{EMAIL}</a> · <a href={LINKEDIN}>LinkedIn</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

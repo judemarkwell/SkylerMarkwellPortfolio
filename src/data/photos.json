@@ -260,5 +260,59 @@
     ],
     "width": 1600,
     "height": 2133
+  },
+  "coworkers-dinner": {
+    "srcset": [
+      {
+        "src": "photos/coworkers-dinner-800.jpg",
+        "width": 800,
+        "height": 600
+      },
+      {
+        "src": "photos/coworkers-dinner-1600.jpg",
+        "width": 1200,
+        "height": 900
+      }
+    ],
+    "width": 1200,
+    "height": 900
+  },
+  "coworkers-kycec": {
+    "srcset": [
+      {
+        "src": "photos/coworkers-kycec-800.jpg",
+        "width": 800,
+        "height": 1067
+      },
+      {
+        "src": "photos/coworkers-kycec-1600.jpg",
+        "width": 1600,
+        "height": 2133
+      }
+    ],
+    "width": 1600,
+    "height": 2133
+  },
+  "staff-photo": {
+    "srcset": [
+      {
+        "src": "photos/staff-photo-800.jpg",
+        "width": 800,
+        "height": 533
+      },
+      {
+        "src": "photos/staff-photo-1600.jpg",
+        "width": 1600,
+        "height": 1067
+      }
+    ],
+    "width": 1600,
+    "height": 1067
+  },
+  "intro-video": {
+    "video": "photos/intro-video.mp4",
+    "poster": "photos/intro-video-poster.jpg",
+    "width": 1280,
+    "height": 720
   }
 }

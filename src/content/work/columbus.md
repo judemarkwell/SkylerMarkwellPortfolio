@@ -1,14 +1,14 @@
 ---
 title: "Columbus: Two Points of View"
 kind: "Assessment design"
-madeFor: "Social studies with multilingual learners"
+madeFor: "A 4th grade general education class"
 format: "Student task, 16-point rubric and answer key"
 languages: "English"
 layout: "clipped"
 tilt: 1.4
 featured: true
 order: 2
-lede: "A performance task I designed where students draw the voyage as Columbus would remember it, then as Bartolomé de las Casas would, then as they see it themselves, citing an excerpt each time."
+lede: "A performance task I designed for a 4th grade general education class where students draw the voyage as Columbus would remember it, then as Bartolomé de las Casas would, then as they see it themselves, citing an excerpt each time."
 alts: ["Assessment page with a box for a drawing and lines to explain the scene", "Four-level rubric with a row for each perspective", "Answer key with a model description of a drawing"]
 prompt: "How did students respond to drawing the evidence before writing about it?"
 ---

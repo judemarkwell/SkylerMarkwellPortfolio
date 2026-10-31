@@ -7,6 +7,8 @@ Portfolio site for Skyler Markwell, educator of multilingual learners and curric
 ```bash
 npm install
 npm run previews   # renders preview images from source-materials/ (needs LibreOffice + Python: pypdfium2, Pillow)
+npm run downloads  # builds public/files/*.pdf (one per piece, credentials, redacted transcript)
+npm run resume-pdf # prints /resume/ to a PDF (needs `npm run preview` running)
 npm run photos     # web-sizes photos and the classroom loop from source-materials/photos/ (needs ffmpeg, pillow-heif)
 npm run dev        # http://localhost:4321/SkylerMarkwellPortfolio/
 npm run build

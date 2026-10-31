@@ -16,44 +16,6 @@
       0.2,
       0.9,
       0.76
-    ],
-    "blurEllipses": [
-      [
-        0.545,
-        0.45,
-        0.3,
-        0.33
-      ],
-      [
-        0.27,
-        0.44,
-        0.075,
-        0.09
-      ],
-      [
-        0.67,
-        0.76,
-        0.14,
-        0.1
-      ],
-      [
-        0.36,
-        0.68,
-        0.07,
-        0.08
-      ],
-      [
-        0.32,
-        0.25,
-        0.05,
-        0.09
-      ],
-      [
-        0.78,
-        0.32,
-        0.06,
-        0.12
-      ]
     ]
   },
   "kycec-poster": {
@@ -564,5 +526,21 @@
   },
   "wku-mascot": {
     "src": "wku-mascot.heic"
+  },
+  "coworkers-dinner": {
+    "src": "coworkers-dinner.jpg"
+  },
+  "coworkers-kycec": {
+    "src": "coworkers-kycec.heic"
+  },
+  "staff-photo": {
+    "src": "staff-photo.jpg"
+  },
+  "intro-video": {
+    "src": "intro-video.mp4",
+    "video": true,
+    "keepAudio": true,
+    "seconds": null,
+    "noCrop": true
   }
 }

@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import Sheets from "../components/Sheets.astro";
-import { u, previewsFor, headshot } from "../lib/site";
+import { u, previewsFor, headshot, photo } from "../lib/site";
 import Figure from "../components/Figure.astro";
 import Carousel from "../components/Carousel.astro";
 
@@ -10,6 +10,7 @@ const all = (await getCollection("work")).sort((a, b) => a.data.order - b.data.o
 const featured = all.filter((w) => w.data.featured);
 const bySlug = Object.fromEntries(all.map((w) => [w.id, w]));
 const portrait = headshot();
+const intro = photo("intro-video");
 
 // The live thing: a learner finishes the sentence, and the piece made for them is lifted.
 const frames = [
@@ -46,6 +47,52 @@ const designs = [
     <p class="hero-sub">Teacher of multilingual learners and curriculum designer. I build learning for people still learning English, and for the families and teachers around them.</p>
   </section>
 
+
+  <section class="chapter-paper frame define" data-chapter="paper" aria-labelledby="define-title">
+    <div class="define-head rise">
+      <h2 id="define-title">By definition</h2>
+      <p class="define-text">
+        Adaptable educator and <a href="#d-advocate" class="term t-advocate">advocate</a>, skilled in
+        <a href="#d-curriculum" class="term t-curriculum">ground-up curriculum development</a> and
+        <a href="#d-problem" class="term t-problem">problem solving</a>. I thrive in
+        <a href="#d-collab" class="term t-collab">collaborative environments</a> where I can empower individuals to reach their full potential.
+      </p>
+    </div>
+    <div class="define-grid rise">
+      <article id="d-advocate" class="def t-advocate">
+        <h3>Advocate</h3>
+        <ul>
+          <li>Letters to families and to my district: <a href={u("/work/access-faqs/")}>ACCESS FAQs</a>, <a href={u("/work/nti-packet/")}>NTI letter</a>, <a href={u("/work/district-letter/")}>principal selection letter</a></li>
+          <li>Training for teachers: <a href={u("/research/#tesol")}>TESOL station</a>, <a href={u("/work/read-to-self/")}>Read to Self guide</a>, <a href={u("/work/spanish-vocabulary/")}>Spanish vocabulary cards</a></li>
+          <li>Made sure 100% of families were onboarded to our digital communication platform</li>
+        </ul>
+      </article>
+      <article id="d-curriculum" class="def t-curriculum">
+        <h3>Ground-up curriculum</h3>
+        <ul>
+          <li><a href={u("/work/health/")}>Newcomer Health scope and sequence</a>: seven skills-based units built from scratch</li>
+          <li><a href={u("/work/health/")}>Our World in Wellness</a> bulletin board from the same course</li>
+        </ul>
+      </article>
+      <article id="d-problem" class="def t-problem">
+        <h3>Problem solving</h3>
+        <ul>
+          <li>Data and spreadsheets: <a href={u("/work/progress-tracker/")}>IEP goal progress tracker</a></li>
+          <li>Exited 25 students from English learner services</li>
+          <li>Led a team of 6, managing schedules and resource allocation to ensure daily coverage for 100% of my caseload</li>
+          <li>Led a data-cleansing initiative that audited records for 225 students, from their first entry into the country to the present day</li>
+        </ul>
+      </article>
+      <article id="d-collab" class="def t-collab">
+        <h3>Collaborative</h3>
+        <ul>
+          <li>Co-teaching: <a href={u("/work/compare-contrast/")}>compare and contrast lesson</a> taught in a general education class</li>
+          <li>Elected to the Collaboration Leadership Team at the ESL Newcomer Academy</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
   <section class="chapter-orange frame" data-chapter="orange" aria-labelledby="finish-title">
     <div class="finish">
       <div class="rise">
@@ -71,16 +118,19 @@ const designs = [
       <p>Me, my students, and a few days I’m proud of. Swipe or use the arrows to look around.</p>
     </div>
     <Carousel label="Snapshots" items={[
-      { k: "headshot", alt: "Me, smiling, in a denim jacket", caption: "Hi, I’m Skyler. I teach multilingual learners in Louisville, Kentucky." },
+      { k: "headshot", alt: "Me, smiling, in a denim jacket", caption: "I am currently one of two teachers in the entire state of Kentucky teaching students with disabilities, ages 12–21, at a specialized school for multilingual learners." },
       { k: "grad-flowers", alt: "Me with a graduate in a blue gown holding flowers", caption: "Graduation day for one of my students, the first in her family to finish high school." },
-      { k: "access-exit", alt: "Students holding certificates under a We're Multilingual banner", caption: "My students after passing the ACCESS test and exiting English learner services." },
+      { k: "access-exit", alt: "Students holding certificates under a We're Multilingual banner", caption: "I exited 25 students from English learner services. Here are some of them with their certificates after passing the ACCESS test." },
       { k: "kycec-skyler", alt: "Me kneeling beside my research poster", caption: "Presenting my peer-tutoring research at KYCEC in Louisville, 2022." },
       { k: "thank-you", alt: "A second grade class with a thank-you sign for Ms. Markwell", caption: "A second grade class celebrating the day I came back." },
       { k: "asbury-grad", alt: "Me in cap and gown at Asbury University", caption: "Finishing my Master of Arts in Teaching at Asbury University, 2025." },
-      { k: "grad-cert", alt: "Me beside a 12th grade student holding a certificate", caption: "After a 12th grade Defense of Learning at the Newcomer Academy." },
+      { k: "grad-cert", alt: "Me beside a 12th grade student holding a certificate", caption: "A 20-year-old student I taught passed his Defense of Learning and came back to thank me!" },
       { k: "tesol-2025", alt: "Me with four colleagues on the pier in Long Beach", caption: "With colleagues at the TESOL convention in Long Beach, 2025." },
-      { k: "pumpkin-patch", alt: "Me and two teachers with students at a pumpkin farm", caption: "A fall field trip with my students." },
+      { k: "pumpkin-patch", alt: "Me and two teachers with students at a pumpkin farm", caption: "My elementary students seeing a pumpkin patch for the first time." },
       { k: "wku-grad", alt: "Me in a graduation gown holding a WKU Alumni flag", caption: "Graduating from Western Kentucky University, 2022." },
+      { k: "coworkers-dinner", alt: "Me with six co-workers smiling in a restaurant selfie", caption: "Dinner with my co-workers." },
+      { k: "coworkers-kycec", alt: "Me with three fellow educators in a hotel lobby", caption: "With fellow educators at the KYCEC conference in Louisville, 2022." },
+      { k: "staff-photo", alt: "A whole school staff in green shirts posing in a gym", caption: "With my whole school staff, everyone in green." },
       { k: "wku-mascot", alt: "Me in a red dress with WKU's mascot, Big Red", caption: "With Big Red at Western Kentucky University." },
     ]} />
   </section>
@@ -126,19 +176,23 @@ const designs = [
             <div><dt>Based in</dt><dd>Louisville, Kentucky</dd></div>
             <div><dt>Teaching since</dt><dd>2022</dd></div>
             <div><dt>Languages</dt><dd>English, conversational Spanish</dd></div>
+            <div><dt>Trained in</dt><dd>Restorative practices</dd></div>
           </dl>
         </div>
         <div>
-          <p class="lead">I’ve taught multilingual learners since 2022: first as the program lead for a K–8 English learner program in Shelby County, and now teaching health and early-childhood education at the ESL Newcomer Academy in Louisville. I build courses from the ground up, write the assessments that go with them, and make sure families can read every page.</p>
+          <p class="lead">I’ve taught ages 5–21, all with varying levels of English language proficiency and background knowledge. I’ve co-taught with other teachers in mixed groups, and I’ve taught in isolated settings with high-needs students. I enjoy helping all learners exceed what they thought possible.</p>
           <blockquote>
             <p>I have since learned that the process is the most important piece.</p>
             <cite>From my 2026 Insight to Action reflection, on teaching math</cite>
           </blockquote>
-          <div class="math-pair">
-            <Figure k="math-whiteboard" sizes="(min-width: 900px) 28vw, 50vw" alt="Student whiteboard with domino pictures labeled 3, 8, 9 and 6" />
-            <Figure k="math-dominoes" sizes="(min-width: 900px) 28vw, 50vw" alt="A student's hand writing numbers next to dominoes on a whiteboard" />
-          </div>
-          <p class="math-cap">Whiteboards from one of my math lessons built on dominoes: students show their thinking before the answer.</p>
+          {intro && (
+            <figure class="photo intro-video">
+              <video controls playsinline preload="none" poster={intro.poster} width={intro.width} height={intro.height} aria-label="Me in a pink jacket, outdoors in the snow, talking about the kind of teacher I wanted to be">
+                <source src={intro.video} type="video/mp4" />
+              </video>
+              <figcaption>When I first started student teaching, I recorded what kind of teacher I wanted to be.</figcaption>
+            </figure>
+          )}
         </div>
       </div>
       <div class="row">
@@ -147,7 +201,7 @@ const designs = [
           <div>
             <h3>Experience</h3>
             <ul>
-              <li><span>Teacher of multilingual learners, ESL Newcomer Academy (JCPS)</span><span class="y">2026–</span></li>
+              <li><span>Teacher of multilingual learners, ECE and Health, ESL Newcomer Academy</span><span class="y">2026–</span></li>
               <li><span>Instructional lead and career coach, SummerWorks</span><span class="y">2026</span></li>
               <li><span>Teacher of multilingual learners and program lead, Marnel C. Moorman K–8</span><span class="y">2022–26</span></li>
               <li><span>Elected to the Collaboration Leadership Team, Newcomer Academy</span><span class="y">2026</span></li>
