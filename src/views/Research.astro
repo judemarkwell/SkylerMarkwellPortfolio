@@ -1,0 +1,50 @@
+---
+import Base from "../layouts/Base.astro";
+import Figure from "../components/Figure.astro";
+import { tr, lp, type Lang } from "../lib/i18n";
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = tr(lang);
+---
+<Base lang={lang} title={t("Parents Do Care · Skyler Markwell", "Los padres sí se interesan · Skyler Markwell")} description={t("Skyler Markwell's action research on open dialogue between teachers and Spanish-speaking immigrant parents.", "La investigación-acción de Skyler Markwell sobre el diálogo abierto entre maestros y padres inmigrantes hispanohablantes.")} current="research" chapter="orange">
+  <section class="chapter-orange frame page-head" data-chapter="orange">
+    <h1>{t("Parents do care", "Los padres sí se interesan")}</h1>
+    <p>{t("My action research on what happens when teachers sit down with Spanish-speaking immigrant parents and ask, instead of tell. Master of Arts in Teaching, Asbury University, 2025.", "Mi investigación-acción sobre lo que pasa cuando los maestros se sientan con padres inmigrantes hispanohablantes a preguntar en lugar de decir. Maestría en Enseñanza, Asbury University, 2025.")}</p>
+  </section>
+  <section class="chapter-paper frame" data-chapter="paper">
+    <div class="prose">
+      <h2>{t("The question", "La pregunta")}</h2>
+      <p>{t("Spanish-speaking immigrant parents are deeply engaged in their children's learning at home, yet schools sometimes assume these parents do not care about their children's success. My study asks what effect open dialogue has on parent communication, and on how teachers see these families.", "Los padres inmigrantes hispanohablantes participan mucho en el aprendizaje de sus hijos en casa, pero a veces las escuelas suponen que no les importa el éxito de sus hijos. Mi estudio pregunta qué efecto tiene el diálogo abierto en la comunicación con los padres y en cómo los maestros ven a estas familias.")}</p>
+      <p>{t("Four research questions guide it:", "Cuatro preguntas de investigación lo guían:")}</p>
+      <ol>
+        <li>{t("How does parent engagement affect student success?", "¿Cómo afecta la participación de los padres el éxito de los estudiantes?")}</li>
+        <li>{t("What barriers exist to immigrant families in school engagement?", "¿Qué barreras enfrentan las familias inmigrantes para participar en la escuela?")}</li>
+        <li>{t("What can schools do to overcome these barriers?", "¿Qué pueden hacer las escuelas para superar estas barreras?")}</li>
+        <li>{t("What effect will open dialogue have on parent communication?", "¿Qué efecto tendrá el diálogo abierto en la comunicación con los padres?")}</li>
+      </ol>
+      <h2>{t("The study design", "El diseño del estudio")}</h2>
+      <p>{t("The study uses spring parent-teacher conferences, an event families already plan around. One core teacher per grade level at a K–8 school with a large Spanish-speaking English learner population chooses one family who would benefit most from a one-to-one conversation. Before the conference, the teacher reads about common breakdowns in cross-cultural communication and receives a set of open-ended prompts that position the parent as the expert on their child. Families receive the same questions ahead of time, with interpretation provided.", "El estudio usa las conferencias de padres y maestros de primavera, un evento que las familias ya tienen en su calendario. Un maestro principal por grado, en una escuela K–8 con muchos estudiantes de inglés hispanohablantes, elige a una familia que se beneficiaría más de una conversación individual. Antes de la conferencia, el maestro lee sobre las fallas comunes en la comunicación intercultural y recibe preguntas abiertas que reconocen al padre o la madre como el experto en su hijo. Las familias reciben las mismas preguntas con anticipación, con interpretación disponible.")}</p>
+      <p>{t("A mixed-design questionnaire, combining Likert-scale and open-ended questions, captures how teachers' perceptions of parent engagement change.", "Un cuestionario de diseño mixto, con preguntas de escala Likert y preguntas abiertas, registra cómo cambian las percepciones de los maestros sobre la participación de los padres.")}</p>
+      <h2>{t("What I expect to find", "Lo que espero encontrar")}</h2>
+      <p>{t("I hypothesize that open dialogue reduces the barriers between teachers and parents by opening a line of empathetic, culturally inclusive communication that treats parents as experts on their children, which in turn supports engagement and student achievement.", "Mi hipótesis es que el diálogo abierto reduce las barreras entre maestros y padres al abrir una comunicación empática y culturalmente inclusiva que trata a los padres como expertos en sus hijos, lo que a su vez apoya la participación y el rendimiento de los estudiantes.")}</p>
+
+      <h2>{t("Earlier research: peer tutoring", "Investigación anterior: tutoría entre compañeros")}</h2>
+      <p>{t("As an undergraduate at Western Kentucky University, I reviewed three studies of peer tutoring with Spanish-speaking English learners and presented the results as a poster at the Kentucky Council for Exceptional Children conference in Louisville in 2022.", "Como estudiante de licenciatura en Western Kentucky University, revisé tres estudios sobre tutoría entre compañeros con estudiantes de inglés hispanohablantes y presenté los resultados en un póster en la conferencia del Kentucky Council for Exceptional Children en Louisville en 2022.")}</p>
+      <div class="poster-pair">
+        <Figure k="kycec-skyler" sizes="(min-width: 900px) 30vw, 100vw" alt={t("Me kneeling beside my research poster at the KYCEC 2022 conference", "Yo junto a mi póster de investigación en la conferencia KYCEC 2022")} />
+        <Figure k="kycec-poster" sizes="(min-width: 900px) 30vw, 100vw" alt={t("Research poster: The Effect of Peer Tutoring on ELL Students' Academic Achievement, by Skyler Markwell, Western Kentucky University", "Póster de investigación: The Effect of Peer Tutoring on ELL Students' Academic Achievement, de Skyler Markwell, Western Kentucky University")} />
+      </div>
+      <p><strong>{t("What the studies found.", "Lo que encontraron los estudios.")}</strong> {t("Through peer tutoring, English learners gain language acquisition, social skills, access to classroom content, and academic validity.", "Con la tutoría entre compañeros, los estudiantes de inglés ganan adquisición del idioma, habilidades sociales, acceso al contenido de la clase y validez académica.")}</p>
+      <p><strong>{t("What to plan for.", "Qué hay que planear.")}</strong> {t("Coexisting disabilities, the cultural context of asking for help, teacher knowledge of how to implement it, and the extra time it takes.", "Las discapacidades que coexisten, el contexto cultural de pedir ayuda, lo que sabe el maestro sobre cómo aplicarla y el tiempo adicional que requiere.")}</p>
+
+      <h2 id="tesol">{t("Bringing it back to my school", "Llevarlo a mi escuela")}</h2>
+      <p>{t("After the TESOL International Convention in Long Beach in 2025, I led a station for my colleagues on helping beginning writers analyze informational texts: how a student's cultural expectations of writing shape purpose, tone and what they think is worth saying.", "Después de la Convención Internacional TESOL en Long Beach en 2025, dirigí una estación para mis colegas sobre cómo ayudar a escritores principiantes a analizar textos informativos: cómo las expectativas culturales de un estudiante sobre la escritura moldean el propósito, el tono y lo que considera que vale la pena decir.")}</p>
+      <Figure k="tesol-2025" sizes="(min-width: 900px) 48rem, 100vw" alt={t("Me with four colleagues on the pier in Long Beach, a Ferris wheel behind us", "Yo con cuatro colegas en el muelle de Long Beach, con una rueda de la fortuna detrás")} caption={t("With colleagues in Long Beach at TESOL 2025.", "Con colegas en Long Beach en TESOL 2025.")} />
+    </div>
+    <nav class="nextprev" aria-label={t("More", "Más")}>
+      <a href={lp(lang, "/#work")}><span class="d">{t("See the work it shaped", "Ver el trabajo que inspiró")}</span><span class="t">{t("Family guides on the desk", "Guías para familias en el escritorio")}</span></a>
+      <a class="next" href={lp(lang, "/professional/")}><span class="d">{t("Next", "Siguiente")}</span><span class="t">{t("Professional", "Profesional")}</span></a>
+    </nav>
+  </section>
+</Base>

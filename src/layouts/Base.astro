@@ -2,19 +2,25 @@
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import { otherLangPath, tr, type Lang } from "../lib/i18n";
 
-interface Props { title: string; description: string; current?: string; chapter?: string }
-const { title, description, current, chapter = "paper" } = Astro.props;
+interface Props { title: string; description: string; current?: string; chapter?: string; lang?: Lang }
+const { title, description, current, chapter = "paper", lang = "en" } = Astro.props;
+const t = tr(lang);
+const other = otherLangPath(Astro.url.pathname);
+const alt = new URL(other.href, Astro.site);
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang={lang} href={canonical} />
+    <link rel="alternate" hreflang={other.lang} href={alt} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
@@ -23,12 +29,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <script is:inline>document.documentElement.classList.add("js");</script>
   </head>
   <body id="top">
-    <a class="skip" href="#main">Skip to content</a>
-    <Header current={current} chapter={chapter} />
+    <a class="skip" href="#main">{t("Skip to content", "Saltar al contenido")}</a>
+    <Header current={current} chapter={chapter} lang={lang} />
     <main id="main">
       <slot />
     </main>
-    <Footer />
+    <Footer lang={lang} />
     <script>
       // The header is a fixed solid bar; it gains a shadow once the page scrolls under it.
       const header = document.getElementById("site-header")!;
@@ -41,10 +47,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       toggle.addEventListener("click", () => {
         const open = header.classList.toggle("open");
         toggle.setAttribute("aria-expanded", String(open));
-        toggle.textContent = open ? "Close" : "Menu";
+        toggle.textContent = open ? toggle.dataset.close! : toggle.dataset.open!;
       });
       header.querySelectorAll(".links a").forEach((a) => a.addEventListener("click", () => {
-        header.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); toggle.textContent = "Menu";
+        header.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); toggle.textContent = toggle.dataset.open!;
       }));
 
       // Section parts rise in once, staggered. Content is visible if this never runs.

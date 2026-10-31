@@ -23,4 +23,18 @@ const work = defineCollection({
   }),
 });
 
-export const collections = { work };
+const workEs = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/work-es" }),
+  schema: z.object({
+    title: z.string(),
+    madeFor: z.string(),
+    format: z.string(),
+    languages: z.string(),
+    lede: z.string(),
+    alts: z.array(z.string()),
+    why: z.string().optional(),
+    photos: z.array(z.object({ key: z.string(), alt: z.string(), caption: z.string() })).optional(),
+  }),
+});
+
+export const collections = { work, workEs };
