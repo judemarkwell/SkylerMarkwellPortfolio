@@ -55,7 +55,7 @@ const snaps = [
 ];
 
 const ev = (href: string, label: string) => `<a class="ev" href="${href}">${label}<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m0 0-4.5-4.5M15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>`;
-const term = (id: string, cls: string, text: string) => `<a href="#${id}" class="term ${cls}">${text}</a>`;
+const term = (_id: string, cls: string, text: string) => `<span class="term ${cls}">${text}</span>`;
 const definition = lang === "es"
   ? `Educadora adaptable y ${term("d-advocate", "t-advocate", "defensora")}, con experiencia en el ${term("d-curriculum", "t-curriculum", "desarrollo de currículo desde cero")} y la ${term("d-problem", "t-problem", "resolución de problemas")}. Me desenvuelvo mejor en ${term("d-collab", "t-collab", "entornos colaborativos")} donde puedo ayudar a cada persona a alcanzar su máximo potencial.`
   : `Adaptable educator and ${term("d-advocate", "t-advocate", "advocate")}, skilled in ${term("d-curriculum", "t-curriculum", "ground-up curriculum development")} and ${term("d-problem", "t-problem", "problem solving")}. I thrive in ${term("d-collab", "t-collab", "collaborative environments")} where I can empower individuals to reach their full potential.`;
@@ -80,10 +80,6 @@ const definition = lang === "es"
     <div class="define-head rise">
       <h2 id="define-title">{t("By definition", "Por definición")}</h2>
       <p class="define-text" set:html={definition} />
-      <p class="define-hint">
-        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3.5v8.2l-1.6-1.5a1.4 1.4 0 0 0-2 2l3.7 3.9c.8.8 1.9 1.3 3 1.3h2.4a4 4 0 0 0 4-4V9.5a1.3 1.3 0 0 0-2.6 0V9a1.3 1.3 0 0 0-2.6 0v-.4a1.3 1.3 0 0 0-2.6 0V3.5a1.3 1.3 0 0 0-2.7 0Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-        {t("Tap a highlighted word to see the proof, then follow a link to open the piece.", "Toca una palabra resaltada para ver la evidencia y luego sigue un enlace para abrir el trabajo.")}
-      </p>
     </div>
     <div class="define-grid rise">
       <article id="d-advocate" class="def t-advocate">
@@ -262,16 +258,4 @@ const definition = lang === "es"
     lift(d.slug!);
   }));
 
-  // Definition terms: glide to the card and flash it so the jump is obvious.
-  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  document.querySelectorAll<HTMLAnchorElement>(".define-text .term").forEach((a) => a.addEventListener("click", (e) => {
-    const card = document.querySelector<HTMLElement>(a.getAttribute("href")!);
-    if (!card) return;
-    e.preventDefault();
-    history.replaceState(null, "", a.getAttribute("href"));
-    card.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
-    card.classList.remove("flash"); void card.offsetWidth; card.classList.add("flash");
-    card.querySelector<HTMLElement>("a.ev, h3")?.focus({ preventScroll: true });
-  }));
-  document.querySelectorAll<HTMLElement>(".def h3").forEach((h) => h.setAttribute("tabindex", "-1"));
 </script>
