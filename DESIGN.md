@@ -35,7 +35,7 @@ Dealt by taste-skill (`.taste-skill/direction.json`): **Type and nothing else**,
 
 ## Definition terms
 
-Each term is a plain colour highlight (not a link): its colour matches the card below that holds the evidence. Evidence links are inline crimson text with an underline.
+Her definition sentence sits on the orange field under her name (client request), replacing the old tagline. Each term is a plain colour highlight (not a link) matching the bar on its evidence card just below; "problem solving" is ink with paper text so it shows on orange. Evidence links are inline crimson text with an underline.
 
 ## Snapshots carousel
 

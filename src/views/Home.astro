@@ -73,14 +73,11 @@ const definition = lang === "es"
       <span class="ink above"><span>Skyler</span><span>Markwell</span></span>
       <span class="ink below" aria-hidden="true"><span>Skyler</span><span>Markwell</span></span>
     </h1>
-    <p class="hero-sub">{t("Teacher of multilingual learners and curriculum designer. I build learning for people still learning English, and for the families and teachers around them.", "Maestra de estudiantes multilingües y diseñadora de currículo. Creo aprendizaje para personas que todavía aprenden inglés, y para las familias y maestros que las rodean.")}</p>
+    <p class="hero-sub define-text" set:html={definition} />
   </section>
 
   <section class="chapter-paper frame define" data-chapter="paper" aria-labelledby="define-title">
-    <div class="define-head rise">
-      <h2 id="define-title">{t("By definition", "Por definición")}</h2>
-      <p class="define-text" set:html={definition} />
-    </div>
+    <h2 id="define-title" class="sr-only">{t("What that looks like", "Cómo se ve en la práctica")}</h2>
     <div class="define-grid rise">
       <article id="d-advocate" class="def t-advocate">
         <h3>{t("Advocate", "Defensora")}</h3>
