@@ -1,5 +1,5 @@
 """Print the /resume/ page to public/files/skyler-markwell-resume.pdf (no phone number; print CSS hides the site chrome).
-Usage: python3 scripts/build_resume_pdf.py http://localhost:4321/SkylerMarkwellPortfolio/resume/
+Usage: python3 scripts/build_resume_pdf.py http://localhost:4321/resume/
 """
 import sys, json
 from pathlib import Path
