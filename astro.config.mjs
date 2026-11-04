@@ -2,10 +2,9 @@
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 
-// GitHub Pages project site. When a custom domain is added, set `site` to it and remove `base`.
+// Hosted on Vercel at the root of skylermarkwell.vercel.app.
 export default defineConfig({
-  site: "https://judemarkwell.github.io",
-  base: "/SkylerMarkwellPortfolio",
+  site: "https://skylermarkwell.vercel.app",
   trailingSlash: "always",
   vite: { plugins: [tailwindcss()] },
 });

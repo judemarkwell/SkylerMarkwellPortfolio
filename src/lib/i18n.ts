@@ -6,7 +6,7 @@ export type Lang = "en" | "es";
 /** Pick the string for this language: t("Hello", "Hola"). */
 export const tr = (lang: Lang) => (en: string, es: string) => (lang === "es" ? es : en);
 
-/** Link to a page in this language: lp("es", "/gallery/") -> /SkylerMarkwellPortfolio/es/gallery/ */
+/** Link to a page in this language: lp("es", "/gallery/") -> /es/gallery/ */
 export const lp = (lang: Lang, path = "/") => u(lang === "es" ? `/es${path.startsWith("/") ? path : `/${path}`}` : path);
 
 /** Same page in the other language, from the current URL. */
